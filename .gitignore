@@ -1,0 +1,5 @@
+/src/Cyanide.Cypher/obj/*
+/src/Cyanide.Cypher/bin/*
+/src/Cyanide.Cypher.Tests/obj/*
+/src/Cyanide.Cypher.Tests/bin/*
+/.idea*
