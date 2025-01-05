@@ -58,7 +58,7 @@ internal class CypherToSqlTranslator: CypherBaseVisitor<string>, IQueryTranslato
     public override string VisitMatchPattern(CypherParser.MatchPatternContext context)
     {
         var relationshipLabelNode = context.relationshipLabel();
-        //var relationshipAliasNode = context.relationshipAlias();
+        var relationshipAliasNode = context.relationshipAlias();
 
         if (context.alias() == null || context.label() == null) return null!;
         
@@ -67,7 +67,7 @@ internal class CypherToSqlTranslator: CypherBaseVisitor<string>, IQueryTranslato
 
         if (relationshipLabelNode != null)
         {
-            //var relationshipAlias = relationshipAliasNode != null ? relationshipAliasNode.GetText() : string.Empty;
+            var relationshipAlias = relationshipAliasNode != null ? relationshipAliasNode.GetText() : string.Empty;
             var relationshipLabel = relationshipLabelNode != null ? relationshipLabelNode.GetText() : string.Empty;
             var targetAliasNode = context.alias(1);
             var targetLabelNode = context.label(1);
