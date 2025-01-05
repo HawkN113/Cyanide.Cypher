@@ -15,4 +15,13 @@ public class Tests
         var cypherQuery = sqlToCypher.Translate(sqlQuery);
         Assert.Pass();
     }
+    
+    [Test]
+    public void Test2()
+    {
+        var cypherToSql = TranslatorFactory.CreateTranslator(TranslatorType.CypherToSQL);
+        var cypherQuery = "MATCH (a:Person)-[:FRIEND]->(b:Person)\nWHERE a.age > 30 AND b.city = \"New York\"\nRETURN a.name, b.name";
+        var sqlQuery = cypherToSql.Translate(cypherQuery);
+        Assert.Pass();
+    }
 }

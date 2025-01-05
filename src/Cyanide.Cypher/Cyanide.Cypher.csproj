@@ -29,6 +29,19 @@
             <Error>True</Error>
         </Antlr4>
     </ItemGroup>
+    <ItemGroup>
+        <Antlr4 Include="Grammar\Cypher.g4">
+            <AntOutDir>Generated</AntOutDir>
+            <Listener>True</Listener>
+            <Visitor>True</Visitor>
+            <Encoding>UTF-8</Encoding>
+            <GAtn>False</GAtn>
+            <ForceAtn>True</ForceAtn>
+            <AllowAntlr4cs>True</AllowAntlr4cs>
+            <LongMessages>True</LongMessages>
+            <Error>True</Error>
+        </Antlr4>
+    </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Generated\" />

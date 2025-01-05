@@ -35,7 +35,7 @@ joinType
     | 'LEFT'
     | 'RIGHT'
     | 'FULL'
-    | /* Default is INNER if omitted */ 
+    |  
     ;
 
 whereClause
