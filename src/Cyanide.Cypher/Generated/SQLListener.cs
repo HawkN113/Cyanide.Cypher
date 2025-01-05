@@ -29,7 +29,7 @@ using IToken = Antlr4.Runtime.IToken;
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
 [System.CLSCompliant(false)]
-public interface ISQLListener : IParseTreeListener {
+internal interface ISQLListener : IParseTreeListener {
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SQLParser.sqlStatement"/>.
 	/// </summary>

@@ -18,24 +18,17 @@
 
     <ItemGroup>
         <Antlr4 Include="Grammar\SQL.g4">
-            <!--<Generator>MSBuild:Compile</Generator>-->
             <AntOutDir>Generated</AntOutDir>
             <Listener>True</Listener>
             <Visitor>True</Visitor>
             <Encoding>UTF-8</Encoding>
             <GAtn>False</GAtn>
-            <ForceAtn>False</ForceAtn>
+            <ForceAtn>True</ForceAtn>
             <AllowAntlr4cs>True</AllowAntlr4cs>
             <LongMessages>True</LongMessages>
-            <Error>False</Error>
+            <Error>True</Error>
         </Antlr4>
     </ItemGroup>
-
-    <!--
-    <ItemGroup>
-        <Compile Include="Generated\*.cs" />
-    </ItemGroup>
-    -->
 
     <ItemGroup>
       <Folder Include="Generated\" />
@@ -44,16 +37,16 @@
     <Target Name="GenerateAntlrFiles" AfterTargets="Build">
         <Message Text="Generating ANTLR Files..." Importance="high"/>
     </Target>
-    
-<!--
-    <Target Name="MoveAntlrGeneratedFiles" AfterTargets="AfterBuild">
-        <ItemGroup>
-            <AntlrGeneratedFiles Include="obj\**\*.cs" />
-        </ItemGroup>
-        <Copy SourceFiles="@(AntlrGeneratedFiles)"
-              DestinationFolder="Generated"
-              SkipUnchangedFiles="true" />
+    <Target Name="ModifyAntlrGeneratedFiles" BeforeTargets="AfterBuild">
+        <Message Text="Replaced modifiers in ANTLR Files..." Importance="high"/>
+        <Exec Command="powershell.exe -ExecutionPolicy Bypass -File Scripts\ReplacePublicWithInternal.ps1 -WindowStyle Hidden -NoProfile" />
     </Target>
--->
+
+    <!--
+    <ItemGroup>
+        <InternalsVisibleTo Include="Cyanide.Cypher" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    </ItemGroup>
+    -->
     
 </Project>

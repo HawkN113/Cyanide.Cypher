@@ -32,7 +32,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
 [System.CLSCompliant(false)]
-public partial class SQLParser : Parser{
+internal partial class SQLParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -95,7 +95,7 @@ public partial class SQLParser : Parser{
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
-	public partial class SqlStatementContext : ParserRuleContext {
+	internal partial class SqlStatementContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public SelectStatementContext selectStatement() {
 			return GetRuleContext<SelectStatementContext>(0);
 		}
@@ -147,7 +147,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class SelectStatementContext : ParserRuleContext {
+	internal partial class SelectStatementContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public SelectElementsContext selectElements() {
 			return GetRuleContext<SelectElementsContext>(0);
 		}
@@ -267,7 +267,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class SelectElementsContext : ParserRuleContext {
+	internal partial class SelectElementsContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext[] columnName() {
 			return GetRuleContexts<ColumnNameContext>();
 		}
@@ -351,7 +351,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class TableSourceContext : ParserRuleContext {
+	internal partial class TableSourceContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public TableNameContext tableName() {
 			return GetRuleContext<TableNameContext>(0);
 		}
@@ -400,7 +400,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class JoinClauseContext : ParserRuleContext {
+	internal partial class JoinClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public JoinTypeContext joinType() {
 			return GetRuleContext<JoinTypeContext>(0);
 		}
@@ -463,7 +463,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class JoinTypeContext : ParserRuleContext {
+	internal partial class JoinTypeContext : ParserRuleContext {
 		public JoinTypeContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -541,7 +541,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class WhereClauseContext : ParserRuleContext {
+	internal partial class WhereClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
 			return GetRuleContext<ConditionContext>(0);
 		}
@@ -592,7 +592,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class GroupByClauseContext : ParserRuleContext {
+	internal partial class GroupByClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext[] columnName() {
 			return GetRuleContexts<ColumnNameContext>();
 		}
@@ -665,7 +665,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class HavingClauseContext : ParserRuleContext {
+	internal partial class HavingClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
 			return GetRuleContext<ConditionContext>(0);
 		}
@@ -716,7 +716,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class ConditionContext : ParserRuleContext {
+	internal partial class ConditionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
 			return GetRuleContexts<ExpressionContext>();
 		}
@@ -839,7 +839,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class ExpressionContext : ParserRuleContext {
+	internal partial class ExpressionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext columnName() {
 			return GetRuleContext<ColumnNameContext>(0);
 		}
@@ -904,7 +904,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class ComparisonOperatorContext : ParserRuleContext {
+	internal partial class ComparisonOperatorContext : ParserRuleContext {
 		public ComparisonOperatorContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -958,7 +958,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class LogicalOperatorContext : ParserRuleContext {
+	internal partial class LogicalOperatorContext : ParserRuleContext {
 		public LogicalOperatorContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -1012,7 +1012,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class TableNameContext : ParserRuleContext {
+	internal partial class TableNameContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(SQLParser.IDENTIFIER, 0); }
 		public TableNameContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -1059,7 +1059,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class ColumnNameContext : ParserRuleContext {
+	internal partial class ColumnNameContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(SQLParser.IDENTIFIER, 0); }
 		public ColumnNameContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -1106,7 +1106,7 @@ public partial class SQLParser : Parser{
 		return _localctx;
 	}
 
-	public partial class ConstantContext : ParserRuleContext {
+	internal partial class ConstantContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(SQLParser.STRING, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NUMBER() { return GetToken(SQLParser.NUMBER, 0); }
 		public ConstantContext(ParserRuleContext parent, int invokingState)

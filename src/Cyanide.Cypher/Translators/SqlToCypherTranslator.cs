@@ -1,27 +1,30 @@
-﻿using Antlr4.Runtime;
+﻿using System.Text;
+using Antlr4.Runtime;
 using Cyanide.Cypher.Translators.Abstraction;
 
 namespace Cyanide.Cypher.Translators;
 
 internal class SqlToCypherTranslator: SQLBaseVisitor<string>, IQueryTranslator
 {
-    private string _cypherQuery = string.Empty;
+    private readonly StringBuilder _cypherQuery = new();
+
     public string Translate(string inputQuery)
     {
-        var inputStream = new AntlrInputStream(inputQuery);
-        var lexer = new SQLLexer(inputStream);
+        var lexer = new SQLLexer(new AntlrInputStream(inputQuery));
         var tokenStream = new CommonTokenStream(lexer);
         var parser = new SQLParser(tokenStream);
         var tree = parser.sqlStatement();
+        
         Visit(tree);
-        return _cypherQuery;
+        
+        return _cypherQuery.ToString();
     }
-    
+
     public override string VisitSelectStatement(SQLParser.SelectStatementContext context)
     {
         var selectElements = context.selectElements().GetText();
         var tableSource = context.tableSource().GetText();
-        _cypherQuery += $"MATCH (n:{tableSource})\n";
+        _cypherQuery.AppendLine($"MATCH (n:{tableSource})");
 
         if (context.whereClause() != null)
         {
@@ -38,28 +41,28 @@ internal class SqlToCypherTranslator: SQLBaseVisitor<string>, IQueryTranslator
             Visit(context.havingClause());
         }
 
-        _cypherQuery += $"RETURN {selectElements.Replace(",", ", n.")};";
-        return _cypherQuery;
+        _cypherQuery.AppendLine($"RETURN {selectElements.Replace(",", ", n.")};");
+        return _cypherQuery.ToString();
     }
 
     public override string VisitWhereClause(SQLParser.WhereClauseContext context)
     {
         var condition = context.condition().GetText();
-        _cypherQuery += $"WHERE {condition.Replace("=", ":")}\n";
+        _cypherQuery.AppendLine($"WHERE {condition.Replace("=", ":")}");
         return null!;
     }
 
     public override string VisitGroupByClause(SQLParser.GroupByClauseContext context)
     {
         var groupByColumns = context.columnName().Select(col => col.GetText());
-        _cypherQuery += $"WITH {string.Join(", ", groupByColumns)}\n";
+        _cypherQuery.AppendLine($"WITH {string.Join(", ", groupByColumns)}");
         return null!;
     }
 
     public override string VisitHavingClause(SQLParser.HavingClauseContext context)
     {
         var condition = context.condition().GetText();
-        _cypherQuery += $"WHERE {condition}\n";
+        _cypherQuery.AppendLine($"WHERE {condition}");
         return null!;
     }
 }
