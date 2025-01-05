@@ -16,15 +16,15 @@ matchPattern
     : '(' alias ':' label ')'
       ('-[' relationshipAlias? ':' relationshipLabel ']->' '(' alias ':' label ')')?
     ;
-
-whereClause
-    : 'WHERE' condition
-    ;
-
+    
 returnClause
     : 'RETURN' returnItems
     ;
-
+    
+whereClause
+    : 'WHERE' condition
+    ;
+    
 condition
     : comparison (logicalOperator comparison)*
     ;

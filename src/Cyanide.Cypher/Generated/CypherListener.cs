@@ -61,16 +61,6 @@ internal interface ICypherListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitMatchPattern([NotNull] CypherParser.MatchPatternContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CypherParser.whereClause"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterWhereClause([NotNull] CypherParser.WhereClauseContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CypherParser.whereClause"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitWhereClause([NotNull] CypherParser.WhereClauseContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="CypherParser.returnClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -80,6 +70,16 @@ internal interface ICypherListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitReturnClause([NotNull] CypherParser.ReturnClauseContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CypherParser.whereClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterWhereClause([NotNull] CypherParser.WhereClauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CypherParser.whereClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitWhereClause([NotNull] CypherParser.WhereClauseContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CypherParser.condition"/>.
 	/// </summary>

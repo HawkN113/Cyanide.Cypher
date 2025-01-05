@@ -50,17 +50,17 @@ internal interface ICypherVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitMatchPattern([NotNull] CypherParser.MatchPatternContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CypherParser.whereClause"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitWhereClause([NotNull] CypherParser.WhereClauseContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="CypherParser.returnClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitReturnClause([NotNull] CypherParser.ReturnClauseContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CypherParser.whereClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitWhereClause([NotNull] CypherParser.WhereClauseContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CypherParser.condition"/>.
 	/// </summary>

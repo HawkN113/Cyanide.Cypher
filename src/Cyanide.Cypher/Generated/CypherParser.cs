@@ -40,21 +40,21 @@ internal partial class CypherParser : Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, STRING=19, NUMBER=20, IDENTIFIER=21, WS=22;
 	public const int
-		RULE_cypherQuery = 0, RULE_matchClause = 1, RULE_matchPattern = 2, RULE_whereClause = 3, 
-		RULE_returnClause = 4, RULE_condition = 5, RULE_comparison = 6, RULE_returnItems = 7, 
+		RULE_cypherQuery = 0, RULE_matchClause = 1, RULE_matchPattern = 2, RULE_returnClause = 3, 
+		RULE_whereClause = 4, RULE_condition = 5, RULE_comparison = 6, RULE_returnItems = 7, 
 		RULE_groupByItems = 8, RULE_returnItem = 9, RULE_groupByItem = 10, RULE_logicalOperator = 11, 
 		RULE_comparisonOperator = 12, RULE_property = 13, RULE_value = 14, RULE_label = 15, 
 		RULE_relationshipLabel = 16, RULE_alias = 17, RULE_relationshipAlias = 18;
 	public static readonly string[] ruleNames = {
-		"cypherQuery", "matchClause", "matchPattern", "whereClause", "returnClause", 
+		"cypherQuery", "matchClause", "matchPattern", "returnClause", "whereClause", 
 		"condition", "comparison", "returnItems", "groupByItems", "returnItem", 
 		"groupByItem", "logicalOperator", "comparisonOperator", "property", "value", 
 		"label", "relationshipLabel", "alias", "relationshipAlias"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'MATCH'", "','", "'('", "':'", "')'", "'-['", "']->'", "'WHERE'", 
-		"'RETURN'", "'.'", "'AND'", "'OR'", "'='", "'<>'", "'<'", "'<='", "'>'", 
+		null, "'MATCH'", "','", "'('", "':'", "')'", "'-['", "']->'", "'RETURN'", 
+		"'WHERE'", "'.'", "'AND'", "'OR'", "'='", "'<>'", "'<'", "'<='", "'>'", 
 		"'>='"
 	};
 	private static readonly string[] _SymbolicNames = {
@@ -345,57 +345,6 @@ internal partial class CypherParser : Parser {
 		return _localctx;
 	}
 
-	internal partial class WhereClauseContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
-			return GetRuleContext<ConditionContext>(0);
-		}
-		public WhereClauseContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_whereClause; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICypherListener typedListener = listener as ICypherListener;
-			if (typedListener != null) typedListener.EnterWhereClause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICypherListener typedListener = listener as ICypherListener;
-			if (typedListener != null) typedListener.ExitWhereClause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICypherVisitor<TResult> typedVisitor = visitor as ICypherVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitWhereClause(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public WhereClauseContext whereClause() {
-		WhereClauseContext _localctx = new WhereClauseContext(Context, State);
-		EnterRule(_localctx, 6, RULE_whereClause);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 74;
-			Match(T__7);
-			State = 75;
-			condition();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
 	internal partial class ReturnClauseContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ReturnItemsContext returnItems() {
 			return GetRuleContext<ReturnItemsContext>(0);
@@ -426,14 +375,65 @@ internal partial class CypherParser : Parser {
 	[RuleVersion(0)]
 	public ReturnClauseContext returnClause() {
 		ReturnClauseContext _localctx = new ReturnClauseContext(Context, State);
-		EnterRule(_localctx, 8, RULE_returnClause);
+		EnterRule(_localctx, 6, RULE_returnClause);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 74;
+			Match(T__7);
+			State = 75;
+			returnItems();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	internal partial class WhereClauseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
+		}
+		public WhereClauseContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_whereClause; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ICypherListener typedListener = listener as ICypherListener;
+			if (typedListener != null) typedListener.EnterWhereClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ICypherListener typedListener = listener as ICypherListener;
+			if (typedListener != null) typedListener.ExitWhereClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ICypherVisitor<TResult> typedVisitor = visitor as ICypherVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWhereClause(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public WhereClauseContext whereClause() {
+		WhereClauseContext _localctx = new WhereClauseContext(Context, State);
+		EnterRule(_localctx, 8, RULE_whereClause);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 77;
 			Match(T__8);
 			State = 78;
-			returnItems();
+			condition();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1251,16 +1251,16 @@ internal partial class CypherParser : Parser {
 		0,8,77,1,0,0,0,10,80,1,0,0,0,12,89,1,0,0,0,14,93,1,0,0,0,16,101,1,0,0,
 		0,18,109,1,0,0,0,20,113,1,0,0,0,22,117,1,0,0,0,24,119,1,0,0,0,26,121,1,
 		0,0,0,28,123,1,0,0,0,30,125,1,0,0,0,32,127,1,0,0,0,34,129,1,0,0,0,36,131,
-		1,0,0,0,38,40,3,2,1,0,39,41,3,6,3,0,40,39,1,0,0,0,40,41,1,0,0,0,41,42,
-		1,0,0,0,42,43,3,8,4,0,43,44,5,0,0,1,44,1,1,0,0,0,45,46,5,1,0,0,46,51,3,
+		1,0,0,0,38,40,3,2,1,0,39,41,3,8,4,0,40,39,1,0,0,0,40,41,1,0,0,0,41,42,
+		1,0,0,0,42,43,3,6,3,0,43,44,5,0,0,1,44,1,1,0,0,0,45,46,5,1,0,0,46,51,3,
 		4,2,0,47,48,5,2,0,0,48,50,3,4,2,0,49,47,1,0,0,0,50,53,1,0,0,0,51,49,1,
 		0,0,0,51,52,1,0,0,0,52,3,1,0,0,0,53,51,1,0,0,0,54,55,5,3,0,0,55,56,3,34,
 		17,0,56,57,5,4,0,0,57,58,3,30,15,0,58,72,5,5,0,0,59,61,5,6,0,0,60,62,3,
 		36,18,0,61,60,1,0,0,0,61,62,1,0,0,0,62,63,1,0,0,0,63,64,5,4,0,0,64,65,
 		3,32,16,0,65,66,5,7,0,0,66,67,5,3,0,0,67,68,3,34,17,0,68,69,5,4,0,0,69,
 		70,3,30,15,0,70,71,5,5,0,0,71,73,1,0,0,0,72,59,1,0,0,0,72,73,1,0,0,0,73,
-		5,1,0,0,0,74,75,5,8,0,0,75,76,3,10,5,0,76,7,1,0,0,0,77,78,5,9,0,0,78,79,
-		3,14,7,0,79,9,1,0,0,0,80,86,3,12,6,0,81,82,3,22,11,0,82,83,3,12,6,0,83,
+		5,1,0,0,0,74,75,5,8,0,0,75,76,3,14,7,0,76,7,1,0,0,0,77,78,5,9,0,0,78,79,
+		3,10,5,0,79,9,1,0,0,0,80,86,3,12,6,0,81,82,3,22,11,0,82,83,3,12,6,0,83,
 		85,1,0,0,0,84,81,1,0,0,0,85,88,1,0,0,0,86,84,1,0,0,0,86,87,1,0,0,0,87,
 		11,1,0,0,0,88,86,1,0,0,0,89,90,3,26,13,0,90,91,3,24,12,0,91,92,3,28,14,
 		0,92,13,1,0,0,0,93,98,3,18,9,0,94,95,5,2,0,0,95,97,3,18,9,0,96,94,1,0,

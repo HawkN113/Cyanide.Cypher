@@ -72,18 +72,6 @@ internal partial class CypherBaseListener : ICypherListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitMatchPattern([NotNull] CypherParser.MatchPatternContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="CypherParser.whereClause"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterWhereClause([NotNull] CypherParser.WhereClauseContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="CypherParser.whereClause"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitWhereClause([NotNull] CypherParser.WhereClauseContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="CypherParser.returnClause"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -95,6 +83,18 @@ internal partial class CypherBaseListener : ICypherListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitReturnClause([NotNull] CypherParser.ReturnClauseContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="CypherParser.whereClause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterWhereClause([NotNull] CypherParser.WhereClauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="CypherParser.whereClause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitWhereClause([NotNull] CypherParser.WhereClauseContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="CypherParser.condition"/>.
 	/// <para>The default implementation does nothing.</para>
