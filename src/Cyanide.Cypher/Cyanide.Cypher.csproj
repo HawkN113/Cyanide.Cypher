@@ -4,6 +4,56 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.0" />
+      <PackageReference Include="Antlr4BuildTasks" Version="12.8.0" />
+        <PackageReference Include="Antlr4.Runtime" Version="4.6.6">
+            <Aliases>Antlr4Legacy</Aliases>
+            <PrivateAssets>contentfiles;analyzers;build;compile</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Antlr4 Include="Grammar\SQL.g4">
+            <!--<Generator>MSBuild:Compile</Generator>-->
+            <AntOutDir>Generated</AntOutDir>
+            <Listener>True</Listener>
+            <Visitor>True</Visitor>
+            <Encoding>UTF-8</Encoding>
+            <GAtn>False</GAtn>
+            <ForceAtn>False</ForceAtn>
+            <AllowAntlr4cs>True</AllowAntlr4cs>
+            <LongMessages>True</LongMessages>
+            <Error>False</Error>
+        </Antlr4>
+    </ItemGroup>
+
+    <!--
+    <ItemGroup>
+        <Compile Include="Generated\*.cs" />
+    </ItemGroup>
+    -->
+
+    <ItemGroup>
+      <Folder Include="Generated\" />
+    </ItemGroup>
+
+    <Target Name="GenerateAntlrFiles" AfterTargets="Build">
+        <Message Text="Generating ANTLR Files..." Importance="high"/>
+    </Target>
+    
+<!--
+    <Target Name="MoveAntlrGeneratedFiles" AfterTargets="AfterBuild">
+        <ItemGroup>
+            <AntlrGeneratedFiles Include="obj\**\*.cs" />
+        </ItemGroup>
+        <Copy SourceFiles="@(AntlrGeneratedFiles)"
+              DestinationFolder="Generated"
+              SkipUnchangedFiles="true" />
+    </Target>
+-->
+    
 </Project>
