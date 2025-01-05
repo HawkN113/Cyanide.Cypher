@@ -34,7 +34,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
-internal partial class SQLBaseListener : ISQLListener {
+public partial class SQLBaseListener : ISQLListener{
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SQLParser.sqlStatement"/>.
 	/// <para>The default implementation does nothing.</para>

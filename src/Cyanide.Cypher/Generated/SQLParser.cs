@@ -32,7 +32,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
 [System.CLSCompliant(false)]
-internal partial class SQLParser : Parser{
+public partial class SQLParser : Parser{
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -196,8 +196,8 @@ internal partial class SQLParser : Parser{
 	public SelectStatementContext selectStatement() {
 		SelectStatementContext _localctx = new SelectStatementContext(Context, State);
 		EnterRule(_localctx, 2, RULE_selectStatement);
-		int _la;
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 35;
@@ -210,48 +210,50 @@ internal partial class SQLParser : Parser{
 			tableSource();
 			State = 42;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1952L) != 0)) {
-				{
-				{
-				State = 39;
-				joinClause();
-				}
+			_alt = Interpreter.AdaptivePredict(TokenStream,0,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					State = 39;
+					joinClause();
+					}
+					} 
 				}
 				State = 44;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
+				_alt = Interpreter.AdaptivePredict(TokenStream,0,Context);
 			}
 			State = 46;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==T__10) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
+			case 1:
 				{
 				State = 45;
 				whereClause();
 				}
+				break;
 			}
-
 			State = 49;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==T__11) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,2,Context) ) {
+			case 1:
 				{
 				State = 48;
 				groupByClause();
 				}
+				break;
 			}
-
 			State = 52;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==T__12) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
+			case 1:
 				{
 				State = 51;
 				havingClause();
 				}
+				break;
 			}
-
 			}
 		}
 		catch (RecognitionException re) {
@@ -299,43 +301,43 @@ internal partial class SQLParser : Parser{
 	public SelectElementsContext selectElements() {
 		SelectElementsContext _localctx = new SelectElementsContext(Context, State);
 		EnterRule(_localctx, 4, RULE_selectElements);
-		int _la;
 		try {
+			int _alt;
 			State = 63;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__2:
+			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 54;
 				Match(T__2);
 				}
 				break;
-			case IDENTIFIER:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 55;
 				columnName();
 				State = 60;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				while (_la==T__3) {
-					{
-					{
-					State = 56;
-					Match(T__3);
-					State = 57;
-					columnName();
-					}
+				_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
+				while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1 ) {
+						{
+						{
+						State = 56;
+						Match(T__3);
+						State = 57;
+						columnName();
+						}
+						} 
 					}
 					State = 62;
 					ErrorHandler.Sync(this);
-					_la = TokenStream.LA(1);
+					_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 				}
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -492,42 +494,40 @@ internal partial class SQLParser : Parser{
 		try {
 			State = 78;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__6:
+			switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 73;
 				Match(T__6);
 				}
 				break;
-			case T__7:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 74;
 				Match(T__7);
 				}
 				break;
-			case T__8:
+			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 75;
 				Match(T__8);
 				}
 				break;
-			case T__9:
+			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
 				State = 76;
 				Match(T__9);
 				}
 				break;
-			case T__4:
+			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -626,8 +626,8 @@ internal partial class SQLParser : Parser{
 	public GroupByClauseContext groupByClause() {
 		GroupByClauseContext _localctx = new GroupByClauseContext(Context, State);
 		EnterRule(_localctx, 14, RULE_groupByClause);
-		int _la;
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 83;
@@ -636,19 +636,21 @@ internal partial class SQLParser : Parser{
 			columnName();
 			State = 89;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==T__3) {
-				{
-				{
-				State = 85;
-				Match(T__3);
-				State = 86;
-				columnName();
-				}
+			_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					State = 85;
+					Match(T__3);
+					State = 86;
+					columnName();
+					}
+					} 
 				}
 				State = 91;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
+				_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
 			}
 			}
 		}
@@ -774,10 +776,8 @@ internal partial class SQLParser : Parser{
 			{
 			State = 104;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case IDENTIFIER:
-			case STRING:
-			case NUMBER:
+			switch ( Interpreter.AdaptivePredict(TokenStream,8,Context) ) {
+			case 1:
 				{
 				State = 96;
 				expression();
@@ -789,7 +789,7 @@ internal partial class SQLParser : Parser{
 				}
 				}
 				break;
-			case T__13:
+			case 2:
 				{
 				State = 100;
 				Match(T__13);
@@ -799,8 +799,6 @@ internal partial class SQLParser : Parser{
 				Match(T__14);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
 			State = 112;
@@ -878,24 +876,21 @@ internal partial class SQLParser : Parser{
 		try {
 			State = 117;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case IDENTIFIER:
+			switch ( Interpreter.AdaptivePredict(TokenStream,10,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 115;
 				columnName();
 				}
 				break;
-			case STRING:
-			case NUMBER:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 116;
 				constant();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
