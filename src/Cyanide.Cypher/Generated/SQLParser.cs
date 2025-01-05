@@ -36,21 +36,32 @@ public partial class SQLParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, IDENTIFIER=8, 
-		WS=9;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
+		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, IDENTIFIER=24, 
+		STRING=25, NUMBER=26, WS=27, COMMENT=28;
 	public const int
-		RULE_query = 0, RULE_select_clause = 1, RULE_from_clause = 2, RULE_where_clause = 3, 
-		RULE_column_list = 4, RULE_column = 5, RULE_table_name = 6, RULE_condition = 7;
+		RULE_sqlStatement = 0, RULE_selectStatement = 1, RULE_selectElements = 2, 
+		RULE_tableSource = 3, RULE_joinClause = 4, RULE_joinType = 5, RULE_whereClause = 6, 
+		RULE_groupByClause = 7, RULE_havingClause = 8, RULE_condition = 9, RULE_expression = 10, 
+		RULE_comparisonOperator = 11, RULE_logicalOperator = 12, RULE_tableName = 13, 
+		RULE_columnName = 14, RULE_constant = 15;
 	public static readonly string[] ruleNames = {
-		"query", "select_clause", "from_clause", "where_clause", "column_list", 
-		"column", "table_name", "condition"
+		"sqlStatement", "selectStatement", "selectElements", "tableSource", "joinClause", 
+		"joinType", "whereClause", "groupByClause", "havingClause", "condition", 
+		"expression", "comparisonOperator", "logicalOperator", "tableName", "columnName", 
+		"constant"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "';'", "'SELECT'", "'FROM'", "'WHERE'", "','", "'.'", "'='"
+		null, "'SELECT'", "'FROM'", "'*'", "','", "'JOIN'", "'ON'", "'INNER'", 
+		"'LEFT'", "'RIGHT'", "'FULL'", "'WHERE'", "'GROUP BY'", "'HAVING'", "'('", 
+		"')'", "'='", "'<'", "'>'", "'<='", "'>='", "'<>'", "'AND'", "'OR'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, null, null, null, null, "IDENTIFIER", "WS"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		"IDENTIFIER", "STRING", "NUMBER", "WS", "COMMENT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -84,282 +95,558 @@ public partial class SQLParser : Parser {
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
-	public partial class QueryContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Select_clauseContext select_clause() {
-			return GetRuleContext<Select_clauseContext>(0);
+	public partial class SqlStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public SelectStatementContext selectStatement() {
+			return GetRuleContext<SelectStatementContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public From_clauseContext from_clause() {
-			return GetRuleContext<From_clauseContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Where_clauseContext where_clause() {
-			return GetRuleContext<Where_clauseContext>(0);
-		}
-		public QueryContext(ParserRuleContext parent, int invokingState)
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(SQLParser.Eof, 0); }
+		public SqlStatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_query; } }
+		public override int RuleIndex { get { return RULE_sqlStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterQuery(this);
+			if (typedListener != null) typedListener.EnterSqlStatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitQuery(this);
+			if (typedListener != null) typedListener.ExitSqlStatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitQuery(this);
+			if (typedVisitor != null) return typedVisitor.VisitSqlStatement(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public QueryContext query() {
-		QueryContext _localctx = new QueryContext(Context, State);
-		EnterRule(_localctx, 0, RULE_query);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 16;
-			select_clause();
-			State = 17;
-			from_clause();
-			State = 19;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==T__3) {
-				{
-				State = 18;
-				where_clause();
-				}
-			}
-
-			State = 21;
-			Match(T__0);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Select_clauseContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Column_listContext column_list() {
-			return GetRuleContext<Column_listContext>(0);
-		}
-		public Select_clauseContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_select_clause; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterSelect_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitSelect_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitSelect_clause(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Select_clauseContext select_clause() {
-		Select_clauseContext _localctx = new Select_clauseContext(Context, State);
-		EnterRule(_localctx, 2, RULE_select_clause);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 23;
-			Match(T__1);
-			State = 24;
-			column_list();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class From_clauseContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Table_nameContext table_name() {
-			return GetRuleContext<Table_nameContext>(0);
-		}
-		public From_clauseContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_from_clause; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterFrom_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitFrom_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFrom_clause(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public From_clauseContext from_clause() {
-		From_clauseContext _localctx = new From_clauseContext(Context, State);
-		EnterRule(_localctx, 4, RULE_from_clause);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 26;
-			Match(T__2);
-			State = 27;
-			table_name();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Where_clauseContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
-			return GetRuleContext<ConditionContext>(0);
-		}
-		public Where_clauseContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_where_clause; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterWhere_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitWhere_clause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitWhere_clause(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Where_clauseContext where_clause() {
-		Where_clauseContext _localctx = new Where_clauseContext(Context, State);
-		EnterRule(_localctx, 6, RULE_where_clause);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 29;
-			Match(T__3);
-			State = 30;
-			condition();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Column_listContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ColumnContext[] column() {
-			return GetRuleContexts<ColumnContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ColumnContext column(int i) {
-			return GetRuleContext<ColumnContext>(i);
-		}
-		public Column_listContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_column_list; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterColumn_list(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitColumn_list(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitColumn_list(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Column_listContext column_list() {
-		Column_listContext _localctx = new Column_listContext(Context, State);
-		EnterRule(_localctx, 8, RULE_column_list);
-		int _la;
+	public SqlStatementContext sqlStatement() {
+		SqlStatementContext _localctx = new SqlStatementContext(Context, State);
+		EnterRule(_localctx, 0, RULE_sqlStatement);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 32;
-			column();
+			selectStatement();
+			State = 33;
+			Match(Eof);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class SelectStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public SelectElementsContext selectElements() {
+			return GetRuleContext<SelectElementsContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public TableSourceContext tableSource() {
+			return GetRuleContext<TableSourceContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public JoinClauseContext[] joinClause() {
+			return GetRuleContexts<JoinClauseContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public JoinClauseContext joinClause(int i) {
+			return GetRuleContext<JoinClauseContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public WhereClauseContext whereClause() {
+			return GetRuleContext<WhereClauseContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public GroupByClauseContext groupByClause() {
+			return GetRuleContext<GroupByClauseContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public HavingClauseContext havingClause() {
+			return GetRuleContext<HavingClauseContext>(0);
+		}
+		public SelectStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_selectStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterSelectStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitSelectStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSelectStatement(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public SelectStatementContext selectStatement() {
+		SelectStatementContext _localctx = new SelectStatementContext(Context, State);
+		EnterRule(_localctx, 2, RULE_selectStatement);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 35;
+			Match(T__0);
+			State = 36;
+			selectElements();
 			State = 37;
+			Match(T__1);
+			State = 38;
+			tableSource();
+			State = 42;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==T__4) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1952L) != 0)) {
 				{
 				{
-				State = 33;
-				Match(T__4);
-				State = 34;
-				column();
-				}
-				}
 				State = 39;
+				joinClause();
+				}
+				}
+				State = 44;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			State = 46;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__10) {
+				{
+				State = 45;
+				whereClause();
+				}
+			}
+
+			State = 49;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__11) {
+				{
+				State = 48;
+				groupByClause();
+				}
+			}
+
+			State = 52;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__12) {
+				{
+				State = 51;
+				havingClause();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class SelectElementsContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext[] columnName() {
+			return GetRuleContexts<ColumnNameContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext columnName(int i) {
+			return GetRuleContext<ColumnNameContext>(i);
+		}
+		public SelectElementsContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_selectElements; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterSelectElements(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitSelectElements(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSelectElements(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public SelectElementsContext selectElements() {
+		SelectElementsContext _localctx = new SelectElementsContext(Context, State);
+		EnterRule(_localctx, 4, RULE_selectElements);
+		int _la;
+		try {
+			State = 63;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__2:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 54;
+				Match(T__2);
+				}
+				break;
+			case IDENTIFIER:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 55;
+				columnName();
+				State = 60;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				while (_la==T__3) {
+					{
+					{
+					State = 56;
+					Match(T__3);
+					State = 57;
+					columnName();
+					}
+					}
+					State = 62;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				}
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class TableSourceContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public TableNameContext tableName() {
+			return GetRuleContext<TableNameContext>(0);
+		}
+		public TableSourceContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_tableSource; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterTableSource(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitTableSource(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTableSource(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public TableSourceContext tableSource() {
+		TableSourceContext _localctx = new TableSourceContext(Context, State);
+		EnterRule(_localctx, 6, RULE_tableSource);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 65;
+			tableName();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class JoinClauseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public JoinTypeContext joinType() {
+			return GetRuleContext<JoinTypeContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public TableNameContext tableName() {
+			return GetRuleContext<TableNameContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
+		}
+		public JoinClauseContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_joinClause; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterJoinClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitJoinClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitJoinClause(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public JoinClauseContext joinClause() {
+		JoinClauseContext _localctx = new JoinClauseContext(Context, State);
+		EnterRule(_localctx, 8, RULE_joinClause);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 67;
+			joinType();
+			State = 68;
+			Match(T__4);
+			State = 69;
+			tableName();
+			State = 70;
+			Match(T__5);
+			State = 71;
+			condition(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class JoinTypeContext : ParserRuleContext {
+		public JoinTypeContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_joinType; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterJoinType(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitJoinType(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitJoinType(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public JoinTypeContext joinType() {
+		JoinTypeContext _localctx = new JoinTypeContext(Context, State);
+		EnterRule(_localctx, 10, RULE_joinType);
+		try {
+			State = 78;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__6:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 73;
+				Match(T__6);
+				}
+				break;
+			case T__7:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 74;
+				Match(T__7);
+				}
+				break;
+			case T__8:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 75;
+				Match(T__8);
+				}
+				break;
+			case T__9:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 76;
+				Match(T__9);
+				}
+				break;
+			case T__4:
+				EnterOuterAlt(_localctx, 5);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class WhereClauseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
+		}
+		public WhereClauseContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_whereClause; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterWhereClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitWhereClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWhereClause(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public WhereClauseContext whereClause() {
+		WhereClauseContext _localctx = new WhereClauseContext(Context, State);
+		EnterRule(_localctx, 12, RULE_whereClause);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 80;
+			Match(T__10);
+			State = 81;
+			condition(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class GroupByClauseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext[] columnName() {
+			return GetRuleContexts<ColumnNameContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext columnName(int i) {
+			return GetRuleContext<ColumnNameContext>(i);
+		}
+		public GroupByClauseContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_groupByClause; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterGroupByClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitGroupByClause(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitGroupByClause(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public GroupByClauseContext groupByClause() {
+		GroupByClauseContext _localctx = new GroupByClauseContext(Context, State);
+		EnterRule(_localctx, 14, RULE_groupByClause);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 83;
+			Match(T__11);
+			State = 84;
+			columnName();
+			State = 89;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==T__3) {
+				{
+				{
+				State = 85;
+				Match(T__3);
+				State = 86;
+				columnName();
+				}
+				}
+				State = 91;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -376,103 +663,44 @@ public partial class SQLParser : Parser {
 		return _localctx;
 	}
 
-	public partial class ColumnContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] IDENTIFIER() { return GetTokens(SQLParser.IDENTIFIER); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER(int i) {
-			return GetToken(SQLParser.IDENTIFIER, i);
+	public partial class HavingClauseContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition() {
+			return GetRuleContext<ConditionContext>(0);
 		}
-		public ColumnContext(ParserRuleContext parent, int invokingState)
+		public HavingClauseContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_column; } }
+		public override int RuleIndex { get { return RULE_havingClause; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterColumn(this);
+			if (typedListener != null) typedListener.EnterHavingClause(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitColumn(this);
+			if (typedListener != null) typedListener.ExitHavingClause(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitColumn(this);
+			if (typedVisitor != null) return typedVisitor.VisitHavingClause(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public ColumnContext column() {
-		ColumnContext _localctx = new ColumnContext(Context, State);
-		EnterRule(_localctx, 10, RULE_column);
-		int _la;
+	public HavingClauseContext havingClause() {
+		HavingClauseContext _localctx = new HavingClauseContext(Context, State);
+		EnterRule(_localctx, 16, RULE_havingClause);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 40;
-			Match(IDENTIFIER);
-			State = 43;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==T__5) {
-				{
-				State = 41;
-				Match(T__5);
-				State = 42;
-				Match(IDENTIFIER);
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Table_nameContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(SQLParser.IDENTIFIER, 0); }
-		public Table_nameContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_table_name; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.EnterTable_name(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISQLListener typedListener = listener as ISQLListener;
-			if (typedListener != null) typedListener.ExitTable_name(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitTable_name(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Table_nameContext table_name() {
-		Table_nameContext _localctx = new Table_nameContext(Context, State);
-		EnterRule(_localctx, 12, RULE_table_name);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 45;
-			Match(IDENTIFIER);
+			State = 92;
+			Match(T__12);
+			State = 93;
+			condition(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -487,11 +715,23 @@ public partial class SQLParser : Parser {
 	}
 
 	public partial class ConditionContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ColumnContext[] column() {
-			return GetRuleContexts<ColumnContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ColumnContext column(int i) {
-			return GetRuleContext<ColumnContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ComparisonOperatorContext comparisonOperator() {
+			return GetRuleContext<ComparisonOperatorContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext[] condition() {
+			return GetRuleContexts<ConditionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ConditionContext condition(int i) {
+			return GetRuleContext<ConditionContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public LogicalOperatorContext logicalOperator() {
+			return GetRuleContext<LogicalOperatorContext>(0);
 		}
 		public ConditionContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -518,17 +758,144 @@ public partial class SQLParser : Parser {
 
 	[RuleVersion(0)]
 	public ConditionContext condition() {
-		ConditionContext _localctx = new ConditionContext(Context, State);
-		EnterRule(_localctx, 14, RULE_condition);
+		return condition(0);
+	}
+
+	private ConditionContext condition(int _p) {
+		ParserRuleContext _parentctx = Context;
+		int _parentState = State;
+		ConditionContext _localctx = new ConditionContext(Context, _parentState);
+		ConditionContext _prevctx = _localctx;
+		int _startState = 18;
+		EnterRecursionRule(_localctx, 18, RULE_condition, _p);
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 47;
-			column();
-			State = 48;
-			Match(T__6);
-			State = 49;
-			column();
+			State = 104;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case IDENTIFIER:
+			case STRING:
+			case NUMBER:
+				{
+				State = 96;
+				expression();
+				{
+				State = 97;
+				comparisonOperator();
+				State = 98;
+				expression();
+				}
+				}
+				break;
+			case T__13:
+				{
+				State = 100;
+				Match(T__13);
+				State = 101;
+				condition(0);
+				State = 102;
+				Match(T__14);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			Context.Stop = TokenStream.LT(-1);
+			State = 112;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,9,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( ParseListeners!=null )
+						TriggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new ConditionContext(_parentctx, _parentState);
+					PushNewRecursionContext(_localctx, _startState, RULE_condition);
+					State = 106;
+					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
+					State = 107;
+					logicalOperator();
+					State = 108;
+					condition(2);
+					}
+					} 
+				}
+				State = 114;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,9,Context);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			UnrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public partial class ExpressionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ColumnNameContext columnName() {
+			return GetRuleContext<ColumnNameContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ConstantContext constant() {
+			return GetRuleContext<ConstantContext>(0);
+		}
+		public ExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExpressionContext expression() {
+		ExpressionContext _localctx = new ExpressionContext(Context, State);
+		EnterRule(_localctx, 20, RULE_expression);
+		try {
+			State = 117;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case IDENTIFIER:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 115;
+				columnName();
+				}
+				break;
+			case STRING:
+			case NUMBER:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 116;
+				constant();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -542,20 +909,315 @@ public partial class SQLParser : Parser {
 		return _localctx;
 	}
 
+	public partial class ComparisonOperatorContext : ParserRuleContext {
+		public ComparisonOperatorContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_comparisonOperator; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterComparisonOperator(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitComparisonOperator(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitComparisonOperator(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ComparisonOperatorContext comparisonOperator() {
+		ComparisonOperatorContext _localctx = new ComparisonOperatorContext(Context, State);
+		EnterRule(_localctx, 22, RULE_comparisonOperator);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 119;
+			_la = TokenStream.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4128768L) != 0)) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class LogicalOperatorContext : ParserRuleContext {
+		public LogicalOperatorContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_logicalOperator; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterLogicalOperator(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitLogicalOperator(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLogicalOperator(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public LogicalOperatorContext logicalOperator() {
+		LogicalOperatorContext _localctx = new LogicalOperatorContext(Context, State);
+		EnterRule(_localctx, 24, RULE_logicalOperator);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 121;
+			_la = TokenStream.LA(1);
+			if ( !(_la==T__21 || _la==T__22) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class TableNameContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(SQLParser.IDENTIFIER, 0); }
+		public TableNameContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_tableName; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterTableName(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitTableName(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTableName(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public TableNameContext tableName() {
+		TableNameContext _localctx = new TableNameContext(Context, State);
+		EnterRule(_localctx, 26, RULE_tableName);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 123;
+			Match(IDENTIFIER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ColumnNameContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(SQLParser.IDENTIFIER, 0); }
+		public ColumnNameContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_columnName; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterColumnName(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitColumnName(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitColumnName(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ColumnNameContext columnName() {
+		ColumnNameContext _localctx = new ColumnNameContext(Context, State);
+		EnterRule(_localctx, 28, RULE_columnName);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 125;
+			Match(IDENTIFIER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ConstantContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(SQLParser.STRING, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NUMBER() { return GetToken(SQLParser.NUMBER, 0); }
+		public ConstantContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_constant; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.EnterConstant(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ISQLListener typedListener = listener as ISQLListener;
+			if (typedListener != null) typedListener.ExitConstant(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISQLVisitor<TResult> typedVisitor = visitor as ISQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConstant(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ConstantContext constant() {
+		ConstantContext _localctx = new ConstantContext(Context, State);
+		EnterRule(_localctx, 30, RULE_constant);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 127;
+			_la = TokenStream.LA(1);
+			if ( !(_la==STRING || _la==NUMBER) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 9: return condition_sempred((ConditionContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private bool condition_sempred(ConditionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return Precpred(Context, 1);
+		}
+		return true;
+	}
+
 	private static int[] _serializedATN = {
-		4,1,9,52,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,
-		7,1,0,1,0,1,0,3,0,20,8,0,1,0,1,0,1,1,1,1,1,1,1,2,1,2,1,2,1,3,1,3,1,3,1,
-		4,1,4,1,4,5,4,36,8,4,10,4,12,4,39,9,4,1,5,1,5,1,5,3,5,44,8,5,1,6,1,6,1,
-		7,1,7,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,0,46,0,16,1,0,0,0,2,23,1,
-		0,0,0,4,26,1,0,0,0,6,29,1,0,0,0,8,32,1,0,0,0,10,40,1,0,0,0,12,45,1,0,0,
-		0,14,47,1,0,0,0,16,17,3,2,1,0,17,19,3,4,2,0,18,20,3,6,3,0,19,18,1,0,0,
-		0,19,20,1,0,0,0,20,21,1,0,0,0,21,22,5,1,0,0,22,1,1,0,0,0,23,24,5,2,0,0,
-		24,25,3,8,4,0,25,3,1,0,0,0,26,27,5,3,0,0,27,28,3,12,6,0,28,5,1,0,0,0,29,
-		30,5,4,0,0,30,31,3,14,7,0,31,7,1,0,0,0,32,37,3,10,5,0,33,34,5,5,0,0,34,
-		36,3,10,5,0,35,33,1,0,0,0,36,39,1,0,0,0,37,35,1,0,0,0,37,38,1,0,0,0,38,
-		9,1,0,0,0,39,37,1,0,0,0,40,43,5,8,0,0,41,42,5,6,0,0,42,44,5,8,0,0,43,41,
-		1,0,0,0,43,44,1,0,0,0,44,11,1,0,0,0,45,46,5,8,0,0,46,13,1,0,0,0,47,48,
-		3,10,5,0,48,49,5,7,0,0,49,50,3,10,5,0,50,15,1,0,0,0,3,19,37,43
+		4,1,28,130,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
+		2,15,7,15,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,5,1,41,8,1,10,1,12,1,44,9,1,
+		1,1,3,1,47,8,1,1,1,3,1,50,8,1,1,1,3,1,53,8,1,1,2,1,2,1,2,1,2,5,2,59,8,
+		2,10,2,12,2,62,9,2,3,2,64,8,2,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,
+		1,5,1,5,1,5,3,5,79,8,5,1,6,1,6,1,6,1,7,1,7,1,7,1,7,5,7,88,8,7,10,7,12,
+		7,91,9,7,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,3,9,105,8,9,1,
+		9,1,9,1,9,1,9,5,9,111,8,9,10,9,12,9,114,9,9,1,10,1,10,3,10,118,8,10,1,
+		11,1,11,1,12,1,12,1,13,1,13,1,14,1,14,1,15,1,15,1,15,0,1,18,16,0,2,4,6,
+		8,10,12,14,16,18,20,22,24,26,28,30,0,3,1,0,16,21,1,0,22,23,1,0,25,26,127,
+		0,32,1,0,0,0,2,35,1,0,0,0,4,63,1,0,0,0,6,65,1,0,0,0,8,67,1,0,0,0,10,78,
+		1,0,0,0,12,80,1,0,0,0,14,83,1,0,0,0,16,92,1,0,0,0,18,104,1,0,0,0,20,117,
+		1,0,0,0,22,119,1,0,0,0,24,121,1,0,0,0,26,123,1,0,0,0,28,125,1,0,0,0,30,
+		127,1,0,0,0,32,33,3,2,1,0,33,34,5,0,0,1,34,1,1,0,0,0,35,36,5,1,0,0,36,
+		37,3,4,2,0,37,38,5,2,0,0,38,42,3,6,3,0,39,41,3,8,4,0,40,39,1,0,0,0,41,
+		44,1,0,0,0,42,40,1,0,0,0,42,43,1,0,0,0,43,46,1,0,0,0,44,42,1,0,0,0,45,
+		47,3,12,6,0,46,45,1,0,0,0,46,47,1,0,0,0,47,49,1,0,0,0,48,50,3,14,7,0,49,
+		48,1,0,0,0,49,50,1,0,0,0,50,52,1,0,0,0,51,53,3,16,8,0,52,51,1,0,0,0,52,
+		53,1,0,0,0,53,3,1,0,0,0,54,64,5,3,0,0,55,60,3,28,14,0,56,57,5,4,0,0,57,
+		59,3,28,14,0,58,56,1,0,0,0,59,62,1,0,0,0,60,58,1,0,0,0,60,61,1,0,0,0,61,
+		64,1,0,0,0,62,60,1,0,0,0,63,54,1,0,0,0,63,55,1,0,0,0,64,5,1,0,0,0,65,66,
+		3,26,13,0,66,7,1,0,0,0,67,68,3,10,5,0,68,69,5,5,0,0,69,70,3,26,13,0,70,
+		71,5,6,0,0,71,72,3,18,9,0,72,9,1,0,0,0,73,79,5,7,0,0,74,79,5,8,0,0,75,
+		79,5,9,0,0,76,79,5,10,0,0,77,79,1,0,0,0,78,73,1,0,0,0,78,74,1,0,0,0,78,
+		75,1,0,0,0,78,76,1,0,0,0,78,77,1,0,0,0,79,11,1,0,0,0,80,81,5,11,0,0,81,
+		82,3,18,9,0,82,13,1,0,0,0,83,84,5,12,0,0,84,89,3,28,14,0,85,86,5,4,0,0,
+		86,88,3,28,14,0,87,85,1,0,0,0,88,91,1,0,0,0,89,87,1,0,0,0,89,90,1,0,0,
+		0,90,15,1,0,0,0,91,89,1,0,0,0,92,93,5,13,0,0,93,94,3,18,9,0,94,17,1,0,
+		0,0,95,96,6,9,-1,0,96,97,3,20,10,0,97,98,3,22,11,0,98,99,3,20,10,0,99,
+		105,1,0,0,0,100,101,5,14,0,0,101,102,3,18,9,0,102,103,5,15,0,0,103,105,
+		1,0,0,0,104,95,1,0,0,0,104,100,1,0,0,0,105,112,1,0,0,0,106,107,10,1,0,
+		0,107,108,3,24,12,0,108,109,3,18,9,2,109,111,1,0,0,0,110,106,1,0,0,0,111,
+		114,1,0,0,0,112,110,1,0,0,0,112,113,1,0,0,0,113,19,1,0,0,0,114,112,1,0,
+		0,0,115,118,3,28,14,0,116,118,3,30,15,0,117,115,1,0,0,0,117,116,1,0,0,
+		0,118,21,1,0,0,0,119,120,7,0,0,0,120,23,1,0,0,0,121,122,7,1,0,0,122,25,
+		1,0,0,0,123,124,5,24,0,0,124,27,1,0,0,0,125,126,5,24,0,0,126,29,1,0,0,
+		0,127,128,7,2,0,0,128,31,1,0,0,0,11,42,46,49,52,60,63,78,89,104,112,117
 	};
 
 	public static readonly ATN _ATN =

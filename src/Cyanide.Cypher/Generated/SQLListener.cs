@@ -31,75 +31,95 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface ISQLListener : IParseTreeListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.query"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.sqlStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterQuery([NotNull] SQLParser.QueryContext context);
+	void EnterSqlStatement([NotNull] SQLParser.SqlStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.query"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.sqlStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitQuery([NotNull] SQLParser.QueryContext context);
+	void ExitSqlStatement([NotNull] SQLParser.SqlStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.select_clause"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.selectStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSelect_clause([NotNull] SQLParser.Select_clauseContext context);
+	void EnterSelectStatement([NotNull] SQLParser.SelectStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.select_clause"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.selectStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSelect_clause([NotNull] SQLParser.Select_clauseContext context);
+	void ExitSelectStatement([NotNull] SQLParser.SelectStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.from_clause"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.selectElements"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterFrom_clause([NotNull] SQLParser.From_clauseContext context);
+	void EnterSelectElements([NotNull] SQLParser.SelectElementsContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.from_clause"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.selectElements"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitFrom_clause([NotNull] SQLParser.From_clauseContext context);
+	void ExitSelectElements([NotNull] SQLParser.SelectElementsContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.where_clause"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.tableSource"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterWhere_clause([NotNull] SQLParser.Where_clauseContext context);
+	void EnterTableSource([NotNull] SQLParser.TableSourceContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.where_clause"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.tableSource"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitWhere_clause([NotNull] SQLParser.Where_clauseContext context);
+	void ExitTableSource([NotNull] SQLParser.TableSourceContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.column_list"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.joinClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterColumn_list([NotNull] SQLParser.Column_listContext context);
+	void EnterJoinClause([NotNull] SQLParser.JoinClauseContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.column_list"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.joinClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitColumn_list([NotNull] SQLParser.Column_listContext context);
+	void ExitJoinClause([NotNull] SQLParser.JoinClauseContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.column"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.joinType"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterColumn([NotNull] SQLParser.ColumnContext context);
+	void EnterJoinType([NotNull] SQLParser.JoinTypeContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.column"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.joinType"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitColumn([NotNull] SQLParser.ColumnContext context);
+	void ExitJoinType([NotNull] SQLParser.JoinTypeContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SQLParser.table_name"/>.
+	/// Enter a parse tree produced by <see cref="SQLParser.whereClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterTable_name([NotNull] SQLParser.Table_nameContext context);
+	void EnterWhereClause([NotNull] SQLParser.WhereClauseContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SQLParser.table_name"/>.
+	/// Exit a parse tree produced by <see cref="SQLParser.whereClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitTable_name([NotNull] SQLParser.Table_nameContext context);
+	void ExitWhereClause([NotNull] SQLParser.WhereClauseContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.groupByClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGroupByClause([NotNull] SQLParser.GroupByClauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.groupByClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGroupByClause([NotNull] SQLParser.GroupByClauseContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.havingClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterHavingClause([NotNull] SQLParser.HavingClauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.havingClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitHavingClause([NotNull] SQLParser.HavingClauseContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SQLParser.condition"/>.
 	/// </summary>
@@ -110,4 +130,64 @@ public interface ISQLListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitCondition([NotNull] SQLParser.ConditionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression([NotNull] SQLParser.ExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression([NotNull] SQLParser.ExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.comparisonOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterComparisonOperator([NotNull] SQLParser.ComparisonOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.comparisonOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitComparisonOperator([NotNull] SQLParser.ComparisonOperatorContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLogicalOperator([NotNull] SQLParser.LogicalOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLogicalOperator([NotNull] SQLParser.LogicalOperatorContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.tableName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTableName([NotNull] SQLParser.TableNameContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.tableName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTableName([NotNull] SQLParser.TableNameContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.columnName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterColumnName([NotNull] SQLParser.ColumnNameContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.columnName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitColumnName([NotNull] SQLParser.ColumnNameContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SQLParser.constant"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterConstant([NotNull] SQLParser.ConstantContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SQLParser.constant"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitConstant([NotNull] SQLParser.ConstantContext context);
 }

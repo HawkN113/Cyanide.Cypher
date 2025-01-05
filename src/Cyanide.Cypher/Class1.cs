@@ -10,7 +10,7 @@ public class Class1
 
         // Create an input stream from the query
         var inputStream = new AntlrInputStream(input);
-
+/*
         // Create a lexer instance
         var lexer = new SQLLexer(inputStream);
 
@@ -25,5 +25,6 @@ public class Class1
 
         // Print the parse tree
         Console.WriteLine(queryContext.ToStringTree(parser));
+        */
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Cyanide.Cypher.Abstraction;
+﻿namespace Cyanide.Cypher.Translators.Abstraction;
 
 public interface IQueryTranslator
 {

@@ -21,4 +21,8 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Cyanide.Cypher\Cyanide.Cypher.csproj" />
+    </ItemGroup>
+
 </Project>

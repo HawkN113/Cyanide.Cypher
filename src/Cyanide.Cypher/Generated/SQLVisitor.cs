@@ -32,51 +32,99 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface ISQLVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.query"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.sqlStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitQuery([NotNull] SQLParser.QueryContext context);
+	Result VisitSqlStatement([NotNull] SQLParser.SqlStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.select_clause"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.selectStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitSelect_clause([NotNull] SQLParser.Select_clauseContext context);
+	Result VisitSelectStatement([NotNull] SQLParser.SelectStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.from_clause"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.selectElements"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitFrom_clause([NotNull] SQLParser.From_clauseContext context);
+	Result VisitSelectElements([NotNull] SQLParser.SelectElementsContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.where_clause"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.tableSource"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitWhere_clause([NotNull] SQLParser.Where_clauseContext context);
+	Result VisitTableSource([NotNull] SQLParser.TableSourceContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.column_list"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.joinClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitColumn_list([NotNull] SQLParser.Column_listContext context);
+	Result VisitJoinClause([NotNull] SQLParser.JoinClauseContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.column"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.joinType"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitColumn([NotNull] SQLParser.ColumnContext context);
+	Result VisitJoinType([NotNull] SQLParser.JoinTypeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SQLParser.table_name"/>.
+	/// Visit a parse tree produced by <see cref="SQLParser.whereClause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitTable_name([NotNull] SQLParser.Table_nameContext context);
+	Result VisitWhereClause([NotNull] SQLParser.WhereClauseContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.groupByClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitGroupByClause([NotNull] SQLParser.GroupByClauseContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.havingClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitHavingClause([NotNull] SQLParser.HavingClauseContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SQLParser.condition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitCondition([NotNull] SQLParser.ConditionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression([NotNull] SQLParser.ExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.comparisonOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitComparisonOperator([NotNull] SQLParser.ComparisonOperatorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLogicalOperator([NotNull] SQLParser.LogicalOperatorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.tableName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTableName([NotNull] SQLParser.TableNameContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.columnName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitColumnName([NotNull] SQLParser.ColumnNameContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SQLParser.constant"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitConstant([NotNull] SQLParser.ConstantContext context);
 }
