@@ -7,18 +7,6 @@ namespace Cyanide.Cypher.Builders;
 public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder optMatchClauses): IRelationship<OptMatchBuilder>
 {
     private readonly List<string> _patterns = [];
-
-    /// <summary>
-    /// Add a node (entity) to the OPTIONAL MATCH clause
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="alias"></param>
-    /// <returns></returns>
-    public OptMatchBuilder Node(string type, string alias = "")
-    {
-        _patterns.Add(!string.IsNullOrWhiteSpace(alias) ? $"({alias}:{type})" : $"({type})");
-        return this;
-    }
     
     /// <summary>
     /// Add a node (entity) to the OPTIONAL MATCH clause
@@ -38,9 +26,20 @@ public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder opt
     /// <param name="property"></param>
     /// <param name="propertyValue"></param>
     /// <returns></returns>
-    public OptMatchBuilder Node(string type, string alias, string property, string propertyValue)
+    public OptMatchBuilder Node(string type, string alias = "", string property = null, string propertyValue = null)
     {
-        _patterns.Add($"({alias}:{type} {{{property}: {propertyValue}}})");
+        if (!string.IsNullOrWhiteSpace(property) && !string.IsNullOrWhiteSpace(propertyValue))
+        {
+            _patterns.Add(!string.IsNullOrWhiteSpace(alias)
+                ? $"({alias}:{type} {{{property}: {propertyValue}}})"
+                : $"({type} {{{property}: {propertyValue}}})");
+        }
+        else
+        {
+            _patterns.Add(!string.IsNullOrWhiteSpace(alias)
+                ? $"({alias}:{type})"
+                : $"({type})");
+        }
         return this;
     }
     
