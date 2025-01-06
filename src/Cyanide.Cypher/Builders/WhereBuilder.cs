@@ -19,22 +19,10 @@ public sealed class WhereBuilder(CypherQueryBuilder parent, StringBuilder whereC
         return this;
     }
 
-    public WhereBuilder Or()
-    {
-        _patterns.Add(" OR ");
-        return this;
-    }
-
     public WhereBuilder Not(Func<WhereBuilder, WhereBuilder> nestedConditions)
     {
         _patterns.Add(" NOT ");
         nestedConditions(this);
-        return this;
-    }
-
-    public WhereBuilder Not()
-    {
-        _patterns.Add(" NOT ");
         return this;
     }
 
@@ -45,15 +33,9 @@ public sealed class WhereBuilder(CypherQueryBuilder parent, StringBuilder whereC
         return this;
     }
 
-    public WhereBuilder Xor()
-    {
-        _patterns.Add(" XOR ");
-        return this;
-    }
-
     public WhereBuilder IsNotNull(string query)
     {
-        _patterns.Add($"{query} IS NOT NULL ");
+        _patterns.Add($"{query} IS NOT NULL");
         return this;
     }
 
@@ -61,12 +43,6 @@ public sealed class WhereBuilder(CypherQueryBuilder parent, StringBuilder whereC
     {
         _patterns.Add(" AND ");
         nestedConditions(this);
-        return this;
-    }
-
-    public WhereBuilder And()
-    {
-        _patterns.Add(" AND ");
         return this;
     }
 

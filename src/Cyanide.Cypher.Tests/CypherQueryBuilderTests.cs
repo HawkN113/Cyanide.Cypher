@@ -24,7 +24,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.Direct)
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -46,7 +46,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.InDirect)
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -68,7 +68,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.BiDirect)
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -90,7 +90,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.UnDirect)
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -112,7 +112,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN")
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -134,7 +134,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", alias:"x")
                     .Node("City", "c")
             )
-            .Return(q =>
+            .Select(q =>
                 q.Property("name", "p")
                     .Property("name", "c")
             )
@@ -143,6 +143,46 @@ public class CypherQueryBuilderTests
         // Assert
         var expectedQuery =
             "MATCH (p:Person)-[x:LIVES_IN]-(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+
+    [Test]
+    public void Translate_CypherQueryWithMatchAndPropertyAndAlias_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "a", "name", "'Martin Sheen'")
+            )
+            .Select(q =>
+                q.Property("name", "a")
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (a:Person {name: 'Martin Sheen'}) RETURN a.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+    
+    [Test]
+    public void Translate_CypherQueryWithMatchAndPropertyWithoutAlias_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Select(q =>
+                q.Property("name", "person", "person")
+            )
+            .Match(q =>
+                q.Node("Movie", "title", "'Wall Street'")
+                    .Relationship("ACTED_IN|DIRECTED", RelationshipType.InDirect)
+                    .Node("Person", "person")
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (:Movie {title: 'Wall Street'})<-[:ACTED_IN|DIRECTED]-(person:Person) RETURN person.name AS person";
         Assert.That(resultQuery, Is.EqualTo(expectedQuery));
     }
 
@@ -161,7 +201,7 @@ public class CypherQueryBuilderTests
                     .Node("City", "c")
             )
             .Where(q => q.Query("p.age > 30"))
-            .Return(q =>
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -185,7 +225,7 @@ public class CypherQueryBuilderTests
                     .Node("City", "c")
             )
             .Where(q => q.Query("p.age > 30").And(q1=>q1.Query("b.city=\"New York\"")))
-            .Return(q =>
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -209,7 +249,7 @@ public class CypherQueryBuilderTests
                     .Node("City", "c")
             )
             .Where(q => q.Query("p.age > 30").Or(q1=>q1.Query("b.city=\"New York\"")))
-            .Return(q =>
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -233,7 +273,7 @@ public class CypherQueryBuilderTests
                     .Node("City", "c")
             )
             .Where(q => q.Query("p.age > 30").Xor(q1=>q1.Query("b.city=\"New York\"")))
-            .Return(q =>
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -257,7 +297,7 @@ public class CypherQueryBuilderTests
                     .Node("City", "c")
             )
             .Where(q => q.Query("p.age > 30").Not(q1 => q1.Query("b.city=\"New York\"")))
-            .Return(q =>
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -269,7 +309,7 @@ public class CypherQueryBuilderTests
             "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 NOT b.city=\"New York\" RETURN p.name, c.name";
         Assert.That(resultQuery, Is.EqualTo(expectedQuery));
     }
-    
+
     [Test]
     public void Translate_CypherQueryWithWhere_IS_NOT_NULL_Query_ReturnsCorrectSql()
     {
@@ -280,8 +320,8 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.Direct)
                     .Node("City", "c")
             )
-            .Where(q => q.Query("p.age > 30").And().IsNotNull("b.city"))
-            .Return(q =>
+            .Where(q => q.Query("p.age > 30").And(q => q.IsNotNull("b.city")))
+            .Select(q =>
                 q
                     .Property("name", "p")
                     .Property("name", "c")
@@ -293,6 +333,6 @@ public class CypherQueryBuilderTests
             "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NOT NULL RETURN p.name, c.name";
         Assert.That(resultQuery, Is.EqualTo(expectedQuery));
     }
-    
+
     #endregion
 }

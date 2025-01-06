@@ -26,9 +26,9 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// </summary>
     /// <param name="configureReturn"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Return(Func<ReturnBuilder, ReturnBuilder> configureReturn)
+    public CypherQueryBuilder Select(Func<SelectBuilder, SelectBuilder> configureReturn)
     {
-        var returnBuilder = new ReturnBuilder(this, _returnClauses);
+        var returnBuilder = new SelectBuilder(this, _returnClauses);
         configureReturn(returnBuilder).End();
         return this;
     }

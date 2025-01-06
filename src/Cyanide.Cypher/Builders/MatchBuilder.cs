@@ -19,6 +19,33 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     }
 
     /// <summary>
+    /// Add a node (entity) to the MATCH clause
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="alias"></param>
+    /// <param name="property"></param>
+    /// <param name="propertyValue"></param>
+    /// <returns></returns>
+    public MatchBuilder Node(string type, string alias, string property, string propertyValue)
+    {
+        _patterns.Add($"({alias}:{type} {{{property}: {propertyValue}}})");
+        return this;
+    }
+    
+    /// <summary>
+    /// Add a node (entity) to the MATCH clause
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="property"></param>
+    /// <param name="propertyValue"></param>
+    /// <returns></returns>
+    public MatchBuilder Node(string type, string property, string propertyValue)
+    {
+        _patterns.Add($"(:{type} {{{property}: {propertyValue}}})");
+        return this;
+    }
+
+    /// <summary>
     /// Add a relationship to the MATCH clause
     /// </summary>
     /// <param name="type"></param>

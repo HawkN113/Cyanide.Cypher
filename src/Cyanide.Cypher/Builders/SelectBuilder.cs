@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders;
 
-public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClauses)
+public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClauses)
 {
     private readonly List<string> _patterns = [];
 
@@ -12,7 +12,7 @@ public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClause
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public ReturnBuilder Node(string type)
+    public SelectBuilder Node(string type)
     {
         _patterns.Add($"{type}");
         return this;
@@ -24,7 +24,7 @@ public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClause
     /// </summary>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public ReturnBuilder Relation(string alias)
+    public SelectBuilder Relation(string alias)
     {
         _patterns.Add($"type({alias})");
         return this;
@@ -37,7 +37,7 @@ public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClause
     /// <param name="propertyName"></param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public ReturnBuilder Property(string propertyName, string alias)
+    public SelectBuilder Property(string propertyName, string alias)
     {
         _patterns.Add($"{alias}.{propertyName}");
         return this;
@@ -51,7 +51,7 @@ public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClause
     /// <param name="alias"></param>
     /// <param name="aliasName"></param>
     /// <returns></returns>
-    public ReturnBuilder Property(string propertyName, string alias, string aliasName)
+    public SelectBuilder Property(string propertyName, string alias, string aliasName)
     {
         _patterns.Add($"{alias}.{propertyName} AS {aliasName}");
         return this;
