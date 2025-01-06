@@ -44,13 +44,14 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder EndMatch()
+    public CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (matchClauses.Length > 0)
         {
             matchClauses.Append(' ');
         }
+
         matchClauses.Append("MATCH ");
         matchClauses.Append(string.Join("", _patterns));
         return parent;

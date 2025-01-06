@@ -14,10 +14,10 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// </summary>
     /// <param name="configureMatch"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Match(Action<MatchBuilder> configureMatch)
+    public CypherQueryBuilder Match(Func<MatchBuilder, MatchBuilder> configureMatch)
     {
         var matchBuilder = new MatchBuilder(this, _matchClauses);
-        configureMatch(matchBuilder);
+        configureMatch(matchBuilder).End();
         return this;
     }
 
@@ -26,22 +26,22 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// </summary>
     /// <param name="configureReturn"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Return(Action<ReturnBuilder> configureReturn)
+    public CypherQueryBuilder Return(Func<ReturnBuilder, ReturnBuilder> configureReturn)
     {
         var returnBuilder = new ReturnBuilder(this, _returnClauses);
-        configureReturn(returnBuilder);
+        configureReturn(returnBuilder).End();
         return this;
     }
     
     /// <summary>
     /// Add WHERE clause
     /// </summary>
-    /// <param name="configureWhere"></param>
+    /// <param name="conditions"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Where(Action<WhereBuilder> configureWhere)
+    public CypherQueryBuilder Where(Func<WhereBuilder, WhereBuilder> conditions)
     {
         var whereBuilder = new WhereBuilder(this, _whereClauses);
-        configureWhere(whereBuilder);
+        conditions(whereBuilder).End();
         return this;
     }
 

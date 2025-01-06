@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClauses)
+public class ReturnBuilder(CypherQueryBuilder parent, StringBuilder returnClauses)
 {
     private readonly List<string> _patterns = [];
 
@@ -61,7 +61,7 @@ public sealed class ReturnBuilder(CypherQueryBuilder parent, StringBuilder retur
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder EndReturn()
+    public CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (returnClauses.Length > 0)

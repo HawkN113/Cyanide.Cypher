@@ -8,3 +8,7 @@
 - https://github.com/kaby76/Antlr4BuildTasks/issues/32
 - https://github.com/kaby76/Antlr4BuildTasks
 - https://github.com/mike-lischke/vscode-antlr4/blob/master/doc/extension-settings.md#grammar-formatting
+
+- https://neo4j.com/docs/cypher-manual/current/clauses/return/
+- https://neo4j.com/docs/cypher-manual/current/clauses/match/
+- https://neo4j.com/docs/cypher-manual/current/clauses/where/ (not completed)

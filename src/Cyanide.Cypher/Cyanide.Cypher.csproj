@@ -54,12 +54,5 @@
         <Message Text="Replaced modifiers in ANTLR Files..." Importance="high"/>
         <Exec Command="powershell.exe -ExecutionPolicy Bypass -File Scripts\ReplacePublicWithInternal.ps1 -WindowStyle Hidden -NoProfile" />
     </Target>
-
-    <!--
-    <ItemGroup>
-        <InternalsVisibleTo Include="Cyanide.Cypher" />
-        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-    </ItemGroup>
-    -->
     
 </Project>

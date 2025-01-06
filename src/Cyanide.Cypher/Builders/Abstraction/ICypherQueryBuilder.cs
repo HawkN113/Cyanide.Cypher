@@ -2,8 +2,7 @@
 
 public interface ICypherQueryBuilder
 {
-    CypherQueryBuilder Match(Action<MatchBuilder> configureMatch);
-    CypherQueryBuilder Return(Action<ReturnBuilder> configureReturn);
-    CypherQueryBuilder Where(Action<WhereBuilder> configureWhere);
-    string Build();
+    CypherQueryBuilder Match(Func<MatchBuilder, MatchBuilder> configureMatch);
+    CypherQueryBuilder Return(Func<ReturnBuilder, ReturnBuilder> configureReturn);
+    CypherQueryBuilder Where(Func<WhereBuilder, WhereBuilder> conditions);
 }
