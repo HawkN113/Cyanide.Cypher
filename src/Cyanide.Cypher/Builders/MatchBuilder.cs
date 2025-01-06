@@ -22,12 +22,10 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// Add a relationship to the MATCH clause
     /// </summary>
     /// <param name="type"></param>
+    /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
-    /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional)
-    /// </param>
     /// <returns></returns>
-    public MatchBuilder Relationship(string type, string alias = "",
-        RelationshipType relation = RelationshipType.NonDirect)
+    public MatchBuilder Relationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         var label = !string.IsNullOrWhiteSpace(alias) ? $"[{alias}:{type}]" : $"[:{type}]";
         var relationship = relation switch

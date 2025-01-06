@@ -13,13 +13,13 @@ public class CypherQueryBuilderTests
     }
 
     [Test]
-    public void Translate_CypherQueryWithMatch_ReturnsCorrectSql()
+    public void Translate_CypherQueryWithMatch_DirectRelation_ReturnsCorrectSql()
     {
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.Node("Person", "p")
-                    .Relationship("LIVES_IN", "", RelationshipType.Direct)
+                    .Relationship("LIVES_IN", RelationshipType.Direct)
                     .Node("City", "c")
                     .EndMatch()
             )
@@ -35,6 +35,126 @@ public class CypherQueryBuilderTests
             "MATCH (p:Person)-[:LIVES_IN]->(c:City) RETURN p.name, c.name";
         Assert.That(resultQuery, Is.EqualTo(expectedQuery));
     }
+    
+    [Test]
+    public void Translate_CypherQueryWithMatch_InDirectRelation_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "p")
+                    .Relationship("LIVES_IN", RelationshipType.InDirect)
+                    .Node("City", "c")
+                    .EndMatch()
+            )
+            .Return(q =>
+                q.Property("name", "p")
+                    .Property("name", "c")
+                    .EndReturn()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)<-[:LIVES_IN]-(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+
+    [Test]
+    public void Translate_CypherQueryWithMatch_BiDirectRelation_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "p")
+                    .Relationship("LIVES_IN", RelationshipType.BiDirect)
+                    .Node("City", "c")
+                    .EndMatch()
+            )
+            .Return(q =>
+                q.Property("name", "p")
+                    .Property("name", "c")
+                    .EndReturn()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)->[:LIVES_IN]<-(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+
+    [Test]
+    public void Translate_CypherQueryWithMatch_UnDirectRelation_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "p")
+                    .Relationship("LIVES_IN", RelationshipType.UnDirect)
+                    .Node("City", "c")
+                    .EndMatch()
+            )
+            .Return(q =>
+                q.Property("name", "p")
+                    .Property("name", "c")
+                    .EndReturn()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)<-[:LIVES_IN]->(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+    
+    [Test]
+    public void Translate_CypherQueryWithMatch_NonDirectRelation_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "p")
+                    .Relationship("LIVES_IN")
+                    .Node("City", "c")
+                    .EndMatch()
+            )
+            .Return(q =>
+                q.Property("name", "p")
+                    .Property("name", "c")
+                    .EndReturn()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)-[:LIVES_IN]-(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+    
+    [Test]
+    public void Translate_CypherQueryWithMatch_NonDirectRelationWithAlias_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "p")
+                    .Relationship("LIVES_IN", alias:"x")
+                    .Node("City", "c")
+                    .EndMatch()
+            )
+            .Return(q =>
+                q.Property("name", "p")
+                    .Property("name", "c")
+                    .EndReturn()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)-[x:LIVES_IN]-(c:City) RETURN p.name, c.name";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
 
     [Test]
     public void Translate_CypherQueryWithWhereQuery_ReturnsCorrectSql()
@@ -43,14 +163,11 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.Node("Person", "p")
-                    .Relationship("LIVES_IN", "", RelationshipType.Direct)
+                    .Relationship("LIVES_IN", RelationshipType.Direct)
                     .Node("City", "c")
                     .EndMatch()
             )
-            .Where(q =>
-                q.Query("p.age > 30")
-                    .EndWhere()
-            )
+            .Where(q => q.Query("p.age > 30").EndWhere())
             .Return(q =>
                 q
                     .Property("name", "p")
