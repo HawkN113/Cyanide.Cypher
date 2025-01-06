@@ -19,10 +19,12 @@ public class CypherBuilderTests
 
 
         // Act
-        var query = _queryBuilder.Match("(p:Person)-[:LIVES_IN]->(c:City)")
+        var query = _queryBuilder
+            .Match().Node("Person", "p").Relationship("LIVES_IN", "", RelationshipType.Direct).Node("City", "c")
+            .EndMatch()
             .Where("p.age > 30")
             .Where("c.name = 'New York'")
-            .Return("p.name", "p.age", "c.name")
+            .Return().Property("name", "p").Property("age", "p").Property("name", "c").EndReturn()
             .Build();
 
         // Assert

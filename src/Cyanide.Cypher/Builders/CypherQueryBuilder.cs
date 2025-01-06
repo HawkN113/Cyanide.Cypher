@@ -9,15 +9,14 @@ public class CypherQueryBuilder
     private readonly StringBuilder _returnClauses = new();
     private readonly List<string> _parameters = new();
 
-    // Add a MATCH clause
-    public CypherQueryBuilder Match(string pattern)
+    public MatchBuilder Match()
     {
-        if (_matchClauses.Length > 0)
-        {
-            _matchClauses.Append(" ");
-        }
-        _matchClauses.Append($"MATCH {pattern}");
-        return this;
+        return new MatchBuilder(this, _matchClauses);
+    }
+    
+    public ReturnBuilder Return()
+    {
+        return new ReturnBuilder(this, _returnClauses);
     }
 
     // Add a WHERE clause
@@ -36,6 +35,7 @@ public class CypherQueryBuilder
     }
 
     // Add RETURN clause
+    /*
     public CypherQueryBuilder Return(params string[] fields)
     {
         if (_returnClauses.Length == 0)
@@ -49,6 +49,7 @@ public class CypherQueryBuilder
         _returnClauses.Append(string.Join(", ", fields));
         return this;
     }
+    */
 
     // Add a parameter (optional, for dynamic queries)
     public CypherQueryBuilder WithParameter(string key, string value)
