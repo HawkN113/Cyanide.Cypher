@@ -12,4 +12,5 @@
 
 - https://neo4j.com/docs/cypher-manual/current/clauses/return/
 - https://neo4j.com/docs/cypher-manual/current/clauses/match/
+- https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/
 - https://neo4j.com/docs/cypher-manual/current/clauses/where/ (not completed)

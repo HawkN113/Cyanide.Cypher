@@ -6,6 +6,7 @@ namespace Cyanide.Cypher.Builders;
 public sealed class CypherQueryBuilder: ICypherQueryBuilder
 {
     private readonly StringBuilder _matchClauses = new();
+    private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
 
@@ -18,6 +19,18 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     {
         var matchBuilder = new MatchBuilder(this, _matchClauses);
         configureMatch(matchBuilder).End();
+        return this;
+    }
+    
+    /// <summary>
+    /// Add OPTIONAL MATCH clause
+    /// </summary>
+    /// <param name="configureOptMatch"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder OptionalMatch(Func<OptMatchBuilder, OptMatchBuilder> configureOptMatch)
+    {
+        var optMatchBuilder = new OptMatchBuilder(this, _optMatchClauses);
+        configureOptMatch(optMatchBuilder).End();
         return this;
     }
 
@@ -53,6 +66,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     {
         StringBuilder queryBuilder = new();
         AppendClause(_matchClauses, queryBuilder);
+        AppendClause(_optMatchClauses, queryBuilder);
         AppendClause(_whereClauses, queryBuilder);
         AppendClause(_returnClauses, queryBuilder);
         return queryBuilder.ToString().Trim();
