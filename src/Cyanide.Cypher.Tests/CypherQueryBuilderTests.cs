@@ -383,4 +383,43 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
+    
+    #region CREATE
+    
+    [Test]
+    public void Translate_CypherQueryWithCreate_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "charlie", "name", "'Charlie Sheen'")
+            )
+            .Create(q=>q.Node("Actor", "charlie"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (charlie:Person {name: 'Charlie Sheen'}) CREATE (charlie:Actor)";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+    
+    [Test]
+    public void Translate_CypherQueryWithCreateAndWhere_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node("Person", "person")
+            )
+            .Where(q=>q.IsNotNull("person.name"))
+            .Create(q=>q.Node("Person", "anotherPerson", "name", "person.name"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (person:Person) WHERE person.name IS NOT NULL CREATE (anotherPerson:Person {name: person.name})";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
+    
+    #endregion
 }

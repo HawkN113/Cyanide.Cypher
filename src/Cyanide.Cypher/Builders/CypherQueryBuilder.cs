@@ -5,10 +5,23 @@ namespace Cyanide.Cypher.Builders;
 
 public sealed class CypherQueryBuilder: ICypherQueryBuilder
 {
+    private readonly StringBuilder _createClauses = new();
     private readonly StringBuilder _matchClauses = new();
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
+
+    /// <summary>
+    /// Add CREATE clause
+    /// </summary>
+    /// <param name="configureCreate"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder Create(Func<CreateBuilder, CreateBuilder> configureCreate)
+    {
+        var createBuilder = new CreateBuilder(this, _createClauses);
+        configureCreate(createBuilder).End();
+        return this;
+    }
 
     /// <summary>
     /// Add MATCH clause
@@ -68,6 +81,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
         AppendClause(_matchClauses, queryBuilder);
         AppendClause(_optMatchClauses, queryBuilder);
         AppendClause(_whereClauses, queryBuilder);
+        AppendClause(_createClauses, queryBuilder);
         AppendClause(_returnClauses, queryBuilder);
         return queryBuilder.ToString().Trim();
     }
