@@ -185,6 +185,30 @@ public class CypherQueryBuilderTests
             "MATCH (:Movie {title: 'Wall Street'})<-[:ACTED_IN|DIRECTED]-(person:Person) RETURN person.name AS person";
         Assert.That(resultQuery, Is.EqualTo(expectedQuery));
     }
+    
+    [Test]
+    public void Translate_CypherQueryWithMultiMatches_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Select(q =>
+                q.Property("name", "a").Property("r")
+            )
+            .Match(q =>
+                q.Node("Person", "a", "name", "'Martin Sheen'")
+            )
+            .Match(q =>
+                q.Node("a")
+                    .Relationship("DIRECTED", RelationshipType.Direct,"r")
+                    .EmptyNode()
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (a:Person {name: 'Martin Sheen'}) MATCH (a)-[r:DIRECTED]->() RETURN a.name, r";
+        Assert.That(resultQuery, Is.EqualTo(expectedQuery));
+    }
 
     #endregion
     

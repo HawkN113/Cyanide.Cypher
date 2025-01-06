@@ -42,6 +42,18 @@ public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClause
         _patterns.Add($"{alias}.{propertyName}");
         return this;
     }
+    
+    /// <summary>
+    /// Return a property to the RETURN clause
+    /// Sample: p
+    /// </summary>
+    /// <param name="alias"></param>
+    /// <returns></returns>
+    public SelectBuilder Property(string alias)
+    {
+        _patterns.Add($"{alias}");
+        return this;
+    }
 
     /// <summary>
     /// Return a named property to the RETURN clause

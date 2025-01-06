@@ -17,6 +17,16 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
         _patterns.Add(!string.IsNullOrWhiteSpace(alias) ? $"({alias}:{type})" : $"({type})");
         return this;
     }
+    
+    /// <summary>
+    /// Add a node (entity) to the MATCH clause
+    /// </summary>
+    /// <returns></returns>
+    public MatchBuilder EmptyNode()
+    {
+        _patterns.Add("()");
+        return this;
+    }
 
     /// <summary>
     /// Add a node (entity) to the MATCH clause
