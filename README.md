@@ -10,8 +10,9 @@
 - https://github.com/mike-lischke/vscode-antlr4/blob/master/doc/extension-settings.md#grammar-formatting
 - https://github.com/kaby76/Antlr4BuildTasks/blob/master/Antlr4BuildTasks/Antlr4BuildTasks.xml
 
-- https://neo4j.com/docs/cypher-manual/current/clauses/create/
-- https://neo4j.com/docs/cypher-manual/current/clauses/return/
-- https://neo4j.com/docs/cypher-manual/current/clauses/match/
-- https://neo4j.com/docs/cypher-manual/current/clauses/optional-match/
-- https://neo4j.com/docs/cypher-manual/current/clauses/where/ (not completed)
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/delete/
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/create/
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/return/
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/match/
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/optional-match/
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/where/ (not completed)

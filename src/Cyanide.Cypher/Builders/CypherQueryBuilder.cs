@@ -6,11 +6,11 @@ namespace Cyanide.Cypher.Builders;
 public sealed class CypherQueryBuilder: ICypherQueryBuilder
 {
     private readonly StringBuilder _createClauses = new();
+    private readonly StringBuilder _deleteClauses = new();
     private readonly StringBuilder _matchClauses = new();
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
-    private bool _isMultiNodes = false;
 
     /// <summary>
     /// Add CREATE clause
@@ -19,7 +19,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// <returns></returns>
     public CypherQueryBuilder Create(Func<CreateBuilder, CreateBuilder> configureCreate)
     {
-        var createBuilder = new CreateBuilder(this, _createClauses, _isMultiNodes);
+        var createBuilder = new CreateBuilder(this, _createClauses, false);
         configureCreate(createBuilder).End();
         return this;
     }
@@ -31,9 +31,33 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// <returns></returns>
     public CypherQueryBuilder MultiCreate(Func<CreateBuilder, CreateBuilder> configureCreate)
     {
-        _isMultiNodes = true;
-        var createBuilder = new CreateBuilder(this, _createClauses, _isMultiNodes);
+        var createBuilder = new CreateBuilder(this, _createClauses, true);
         configureCreate(createBuilder).End();
+        return this;
+    }
+
+    /// <summary>
+    /// Add DELETE clause
+    /// </summary>
+    /// <param name="configureDelete"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder Delete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
+    {
+        var deleteBuilder = new DeleteBuilder(this, _deleteClauses, false);
+        configureDelete(deleteBuilder).End();
+        return this;
+    }
+    
+    
+    /// <summary>
+    /// Add DETACH DELETE clause
+    /// </summary>
+    /// <param name="configureDelete"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder DetachDelete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
+    {
+        var deleteBuilder = new DeleteBuilder(this, _deleteClauses, true);
+        configureDelete(deleteBuilder).End();
         return this;
     }
 
@@ -96,6 +120,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
         AppendClause(_optMatchClauses, queryBuilder);
         AppendClause(_whereClauses, queryBuilder);
         AppendClause(_createClauses, queryBuilder);
+        AppendClause(_deleteClauses, queryBuilder);
         AppendClause(_returnClauses, queryBuilder);
         return queryBuilder.ToString().Trim();
     }

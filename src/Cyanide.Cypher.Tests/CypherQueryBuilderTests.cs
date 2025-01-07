@@ -9,7 +9,7 @@ public class CypherQueryBuilderTests
     #region MATCH
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_DirectRelation_ReturnsCorrectSql()
+    public void Translate_With_MATCH_DirectRelation_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -31,7 +31,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_InDirectRelation_ReturnsCorrectSql()
+    public void Translate_With_MATCH_InDirectRelation_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -53,7 +53,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_BiDirectRelation_ReturnsCorrectSql()
+    public void Translate_With_MATCH_BiDirectRelation_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -75,7 +75,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_UnDirectRelation_ReturnsCorrectSql()
+    public void Translate_With_MATCH_UnDirectRelation_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -97,7 +97,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_NonDirectRelation_ReturnsCorrectSql()
+    public void Translate_With_MATCH_NonDirectRelation_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -119,7 +119,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_NonDirectRelationWithAlias_ReturnsCorrectSql()
+    public void Translate_With_MATCH_NonDirectRelationWithAlias_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -141,7 +141,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_AndPropertyAndAlias_ReturnsCorrectSql()
+    public void Translate_With_MATCH_AndPropertyAndAlias_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -160,7 +160,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_MATCH_AndPropertyWithoutAlias_ReturnsCorrectSql()
+    public void Translate_With_MATCH_AndPropertyWithoutAlias_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -181,7 +181,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWithMulti_MATCH_ReturnsCorrectSql()
+    public void Translate_WithMulti_MATCH_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -205,7 +205,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_OPTIONAL_MATCH_ReturnsCorrectSql()
+    public void Translate_With_OPTIONAL_MATCH_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -233,7 +233,7 @@ public class CypherQueryBuilderTests
     #region WHERE
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -257,7 +257,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_AND_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_AND_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -281,7 +281,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_OR_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_OR_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -305,7 +305,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_XOR_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_XOR_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -329,7 +329,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_NOT_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_NOT_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -353,7 +353,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_IS_NOT_NULL_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_IS_NOT_NULL_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -377,7 +377,7 @@ public class CypherQueryBuilderTests
     }
     
     [Fact]
-    public void Translate_CypherQueryWith_WHERE_IS_NULL_Query_ReturnsCorrectSql()
+    public void Translate_With_WHERE_IS_NULL_Query_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -405,7 +405,7 @@ public class CypherQueryBuilderTests
     #region CREATE
 
     [Fact]
-    public void Translate_CypherQueryWith_CREATE_ReturnsCorrectSql()
+    public void Translate_With_CREATE_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -422,7 +422,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_CREATE_Where_ReturnsCorrectSql()
+    public void Translate_With_CREATE_Where_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -440,7 +440,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_CypherQueryWith_CREATE_MultiProperties_ReturnsCorrectSql()
+    public void Translate_With_CREATE_MultiProperties_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -457,7 +457,7 @@ public class CypherQueryBuilderTests
     }
     
     [Fact]
-    public void Translate_CypherQueryWith_CREATE_FullPath_ReturnsCorrectSql()
+    public void Translate_With_CREATE_FullPath_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -478,7 +478,7 @@ public class CypherQueryBuilderTests
     }
     
     [Fact]
-    public void Translate_CypherQueryWith_CREATE_MultiNodes_ReturnsCorrectSql()
+    public void Translate_With_CREATE_MultiNodes_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -498,5 +498,45 @@ public class CypherQueryBuilderTests
         Assert.Equal(resultQuery, expectedQuery);
     }
 
+    #endregion
+    
+    #region DELETE
+    
+    [Fact]
+    public void Translate_With_DELETE_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Relationship(new Entity("ACTED_IN", "r"), RelationshipType.Direct, 
+                        new Entity("Person", "n", [new Property("name", "'Laurence Fishburne'")]), 
+                        new Entity(string.Empty))
+            )
+            .Delete(q => q.Node("r"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (n:Person {name: 'Laurence Fishburne'})-[r:ACTED_IN]->() DELETE r";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_DETACH_DELETE_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node(new Entity("Person", "n", [new Property("name", "'Carrie-Anne Moss'")]))
+            )
+            .DetachDelete(q => q.Node("n"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (n:Person {name: 'Carrie-Anne Moss'}) DETACH DELETE n";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
+    
     #endregion
 }
