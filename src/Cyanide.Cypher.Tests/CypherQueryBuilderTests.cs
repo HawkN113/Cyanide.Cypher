@@ -146,9 +146,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.Node(new Entity("Person", "a"), [
-                    new Property() { Label = "name", Value = "'Martin Sheen'" }
-                ])
+                q.Node(new Entity("Person", "a", [new Property("name", "'Martin Sheen'")]))
             )
             .Select(q =>
                 q.Property("name", "a")
@@ -170,9 +168,7 @@ public class CypherQueryBuilderTests
                 q.Property("name", "person", "person")
             )
             .Match(q =>
-                q.Node(new Entity("Movie", ""), [
-                        new Property() { Label = "title", Value = "'Wall Street'" }
-                    ])
+                q.Node(new Entity("Movie", "", [new Property("title", "'Wall Street'")]))
                     .Relationship("ACTED_IN|DIRECTED", RelationshipType.InDirect)
                     .Node(new Entity("Person", "person"))
             )
@@ -193,9 +189,7 @@ public class CypherQueryBuilderTests
                 q.Property("name", "a").Property("r")
             )
             .Match(q =>
-                q.Node(new Entity("Person", "a"), [
-                    new Property() { Label = "name", Value = "'Martin Sheen'" }
-                ])
+                q.Node(new Entity("Person", "a",[new Property("name","'Martin Sheen'")]))
             )
             .Match(q =>
                 q.Node(new Entity("a"))
@@ -219,9 +213,7 @@ public class CypherQueryBuilderTests
                 q.Property("name", "a").Property("r")
             )
             .Match(q =>
-                q.Node(new Entity("Person", "a"), [
-                    new Property() { Label = "name", Value = "'Martin Sheen'" }
-                ])
+                q.Node(new Entity("Person", "a", [new Property("name", "'Martin Sheen'")]))
             )
             .OptionalMatch(q =>
                 q.Node(new Entity("a"))
@@ -394,9 +386,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.Node(new Entity("Person", "charlie"), [
-                    new Property() { Label = "name", Value = "'Charlie Sheen'" }
-                ])
+                q.Node(new Entity("Person", "charlie",[new Property("name","'Charlie Sheen'")]))
             )
             .Create(q => q.Node(new Entity("Actor", "charlie")))
             .Build();
@@ -416,9 +406,7 @@ public class CypherQueryBuilderTests
                 q.Node(new Entity("Person", "person"))
             )
             .Where(q => q.IsNotNull("person.name"))
-            .Create(q => q.Node(new Entity("Person", "anotherPerson"), [
-                new Property() { Label = "name", Value = "person.name" }
-            ]))
+            .Create(q => q.Node(new Entity("Person", "anotherPerson", [new Property("name", "person.name")])))
             .Build();
 
         // Assert
@@ -432,10 +420,10 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Create(q => q.Node(new Entity("Person", "n"), [
-                new Property() { Label = "name", Value = "'Andy'" },
-                new Property() { Label = "title", Value = "'Developer'" }
-            ]))
+            .Create(q =>
+                q.Node(new Entity("Person", "n",
+                    [new Property("name", "'Andy'"), 
+                        new Property("title", "'Developer'")])))
             .Build();
 
         // Assert
@@ -449,13 +437,14 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Create(q => 
-                q.Node(new Entity("Person", "andy"), [new Property() { Label = "name", Value = "'Andy'" }])
-                    .Relationship(new Entity("WORKS_AT"), RelationshipType.Direct,null, new Entity("neo"))
-                .Relationship("WORKS_AT", RelationshipType.InDirect)
-                .Node(new Entity("Person", "michael"), [new Property() { Label = "name", Value = "'Michael'" }])
+            .Create(q =>
+                q.Relationship(new Entity("WORKS_AT"), RelationshipType.Direct, 
+                        new Entity("Person", "andy", [new Property("name", "'Andy'")]), 
+                        new Entity("neo"))
+                    .Relationship("WORKS_AT", RelationshipType.InDirect)
+                    .Node(new Entity("Person", "michael", [new Property("name", "'Michael'")]))
             )
-            .Select(q=>q.Property("andy").Property("michael") )
+            .Select(q => q.Property("andy").Property("michael"))
             .Build();
 
         // Assert
@@ -469,11 +458,13 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Create(q => 
-                q.Node(new Entity("Person","keanu"), [new Property() { Label = "name", Value = "'Keanu Reever'" }])
-                    .Node(new Entity("Person","laurence"), [new Property() { Label = "name", Value = "'Laurence Fishburne'" }])
-                    .Relationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("keanu"), new Entity("theMatrix"))
-                    .Relationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("laurence"), new Entity("theMatrix"))
+            .MultiCreate(q =>
+                q.Node(new Entity("Person", "keanu", [new Property("name", "'Keanu Reever'")]))
+                    .Node(new Entity("Person", "laurence", [new Property("name", "'Laurence Fishburne'")]))
+                    .Relationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("keanu"),
+                        new Entity("theMatrix"))
+                    .Relationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("laurence"),
+                        new Entity("theMatrix"))
             )
             .Build();
 

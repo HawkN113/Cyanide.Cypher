@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Helper;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder createClauses): IRelationship<CreateBuilder>, INode<CreateBuilder>
+public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder createClauses, bool isMultiNodes): IRelationship<CreateBuilder>, INode<CreateBuilder>
 {
     private readonly List<string> _patterns = [];
     
@@ -22,23 +22,10 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <param name="entity"></param>
-    /// <param name="properties"></param>
     /// <returns></returns>
-    public CreateBuilder Node(Entity entity, Property[] properties = null)
+    public CreateBuilder Node(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity, properties));
-        return this;
-    }
-    
-    /// <summary>
-    /// Add a node (entity) to the MATCH clause
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="property"></param>
-    /// <returns></returns>
-    public CreateBuilder Node(Entity entity, Property property)
-    {
-        _patterns.AddRange(NodeHelper.Node(entity, property));
+        _patterns.AddRange(NodeHelper.Node(entity));
         return this;
     }
 
@@ -83,7 +70,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
         }
 
         createClauses.Append("CREATE ");
-        createClauses.Append(string.Join(", ", _patterns));
+        createClauses.Append(isMultiNodes ? string.Join(", ", _patterns) : string.Join("", _patterns));
         return parent;
     }
 }

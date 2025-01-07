@@ -22,23 +22,10 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <param name="entity"></param>
-    /// <param name="properties"></param>
     /// <returns></returns>
-    public MatchBuilder Node(Entity entity, Property[] properties = null)
+    public MatchBuilder Node(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity, properties));
-        return this;
-    }
-
-    /// <summary>
-    /// Add a node (entity) to the MATCH clause
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="property"></param>
-    /// <returns></returns>
-    public MatchBuilder Node(Entity entity, Property property)
-    {
-        _patterns.AddRange(NodeHelper.Node(entity, property));
+        _patterns.AddRange(NodeHelper.Node(entity));
         return this;
     }
 

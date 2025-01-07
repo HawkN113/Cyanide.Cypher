@@ -1,4 +1,6 @@
-﻿namespace Cyanide.Cypher.Builders.Helper;
+﻿using System.Text;
+
+namespace Cyanide.Cypher.Builders.Helper;
 
 internal static class RelationshipHelper
 {
@@ -22,8 +24,12 @@ internal static class RelationshipHelper
     {
         var label = !string.IsNullOrWhiteSpace(entity.Alias) ? $"[{entity.Alias}:{entity.Type}]" : $"[:{entity.Type}]";
 
-        var leftLabel = left is not null ? GetRelationLabel(left) : string.Empty;
-        var rightLabel = right is not null ? GetRelationLabel(right) : string.Empty;
+        var leftLabel = left is not null
+            ? new StringBuilder().Append(string.Join("", NodeHelper.Node(left))).ToString()
+            : string.Empty;
+        var rightLabel = right is not null
+            ? new StringBuilder().Append(string.Join("", NodeHelper.Node(right))).ToString()
+            : string.Empty;
 
         var relationship = relation switch
         {
@@ -34,15 +40,5 @@ internal static class RelationshipHelper
             _ => $"{leftLabel}-{label}-{rightLabel}"
         };
         return relationship;
-    }
-
-    private static string GetRelationLabel(Entity entity)
-    {
-        return entity.Alias switch
-        {
-            null => $"({entity.Type})",
-            "" => $"({entity.Alias}:{entity.Type})",
-            _ => $"(:{entity.Type})"
-        };
     }
 }

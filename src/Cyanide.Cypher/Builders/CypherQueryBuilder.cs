@@ -10,6 +10,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
+    private bool _isMultiNodes = false;
 
     /// <summary>
     /// Add CREATE clause
@@ -18,7 +19,20 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// <returns></returns>
     public CypherQueryBuilder Create(Func<CreateBuilder, CreateBuilder> configureCreate)
     {
-        var createBuilder = new CreateBuilder(this, _createClauses);
+        var createBuilder = new CreateBuilder(this, _createClauses, _isMultiNodes);
+        configureCreate(createBuilder).End();
+        return this;
+    }
+    
+    /// <summary>
+    /// Add CREATE clause
+    /// </summary>
+    /// <param name="configureCreate"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder MultiCreate(Func<CreateBuilder, CreateBuilder> configureCreate)
+    {
+        _isMultiNodes = true;
+        var createBuilder = new CreateBuilder(this, _createClauses, _isMultiNodes);
         configureCreate(createBuilder).End();
         return this;
     }
