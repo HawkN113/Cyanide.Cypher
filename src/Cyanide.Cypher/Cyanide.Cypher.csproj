@@ -6,53 +6,5 @@
         <Nullable>enable</Nullable>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.0" />
-      <PackageReference Include="Antlr4BuildTasks" Version="12.8.0" />
-        <PackageReference Include="Antlr4.Runtime" Version="4.6.6">
-            <Aliases>Antlr4Legacy</Aliases>
-            <PrivateAssets>contentfiles;analyzers;build;compile</PrivateAssets>
-        </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Antlr4 Include="Grammar\SQL.g4">
-            <AntOutDir>Generated</AntOutDir>
-            <Listener>True</Listener>
-            <Visitor>True</Visitor>
-            <Encoding>UTF-8</Encoding>
-            <GAtn>False</GAtn>
-            <ForceAtn>True</ForceAtn>
-            <AllowAntlr4cs>True</AllowAntlr4cs>
-            <LongMessages>True</LongMessages>
-            <Error>True</Error>
-        </Antlr4>
-    </ItemGroup>
-    <ItemGroup>
-        <Antlr4 Include="Grammar\Cypher.g4">
-            <AntOutDir>Generated</AntOutDir>
-            <Listener>True</Listener>
-            <Visitor>True</Visitor>
-            <Encoding>UTF-8</Encoding>
-            <GAtn>False</GAtn>
-            <ForceAtn>True</ForceAtn>
-            <AllowAntlr4cs>True</AllowAntlr4cs>
-            <LongMessages>True</LongMessages>
-            <Error>True</Error>
-        </Antlr4>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Generated\" />
-    </ItemGroup>
-
-    <Target Name="GenerateAntlrFiles" AfterTargets="Build">
-        <Message Text="Generating ANTLR Files..." Importance="high"/>
-    </Target>
-    <Target Name="ModifyAntlrGeneratedFiles" BeforeTargets="AfterBuild">
-        <Message Text="Replaced modifiers in ANTLR Files..." Importance="high"/>
-        <Exec Command="powershell.exe -ExecutionPolicy Bypass -File Scripts\ReplacePublicWithInternal.ps1 -WindowStyle Hidden -NoProfile" />
-    </Target>
     
 </Project>

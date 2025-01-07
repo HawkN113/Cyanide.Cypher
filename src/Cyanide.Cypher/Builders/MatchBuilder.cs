@@ -4,17 +4,17 @@ using Cyanide.Cypher.Builders.Helper;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchClauses): IRelationship<MatchBuilder>
+public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchClauses): IRelationship<MatchBuilder>, INode<MatchBuilder>
 {
     private readonly List<string> _patterns = [];
-    
+
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <returns></returns>
     public MatchBuilder EmptyNode()
     {
-        _patterns.Add("()");
+        _patterns.AddRange(NodeHelper.EmptyNode());
         return this;
     }
 
@@ -23,36 +23,23 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// </summary>
     /// <param name="type"></param>
     /// <param name="alias"></param>
-    /// <param name="property"></param>
-    /// <param name="propertyValue"></param>
+    /// <param name="properties"></param>
     /// <returns></returns>
-    public MatchBuilder Node(string type, string alias = "", string property = null, string propertyValue = null)
+    public MatchBuilder Node(string type, string alias = "", Property[] properties = null)
     {
-        if (!string.IsNullOrWhiteSpace(property) && !string.IsNullOrWhiteSpace(propertyValue))
-        {
-            _patterns.Add(!string.IsNullOrWhiteSpace(alias)
-                ? $"({alias}:{type} {{{property}: {propertyValue}}})"
-                : $"({type} {{{property}: {propertyValue}}})");
-        }
-        else
-        {
-            _patterns.Add(!string.IsNullOrWhiteSpace(alias)
-                ? $"({alias}:{type})"
-                : $"({type})");
-        }
+        _patterns.AddRange(NodeHelper.Node(type, alias, properties));
         return this;
     }
-    
+
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <param name="type"></param>
     /// <param name="property"></param>
-    /// <param name="propertyValue"></param>
     /// <returns></returns>
-    public MatchBuilder Node(string type, string property, string propertyValue)
+    public MatchBuilder Node(string type, Property property)
     {
-        _patterns.Add($"(:{type} {{{property}: {propertyValue}}})");
+        _patterns.AddRange(NodeHelper.Node(type, property));
         return this;
     }
 
