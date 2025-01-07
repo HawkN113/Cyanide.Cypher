@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Cyanide.Cypher.Builders.Helper;
+namespace Cyanide.Cypher.Builders;
 
 internal static class NodeHelper
 {

@@ -362,7 +362,7 @@ public class CypherQueryBuilderTests
                     .Relationship("LIVES_IN", RelationshipType.Direct)
                     .Node(new Entity("City", "c"))
             )
-            .Where(q => q.Query("p.age > 30").And(q => q.IsNotNull("b.city")))
+            .Where(q => q.Query("p.age > 30").And(q1 => q1.IsNotNull("b.city")))
             .Select(q =>
                 q
                     .Property("name", "p")
