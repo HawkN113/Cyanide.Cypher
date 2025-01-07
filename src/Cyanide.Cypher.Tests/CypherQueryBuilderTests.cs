@@ -451,8 +451,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q => 
                 q.Node(new Entity("Person", "andy"), [new Property() { Label = "name", Value = "'Andy'" }])
-                    .Relationship(new Entity("WORKS_AT"), RelationshipType.Direct)
-                    .Node(new Entity("neo"))
+                    .Relationship(new Entity("WORKS_AT"), RelationshipType.Direct,null, new Entity("neo"))
                 .Relationship("WORKS_AT", RelationshipType.InDirect)
                 .Node(new Entity("Person", "michael"), [new Property() { Label = "name", Value = "'Michael'" }])
             )
