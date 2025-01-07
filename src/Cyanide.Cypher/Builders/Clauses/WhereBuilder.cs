@@ -38,6 +38,12 @@ public sealed class WhereBuilder(CypherQueryBuilder parent, StringBuilder whereC
         _patterns.Add($"{query} IS NOT NULL");
         return this;
     }
+    
+    public WhereBuilder IsNull(string query)
+    {
+        _patterns.Add($"{query} IS NULL");
+        return this;
+    }
 
     public WhereBuilder And(Func<WhereBuilder, WhereBuilder> nestedConditions)
     {

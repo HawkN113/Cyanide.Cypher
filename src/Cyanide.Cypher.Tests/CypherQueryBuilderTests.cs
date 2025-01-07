@@ -375,6 +375,30 @@ public class CypherQueryBuilderTests
             "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NOT NULL RETURN p.name, c.name";
         Assert.Equal(resultQuery, expectedQuery);
     }
+    
+    [Fact]
+    public void Translate_CypherQueryWith_WHERE_IS_NULL_Query_ReturnsCorrectSql()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node(new Entity("Person", "p"))
+                    .Relationship("LIVES_IN", RelationshipType.Direct)
+                    .Node(new Entity("City", "c"))
+            )
+            .Where(q => q.Query("p.age > 30").And(q1 => q1.IsNull("b.city")))
+            .Select(q =>
+                q
+                    .Property("name", "p")
+                    .Property("name", "c")
+            )
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NULL RETURN p.name, c.name";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
 
     #endregion
 
