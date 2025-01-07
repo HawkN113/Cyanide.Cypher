@@ -21,25 +21,24 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="alias"></param>
+    /// <param name="entity"></param>
     /// <param name="properties"></param>
     /// <returns></returns>
-    public MatchBuilder Node(string type, string alias = "", Property[] properties = null)
+    public MatchBuilder Node(Entity entity, Property[] properties = null)
     {
-        _patterns.AddRange(NodeHelper.Node(type, alias, properties));
+        _patterns.AddRange(NodeHelper.Node(entity, properties));
         return this;
     }
 
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="entity"></param>
     /// <param name="property"></param>
     /// <returns></returns>
-    public MatchBuilder Node(string type, Property property)
+    public MatchBuilder Node(Entity entity, Property property)
     {
-        _patterns.AddRange(NodeHelper.Node(type, property));
+        _patterns.AddRange(NodeHelper.Node(entity, property));
         return this;
     }
 
@@ -53,6 +52,21 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     public MatchBuilder Relationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipHelper.Create(type, relation, alias));
+        return this;
+    }
+    
+    /// <summary>
+    /// Add a relationship to the MATCH clause
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="relation"></param>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <returns></returns>
+    public MatchBuilder Relationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+        Entity? right = null)
+    {
+        _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));
         return this;
     }
 

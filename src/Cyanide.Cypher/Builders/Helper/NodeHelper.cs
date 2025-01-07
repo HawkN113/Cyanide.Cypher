@@ -13,14 +13,14 @@ internal static class NodeHelper
         return patterns;
     }
     
-    public static List<string> Node(string type, Property property)
+    public static List<string> Node(Entity entity, Property property)
     {
         List<string> patterns = [];
-        patterns.Add($"(:{type} {{{property.Label}: {property.Value}}})");
+        patterns.Add($"(:{entity.Type} {{{property.Label}: {property.Value}}})");
         return patterns;
     }
 
-    public static List<string> Node(string type, string alias = "", Property[]? properties = null)
+    public static List<string> Node(Entity entity, Property[]? properties = null)
     {
         List<string> patterns = [];
         if (properties is not null && properties.Any())
@@ -33,15 +33,15 @@ internal static class NodeHelper
                     result.Append(", ");
             }
 
-            patterns.Add(!string.IsNullOrWhiteSpace(alias)
-                ? $"({alias}:{type} {{{result}}})"
-                : $"(:{type} {{{result}}})");
+            patterns.Add(!string.IsNullOrWhiteSpace(entity.Alias)
+                ? $"({entity.Alias}:{entity.Type} {{{result}}})"
+                : $"(:{entity.Type} {{{result}}})");
         }
         else
         {
-            patterns.Add(!string.IsNullOrWhiteSpace(alias)
-                ? $"({alias}:{type})"
-                : $"({type})");
+            patterns.Add(!string.IsNullOrWhiteSpace(entity.Alias)
+                ? $"({entity.Alias}:{entity.Type})"
+                : $"({entity.Type})");
         }
 
         return patterns;
