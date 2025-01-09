@@ -3,7 +3,9 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder createClauses): IRelationship<CreateBuilder>, INode<CreateBuilder>
+public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder createClauses): 
+    IRelationship<CreateBuilder>, 
+    INode<CreateBuilder>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;
@@ -63,7 +65,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder End()
+    internal CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (createClauses.Length > 0)

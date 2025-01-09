@@ -3,7 +3,9 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder createClauses, bool isDetachDelete): IRelationship<DeleteBuilder>, INode<DeleteBuilder>
+public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder createClauses, bool isDetachDelete): 
+    IRelationship<DeleteBuilder>, 
+    INode<DeleteBuilder>
 {
     private readonly List<string> _patterns = [];
     
@@ -72,7 +74,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder End()
+    internal CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (createClauses.Length > 0)

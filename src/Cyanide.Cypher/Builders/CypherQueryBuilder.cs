@@ -1,9 +1,10 @@
 ﻿using System.Text;
-using Cyanide.Cypher.Builders.Abstraction;
+using Cyanide.Cypher.Builders.Abstraction.Clauses;
+using Cyanide.Cypher.Builders.Abstraction.Subclauses;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CypherQueryBuilder: IOrderBySubQuery, ICreateQuery, IDeleteQuery
+public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDeleteQuery, IWhereSubQuery, ISelectQuery, IBuildQuery, IMatchQuery, IOptMatchQuery
 {
     private readonly StringBuilder _createClauses = new();
     private readonly StringBuilder _deleteClauses = new();
@@ -20,7 +21,7 @@ public sealed class CypherQueryBuilder: IOrderBySubQuery, ICreateQuery, IDeleteQ
         return this;
     }
 
-    public IMatchQuery Create(Func<CreateBuilder, CreateBuilder> configureCreate)
+    public IBuildQuery Create(Func<CreateBuilder, CreateBuilder> configureCreate)
     {
         var createBuilder = new CreateBuilder(this, _createClauses);
         configureCreate(createBuilder).End();
@@ -48,6 +49,13 @@ public sealed class CypherQueryBuilder: IOrderBySubQuery, ICreateQuery, IDeleteQ
         return this;
     }
 
+    IMatchQuery IOptMatchQuery.Match(Func<MatchBuilder, MatchBuilder> configureMatch)
+    {
+        var matchBuilder = new MatchBuilder(this, _matchClauses);
+        configureMatch(matchBuilder).End();
+        return this;
+    }
+
     public IMatchQuery Where(Func<WhereBuilder, WhereBuilder> conditions)
     {
         var whereBuilder = new WhereBuilder(this, _whereClauses);
@@ -55,20 +63,20 @@ public sealed class CypherQueryBuilder: IOrderBySubQuery, ICreateQuery, IDeleteQ
         return this;
     }
 
-    public IMatchQuery Delete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
+    public IBuildQuery Delete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
     {
         var deleteBuilder = new DeleteBuilder(this, _deleteClauses, false);
         configureDelete(deleteBuilder).End();
         return this;
     }
 
-    public IMatchQuery DetachDelete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
+    public IBuildQuery DetachDelete(Func<DeleteBuilder, DeleteBuilder> configureDelete)
     {
         var deleteBuilder = new DeleteBuilder(this, _deleteClauses, true);
         configureDelete(deleteBuilder).End();
         return this;
     }
-    
+
     public string Build()
     {
         StringBuilder queryBuilder = new();
@@ -89,6 +97,7 @@ public sealed class CypherQueryBuilder: IOrderBySubQuery, ICreateQuery, IDeleteQ
         {
             queryBuilder.Append(' ');
         }
+
         queryBuilder.Append(clause);
     }
 }

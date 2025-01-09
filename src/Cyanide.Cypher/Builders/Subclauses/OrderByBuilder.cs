@@ -43,16 +43,9 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
         return this;
     }
     
-    public OrderByBuilder Asc(Func<OrderByBuilder, OrderByBuilder> nestedConditions)
+    public OrderByBuilder Desc()
     {
-        nestedConditions(this);
-        return this;
-    }
-    
-    public OrderByBuilder Desc(Func<OrderByBuilder, OrderByBuilder> nestedConditions)
-    {
-        _patterns.Add("DESC");
-        nestedConditions(this);
+        _patterns.Add(" DESC");
         return this;
     }
 
