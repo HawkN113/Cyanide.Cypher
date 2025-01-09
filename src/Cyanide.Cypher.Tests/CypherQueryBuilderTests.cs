@@ -482,7 +482,7 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .MultiCreate(q =>
+            .Create(q =>
                 q.Node(new Entity("Person", "keanu", [new Property("name", "'Keanu Reever'")]))
                     .Node(new Entity("Person", "laurence", [new Property("name", "'Laurence Fishburne'")]))
                     .Relationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("keanu"),
@@ -535,6 +535,27 @@ public class CypherQueryBuilderTests
         // Assert
         var expectedQuery =
             "MATCH (n:Person {name: 'Carrie-Anne Moss'}) DETACH DELETE n";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
+    
+    #endregion
+    
+    #region ORDER BY
+    [Fact]
+    public void Translate_With_ORDER_BY_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.Node(new Entity("n", ""))
+            )
+            .Select(q => q.Property("name", "n").Property("age", "n"))
+            .OrderBy(q => q.Property("name", "n").Property("age", "n"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (n) RETURN n.name, n.age ORDER BY n.name, n.age";
         Assert.Equal(resultQuery, expectedQuery);
     }
     

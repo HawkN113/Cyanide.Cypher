@@ -11,6 +11,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
+    private readonly StringBuilder _orderByClauses = new();
 
     /// <summary>
     /// Add CREATE clause
@@ -19,19 +20,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// <returns></returns>
     public CypherQueryBuilder Create(Func<CreateBuilder, CreateBuilder> configureCreate)
     {
-        var createBuilder = new CreateBuilder(this, _createClauses, false);
-        configureCreate(createBuilder).End();
-        return this;
-    }
-    
-    /// <summary>
-    /// Add CREATE clause
-    /// </summary>
-    /// <param name="configureCreate"></param>
-    /// <returns></returns>
-    public CypherQueryBuilder MultiCreate(Func<CreateBuilder, CreateBuilder> configureCreate)
-    {
-        var createBuilder = new CreateBuilder(this, _createClauses, true);
+        var createBuilder = new CreateBuilder(this, _createClauses);
         configureCreate(createBuilder).End();
         return this;
     }
@@ -98,6 +87,18 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     }
     
     /// <summary>
+    /// Add ORDER BY clause
+    /// </summary>
+    /// <param name="configureOrderBy"></param>
+    /// <returns></returns>
+    public CypherQueryBuilder OrderBy(Func<OrderByBuilder, OrderByBuilder> configureOrderBy)
+    {
+        var orderByBuilder = new OrderByBuilder(this, _orderByClauses);
+        configureOrderBy(orderByBuilder).End();
+        return this;
+    }
+    
+    /// <summary>
     /// Add WHERE clause
     /// </summary>
     /// <param name="conditions"></param>
@@ -122,6 +123,7 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
         AppendClause(_createClauses, queryBuilder);
         AppendClause(_deleteClauses, queryBuilder);
         AppendClause(_returnClauses, queryBuilder);
+        AppendClause(_orderByClauses, queryBuilder);
         return queryBuilder.ToString().Trim();
     }
 
