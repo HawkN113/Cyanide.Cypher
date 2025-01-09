@@ -54,11 +54,20 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
     /// Add MATCH clause
     /// </summary>
     /// <param name="configureMatch"></param>
+    /// <param name="configureOptMatch"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Match(Func<MatchBuilder, MatchBuilder> configureMatch)
+    public CypherQueryBuilder Match(
+        Func<MatchBuilder, MatchBuilder> configureMatch,
+        Func<OptMatchBuilder, OptMatchBuilder>? configureOptMatch = null)
     {
         var matchBuilder = new MatchBuilder(this, _matchClauses);
         configureMatch(matchBuilder).End();
+        
+        if (configureOptMatch is null) return this;
+        
+        var optionalMatchBuilder = new OptMatchBuilder(this, _optMatchClauses);
+        configureOptMatch(optionalMatchBuilder).End();
+        
         return this;
     }
     
@@ -76,13 +85,23 @@ public sealed class CypherQueryBuilder: ICypherQueryBuilder
 
     /// <summary>
     /// Add RETURN clause
+    /// Use ORDER BY
     /// </summary>
     /// <param name="configureReturn"></param>
+    /// <param name="configureOrderBy"></param>
     /// <returns></returns>
-    public CypherQueryBuilder Select(Func<SelectBuilder, SelectBuilder> configureReturn)
+    public CypherQueryBuilder Select(
+        Func<SelectBuilder, SelectBuilder> configureReturn,
+        Func<OrderByBuilder, OrderByBuilder>? configureOrderBy = null)
     {
         var returnBuilder = new SelectBuilder(this, _returnClauses);
         configureReturn(returnBuilder).End();
+
+        if (configureOrderBy is null) return this;
+        
+        var orderByBuilder = new OrderByBuilder(this, _orderByClauses);
+        configureOrderBy(orderByBuilder).End();
+
         return this;
     }
     
