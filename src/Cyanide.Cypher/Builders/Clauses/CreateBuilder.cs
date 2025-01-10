@@ -57,7 +57,7 @@ public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<Cr
         if (_patterns.Count <= 0) return;
         if (createClauses.Length > 0)
         {
-            createClauses.Append(", ");
+            createClauses.Append(' ');
         }
 
         createClauses.Append("CREATE ");

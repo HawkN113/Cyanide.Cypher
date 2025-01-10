@@ -67,7 +67,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
         if (_patterns.Count <= 0) return;
         if (returnClauses.Length > 0)
         {
-            returnClauses.Append(',');
+            returnClauses.Append(' ');
         }
 
         returnClauses.Append("RETURN ");

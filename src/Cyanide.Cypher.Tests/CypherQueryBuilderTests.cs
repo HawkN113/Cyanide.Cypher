@@ -455,7 +455,24 @@ public class CypherQueryBuilderTests
             "CREATE (n:Person {name: 'Andy', title: 'Developer'})";
         Assert.Equal(resultQuery, expectedQuery);
     }
-    
+
+    [Fact]
+    public void Translate_With_CREATE_WithoutAlias_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Create(q =>
+                q.WithNode(new Entity("Person", null,
+                [new Field("name", "'Andy'"), 
+                    new Field("title", "'Developer'")])))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "CREATE (Person {name: 'Andy', title: 'Developer'})";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
+
     [Fact]
     public void Translate_With_CREATE_FullPath_ReturnsCorrectCypherQuery()
     {

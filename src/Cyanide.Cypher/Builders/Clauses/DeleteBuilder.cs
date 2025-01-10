@@ -76,7 +76,7 @@ public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDele
         if (_patterns.Count <= 0) return;
         if (createClauses.Length > 0)
         {
-            createClauses.Append(", ");
+            createClauses.Append(' ');
         }
 
         createClauses.Append(!isDetachDelete ? "DELETE " : "DETACH DELETE ");
