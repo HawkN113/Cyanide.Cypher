@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClauses): IField<SelectBuilder>
+public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
 {
     private readonly List<string> _patterns = [];
     
@@ -62,9 +62,9 @@ public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClause
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    internal CypherQueryBuilder End()
+    internal void End()
     {
-        if (_patterns.Count <= 0) return parent;
+        if (_patterns.Count <= 0) return;
         if (returnClauses.Length > 0)
         {
             returnClauses.Append(',');
@@ -72,7 +72,6 @@ public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClause
 
         returnClauses.Append("RETURN ");
         returnClauses.Append(string.Join(", ", _patterns));
-        return parent;
     }
 
 }

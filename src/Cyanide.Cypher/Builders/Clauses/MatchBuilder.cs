@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchClauses): 
+public sealed class MatchBuilder(StringBuilder matchClauses): 
     IRelationship<MatchBuilder>, 
     INode<MatchBuilder>
 {
@@ -62,9 +62,9 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    internal CypherQueryBuilder End()
+    internal void End()
     {
-        if (_patterns.Count <= 0) return parent;
+        if (_patterns.Count <= 0) return;
         if (matchClauses.Length > 0)
         {
             matchClauses.Append(' ');
@@ -72,6 +72,5 @@ public sealed class MatchBuilder(CypherQueryBuilder parent, StringBuilder matchC
 
         matchClauses.Append("MATCH ");
         matchClauses.Append(string.Join("", _patterns));
-        return parent;
     }
 }

@@ -4,6 +4,6 @@ namespace Cyanide.Cypher.Builders.Abstraction.Subclauses;
 
 public interface IOrderBySubQuery
 {
-    IBuildQuery OrderBy(Func<OrderByBuilder, OrderByBuilder> configureOrderBy);
+    IBuildQuery OrderBy(Action<OrderByBuilder> configureOrderBy);
     string Build();
 }

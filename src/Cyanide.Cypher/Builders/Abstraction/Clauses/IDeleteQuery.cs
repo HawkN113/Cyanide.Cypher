@@ -2,6 +2,6 @@
 
 public interface IDeleteQuery
 {
-    IBuildQuery Delete(Func<DeleteBuilder, DeleteBuilder> configureDelete);
-    IBuildQuery DetachDelete(Func<DeleteBuilder, DeleteBuilder> configureDelete);
+    IBuildQuery Delete(Action<DeleteBuilder> configureDelete);
+    IBuildQuery DetachDelete(Action<DeleteBuilder> configureDelete);
 }

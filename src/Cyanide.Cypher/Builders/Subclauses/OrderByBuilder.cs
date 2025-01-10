@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orderByClauses): INode<OrderByBuilder>
+public sealed class OrderByBuilder(StringBuilder orderByClauses): INode<OrderByBuilder>
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
@@ -43,25 +43,23 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
         return this;
     }
     
-    public OrderByBuilder Descending()
+    public void Descending()
     {
         _patterns.Add(" DESC");
-        return this;
     }
 
     /// <summary>
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    internal CypherQueryBuilder End()
+    internal void End()
     {
-        if (_patterns.Count <= 0) return parent;
+        if (_patterns.Count <= 0) return;
         if (orderByClauses.Length > 0)
         {
             orderByClauses.Append(' ');
         }
         orderByClauses.Append("ORDER BY ");
         orderByClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
-        return parent;
     }
 }

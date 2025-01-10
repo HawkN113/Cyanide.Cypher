@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder createClauses, bool isDetachDelete): 
+public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDelete): 
     IRelationship<DeleteBuilder>, 
     INode<DeleteBuilder>
 {
@@ -29,17 +29,16 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
         _patterns.AddRange(NodeHelper.Node(entity));
         return this;
     }
-    
+
     /// <summary>
     /// Return a node (entity) to the DELETE clause
     /// Sample: p
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public DeleteBuilder WithNode(string type)
+    public void WithNode(string type)
     {
         _patterns.Add($"{type}");
-        return this;
     }
 
     /// <summary>
@@ -74,9 +73,9 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    internal CypherQueryBuilder End()
+    internal void End()
     {
-        if (_patterns.Count <= 0) return parent;
+        if (_patterns.Count <= 0) return;
         if (createClauses.Length > 0)
         {
             createClauses.Append(", ");
@@ -84,6 +83,5 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
 
         createClauses.Append(!isDetachDelete ? "DELETE " : "DETACH DELETE ");
         createClauses.Append(string.Join("", _patterns));
-        return parent;
     }
 }

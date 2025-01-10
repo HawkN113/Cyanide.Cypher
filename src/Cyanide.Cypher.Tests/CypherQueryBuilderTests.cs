@@ -569,7 +569,7 @@ public class CypherQueryBuilderTests
                 q.WithNode(new Entity("n", ""))
             )
             .Select(q => q.WithField("name", "n").WithField("age", "n"))
-            .OrderBy(q => q.WithField("name", "n").Descending())
+            .OrderBy(b => b.WithField("name", "n").Descending())
             .Build();
 
         // Assert

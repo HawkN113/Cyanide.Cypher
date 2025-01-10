@@ -2,5 +2,5 @@
 
 public interface ICreateQuery
 {
-    IBuildQuery Create(Func<CreateBuilder, CreateBuilder> configureCreate);
+    IBuildQuery Create(Action<CreateBuilder> configureCreate);
 }
