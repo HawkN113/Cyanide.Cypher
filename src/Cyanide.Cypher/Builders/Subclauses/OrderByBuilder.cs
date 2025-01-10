@@ -25,7 +25,7 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
     /// <param name="propertyName"></param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public OrderByBuilder Property(string propertyName, string alias)
+    public OrderByBuilder WithField(string propertyName, string alias)
     {
         _patterns.Add($"{alias}.{propertyName}");
         _countProperties += 1;

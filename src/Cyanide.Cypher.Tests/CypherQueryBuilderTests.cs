@@ -551,7 +551,7 @@ public class CypherQueryBuilderTests
                 q.WithNode(new Entity("n", ""))
             )
             .Select(q => q.WithField("name", "n").WithField("age", "n"))
-            .OrderBy(q => q.Property("name", "n").Property("age", "n"))
+            .OrderBy(q => q.WithField("name", "n").WithField("age", "n"))
             .Build();
 
         // Assert
@@ -569,7 +569,7 @@ public class CypherQueryBuilderTests
                 q.WithNode(new Entity("n", ""))
             )
             .Select(q => q.WithField("name", "n").WithField("age", "n"))
-            .OrderBy(q => q.Property("name", "n").Descending())
+            .OrderBy(q => q.WithField("name", "n").Descending())
             .Build();
 
         // Assert
