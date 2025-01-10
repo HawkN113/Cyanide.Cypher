@@ -5,6 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <Version>4.4.0</Version>
+        <RepositoryUrl>https://github.com/HawkN113/Cyanide.cypher</RepositoryUrl>
+        <PackageTags>neo4j.Cypher;neo4j;translator;query;builder</PackageTags>
+        <Title>Cyanide.Cypher</Title>
+        <Copyright>Nikolay Selyutin (HawkN113)</Copyright>
+        <Description>Cypher Query Builder is a lightweight and intuitive C# library designed to construct Cypher queries programmatically for use with Neo4j or other compatible graph databases. It simplifies query creation by providing a fluent and type-safe API, allowing developers to focus on query logic rather than string concatenation.</Description>
     </PropertyGroup>
     
 </Project>
