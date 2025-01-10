@@ -22,7 +22,7 @@ internal static class RelationshipHelper
         Entity? left = null,
         Entity? right = null)
     {
-        var label = !string.IsNullOrWhiteSpace(entity.Alias) ? $"[{entity.Alias}:{entity.Type}]" : $"[:{entity.Type}]";
+        var label = GetRelationLabel(entity);
 
         var leftLabel = left is not null
             ? new StringBuilder().Append(string.Join("", NodeHelper.Node(left))).ToString()
@@ -40,5 +40,11 @@ internal static class RelationshipHelper
             _ => $"{leftLabel}-{label}-{rightLabel}"
         };
         return relationship;
+    }
+
+    private static string GetRelationLabel(Entity entity)
+    {
+        if (entity.Alias == null) return $"[{entity.Type}]";
+        return entity.Alias != string.Empty ? $"[{entity.Alias}:{entity.Type}]" : $"[:{entity.Type}]";
     }
 }

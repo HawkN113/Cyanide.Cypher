@@ -3,9 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class OptMatchBuilder(StringBuilder optMatchClauses): 
-    IRelationship<OptMatchBuilder>, 
-    INode<OptMatchBuilder>
+public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationship<OptMatchBuilder>, INode<OptMatchBuilder>, IEmptyNode<OptMatchBuilder>
 {
     private readonly List<string> _patterns = [];
     

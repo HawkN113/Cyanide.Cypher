@@ -3,23 +3,10 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CreateBuilder(StringBuilder createClauses): 
-    IRelationship<CreateBuilder>, 
-    INode<CreateBuilder>
+public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<CreateBuilder>, INode<CreateBuilder>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;
-    
-    /// <summary>
-    /// Add a node (entity) to the MATCH clause
-    /// </summary>
-    /// <returns></returns>
-    public CreateBuilder WithEmptyNode()
-    {
-        _patterns.AddRange(NodeHelper.EmptyNode());
-        _countNodes += 1;
-        return this;
-    }
 
     /// <summary>
     /// Add a node (entity) to the MATCH clause

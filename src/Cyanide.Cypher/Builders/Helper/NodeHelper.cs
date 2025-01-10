@@ -29,7 +29,7 @@ internal static class NodeHelper
         }
         else
         {
-            patterns.Add(!string.IsNullOrWhiteSpace(entity.Alias)
+            patterns.Add(!string.IsNullOrEmpty(entity.Alias)
                 ? $"({entity.Alias}:{entity.Type})"
                 : $"({entity.Type})");
         }

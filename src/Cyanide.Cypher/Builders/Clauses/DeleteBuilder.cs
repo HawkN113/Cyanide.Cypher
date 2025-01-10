@@ -3,9 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDelete): 
-    IRelationship<DeleteBuilder>, 
-    INode<DeleteBuilder>
+public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDelete): IRelationship<DeleteBuilder>, INode<DeleteBuilder>, IEmptyNode<DeleteBuilder>
 {
     private readonly List<string> _patterns = [];
     

@@ -13,7 +13,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
     /// </summary>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public SelectBuilder Relation(string alias)
+    public SelectBuilder WithRelation(string alias)
     {
         _patterns.Add($"type({alias})");
         return this;

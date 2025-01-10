@@ -462,7 +462,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Create(q =>
-                q.WithRelationship(new Entity("WORKS_AT"), RelationshipType.Direct, 
+                q.WithRelationship(new Entity("WORKS_AT", ""), RelationshipType.Direct, 
                         new Entity("Person", "andy", [new Field("name", "'Andy'")]), 
                         new Entity("neo"))
                     .WithRelationship("WORKS_AT", RelationshipType.InDirect)
@@ -485,9 +485,9 @@ public class CypherQueryBuilderTests
             .Create(q =>
                 q.WithNode(new Entity("Person", "keanu", [new Field("name", "'Keanu Reever'")]))
                     .WithNode(new Entity("Person", "laurence", [new Field("name", "'Laurence Fishburne'")]))
-                    .WithRelationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("keanu"),
+                    .WithRelationship(new Entity("ACTED_IN",""), RelationshipType.Direct, new Entity("keanu"),
                         new Entity("theMatrix"))
-                    .WithRelationship(new Entity("ACTED_IN"), RelationshipType.Direct, new Entity("laurence"),
+                    .WithRelationship(new Entity("ACTED_IN",""), RelationshipType.Direct, new Entity("laurence"),
                         new Entity("theMatrix"))
             )
             .Build();
@@ -575,6 +575,31 @@ public class CypherQueryBuilderTests
         // Assert
         var expectedQuery =
             "MATCH (n) RETURN n.name, n.age ORDER BY n.name DESC";
+        Assert.Equal(resultQuery, expectedQuery);
+    }
+    
+    #endregion
+    
+    #region SELECT
+    
+    [Fact]
+    public void Translate_With_SELECT_RETURN_Query_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelationship(
+                    new Entity("r"), 
+                    RelationshipType.Direct,
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]), 
+                    new Entity("movie"))
+            )
+            .Select(q => q.WithRelation("r"))
+            .Build();
+
+        // Assert
+        var expectedQuery =
+            "MATCH (:Person {name: 'Oliver Stone'})-[r]->(movie) RETURN type(r)";
         Assert.Equal(resultQuery, expectedQuery);
     }
     
