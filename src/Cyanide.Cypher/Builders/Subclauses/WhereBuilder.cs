@@ -56,7 +56,7 @@ public sealed class WhereBuilder(CypherQueryBuilder parent, StringBuilder whereC
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder End()
+    internal CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (whereClauses.Length > 0)

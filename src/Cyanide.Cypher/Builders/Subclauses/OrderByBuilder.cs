@@ -12,7 +12,7 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
     /// Add a node (entity) to the ORDER BY clause
     /// </summary>
     /// <returns></returns>
-    public OrderByBuilder EmptyNode()
+    public OrderByBuilder WithEmptyNode()
     {
         _patterns.AddRange(NodeHelper.EmptyNode());
         return this;
@@ -37,13 +37,13 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public OrderByBuilder Node(Entity entity)
+    public OrderByBuilder WithNode(Entity entity)
     {
         _patterns.AddRange(NodeHelper.Node(entity));
         return this;
     }
     
-    public OrderByBuilder Desc()
+    public OrderByBuilder Descending()
     {
         _patterns.Add(" DESC");
         return this;
@@ -53,7 +53,7 @@ public sealed class OrderByBuilder(CypherQueryBuilder parent, StringBuilder orde
     /// End the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CypherQueryBuilder End()
+    internal CypherQueryBuilder End()
     {
         if (_patterns.Count <= 0) return parent;
         if (orderByClauses.Length > 0)

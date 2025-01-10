@@ -1,22 +1,11 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClauses)
+public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClauses): IField<SelectBuilder>
 {
     private readonly List<string> _patterns = [];
-
-    /// <summary>
-    /// Return a node (entity) to the RETURN clause
-    /// Sample: p
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public SelectBuilder Node(string type)
-    {
-        _patterns.Add($"{type}");
-        return this;
-    }
     
     /// <summary>
     /// Return a relationship to the RETURN clause
@@ -29,43 +18,43 @@ public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClause
         _patterns.Add($"type({alias})");
         return this;
     }
+    
+    /// <summary>
+    /// Return a named property to the RETURN clause
+    /// Sample: p.bornIn AS Born
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <param name="fieldAlias"></param>
+    /// <param name="aliasName"></param>
+    /// <returns></returns>
+    public SelectBuilder WithField(string fieldName, string fieldAlias, string aliasName)
+    {
+        _patterns.Add($"{fieldAlias}.{fieldName} AS {aliasName}");
+        return this;
+    }
 
     /// <summary>
     /// Return a property to the RETURN clause
     /// Sample: p.bornIn
     /// </summary>
-    /// <param name="propertyName"></param>
-    /// <param name="alias"></param>
+    /// <param name="fieldName"></param>
+    /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public SelectBuilder Property(string propertyName, string alias)
+    public SelectBuilder WithField(string fieldName, string fieldAlias)
     {
-        _patterns.Add($"{alias}.{propertyName}");
-        return this;
-    }
-    
-    /// <summary>
-    /// Return a property to the RETURN clause
-    /// Sample: p
-    /// </summary>
-    /// <param name="alias"></param>
-    /// <returns></returns>
-    public SelectBuilder Property(string alias)
-    {
-        _patterns.Add($"{alias}");
+        _patterns.Add($"{fieldAlias}.{fieldName}");
         return this;
     }
 
     /// <summary>
-    /// Return a named property to the RETURN clause
-    /// Sample: p.bornIn AS Born
+    /// Return a node (entity) to the RETURN clause
+    /// Sample: p
     /// </summary>
-    /// <param name="propertyName"></param>
-    /// <param name="alias"></param>
-    /// <param name="aliasName"></param>
+    /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public SelectBuilder Property(string propertyName, string alias, string aliasName)
+    public SelectBuilder WithField(string fieldAlias)
     {
-        _patterns.Add($"{alias}.{propertyName} AS {aliasName}");
+        _patterns.Add($"{fieldAlias}");
         return this;
     }
 
@@ -85,4 +74,5 @@ public class SelectBuilder(CypherQueryBuilder parent, StringBuilder returnClause
         returnClauses.Append(string.Join(", ", _patterns));
         return parent;
     }
+
 }

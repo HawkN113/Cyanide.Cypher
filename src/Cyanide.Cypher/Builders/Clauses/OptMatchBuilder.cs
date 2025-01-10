@@ -13,7 +13,7 @@ public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder opt
     /// Add a node (entity) to the OPTIONAL MATCH clause
     /// </summary>
     /// <returns></returns>
-    public OptMatchBuilder EmptyNode()
+    public OptMatchBuilder WithEmptyNode()
     {
         _patterns.AddRange(NodeHelper.EmptyNode());
         return this;
@@ -24,7 +24,7 @@ public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder opt
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public OptMatchBuilder Node(Entity entity)
+    public OptMatchBuilder WithNode(Entity entity)
     {
         _patterns.AddRange(NodeHelper.Node(entity));
         return this;
@@ -37,7 +37,7 @@ public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder opt
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public OptMatchBuilder Relationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public OptMatchBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipHelper.Create(type, relation, alias));
         return this;
@@ -51,7 +51,7 @@ public sealed class OptMatchBuilder(CypherQueryBuilder parent, StringBuilder opt
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public OptMatchBuilder Relationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public OptMatchBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));

@@ -17,3 +17,49 @@
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/match/
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/optional-match/
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/where/ (not completed)
+
+```
+@startuml
+hide empty description
+[*] --> Match
+Match --> Select
+Match --> Match
+Match --> OptionalMatch
+Match --> Create
+Match --> Delete
+Match --> DetachDelete
+Match --> Where
+
+Select --> OrderBy
+Select --> Build
+
+OptionalMatch --> OptionalMatch
+OptionalMatch --> Select
+OptionalMatch --> Match
+OptionalMatch --> Where
+OptionalMatch --> Create
+OptionalMatch --> Delete
+OptionalMatch --> DetachDelete
+
+Where --> Select
+
+Create --> Select
+Create --> Build
+
+Delete --> Build
+DetachDelete --> Build
+OrderBy --> Build
+
+Match: MATCH clause
+OptionalMatch: OPTIONAL MATCH clause
+Delete: DELETE clause
+DetachDelete: DETACH DELETE clause
+Where: WHERE subclause
+OrderBy: ORDER BY subclause
+Create: CREATE clause
+Select: RETURN clause
+Build: Cypher query
+
+Build --> [*]
+@enduml
+```

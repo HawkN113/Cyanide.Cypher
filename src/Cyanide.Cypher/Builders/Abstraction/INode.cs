@@ -2,6 +2,6 @@
 
 public interface INode<out T> where T : class
 {
-    T EmptyNode();
-    T Node(Entity entity);
+    T WithEmptyNode();
+    T WithNode(Entity entity);
 }

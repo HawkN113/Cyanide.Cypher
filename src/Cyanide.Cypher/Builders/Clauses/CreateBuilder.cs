@@ -14,7 +14,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public CreateBuilder EmptyNode()
+    public CreateBuilder WithEmptyNode()
     {
         _patterns.AddRange(NodeHelper.EmptyNode());
         _countNodes += 1;
@@ -26,7 +26,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public CreateBuilder Node(Entity entity)
+    public CreateBuilder WithNode(Entity entity)
     {
         _patterns.AddRange(NodeHelper.Node(entity));
         _countNodes += 1;
@@ -40,7 +40,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public CreateBuilder Relationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public CreateBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipHelper.Create(type, relation, alias));
         return this;
@@ -54,7 +54,7 @@ public sealed class CreateBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public CreateBuilder Relationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public CreateBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));

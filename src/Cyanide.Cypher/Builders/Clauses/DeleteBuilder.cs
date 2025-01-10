@@ -13,7 +13,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public DeleteBuilder EmptyNode()
+    public DeleteBuilder WithEmptyNode()
     {
         _patterns.AddRange(NodeHelper.EmptyNode());
         return this;
@@ -24,7 +24,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public DeleteBuilder Node(Entity entity)
+    public DeleteBuilder WithNode(Entity entity)
     {
         _patterns.AddRange(NodeHelper.Node(entity));
         return this;
@@ -36,7 +36,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public DeleteBuilder Node(string type)
+    public DeleteBuilder WithNode(string type)
     {
         _patterns.Add($"{type}");
         return this;
@@ -49,7 +49,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public DeleteBuilder Relationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public DeleteBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipHelper.Create(type, relation, alias));
         return this;
@@ -63,7 +63,7 @@ public sealed class DeleteBuilder(CypherQueryBuilder parent, StringBuilder creat
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public DeleteBuilder Relationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public DeleteBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));
