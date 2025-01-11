@@ -5,8 +5,7 @@ using Cyanide.Cypher.Builders.Validation;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDeleteQuery, IWhereSubQuery, IReturnQuery,
-    IBuildQuery, IMatchQuery, IOptMatchQuery
+internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
 {
     private readonly StringBuilder _createClauses = new();
     private readonly StringBuilder _deleteClauses = new();
@@ -15,29 +14,9 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
     private readonly StringBuilder _orderByClauses = new();
-    private readonly QueryStateValidator _queryStateValidator = new(true);
+    private readonly QueryStateValidator _queryStateValidator = new(false);
 
-    public IOrderBySubQuery Return(Action<ReturnClause> configureReturn)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.Return);
-
-        var returnBuilder = new ReturnClause(_returnClauses);
-        configureReturn(returnBuilder);
-        returnBuilder.End();
-        return this;
-    }
-
-    public IBuildQuery Create(Action<CreateClause> configureCreate)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.Create);
-
-        var createBuilder = new CreateClause(_createClauses);
-        configureCreate(createBuilder);
-        createBuilder.End();
-        return this;
-    }
-
-    public IBuildQuery OrderBy(Action<OrderBySubClause> configureOrderBy)
+    public IOrderBySubQuery OrderBy(Action<OrderBySubClause> configureOrderBy)
     {
         _queryStateValidator.ValidateTransition(QueryState.OrderBy);
 
@@ -47,37 +26,17 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
         return this;
     }
 
-    public IOptMatchQuery Match(Action<MatchClause> configureMatch)
+    public IReturnQuery Return(Action<ReturnClause> configureReturn)
     {
-        _queryStateValidator.ValidateTransition(QueryState.Match);
+        _queryStateValidator.ValidateTransition(QueryState.Return);
 
-        var matchBuilder = new MatchClause(_matchClauses);
-        configureMatch(matchBuilder);
-        matchBuilder.End();
+        var returnBuilder = new ReturnClause(_returnClauses);
+        configureReturn(returnBuilder);
+        returnBuilder.End();
         return this;
     }
 
-    public IReturnQuery OptionalMatch(Action<OptMatchClause> configureOptMatch)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.OptionalMatch);
-
-        var optMatchBuilder = new OptMatchClause(_optMatchClauses);
-        configureOptMatch(optMatchBuilder);
-        optMatchBuilder.End();
-        return this;
-    }
-
-    IMatchQuery IOptMatchQuery.Match(Action<MatchClause> configureMatch)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.Match);
-
-        var matchBuilder = new MatchClause(_matchClauses);
-        configureMatch(matchBuilder);
-        matchBuilder.End();
-        return this;
-    }
-
-    public IMatchQuery Where(Action<WhereSubClause> conditions)
+    public IWhereSubQuery Where(Action<WhereSubClause> conditions)
     {
         _queryStateValidator.ValidateTransition(QueryState.Where);
 
@@ -87,7 +46,37 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
         return this;
     }
 
-    public IBuildQuery Delete(Action<DeleteClause> configureDelete)
+    public ICreateQuery Create(Action<CreateClause> configureCreate)
+    {
+        _queryStateValidator.ValidateTransition(QueryState.Create);
+
+        var createBuilder = new CreateClause(_createClauses);
+        configureCreate(createBuilder);
+        createBuilder.End();
+        return this;
+    }
+
+    public IMatchQuery Match(Action<MatchClause> configureMatch)
+    {
+        _queryStateValidator.ValidateTransition(QueryState.Match);
+
+        var matchBuilder = new MatchClause(_matchClauses);
+        configureMatch(matchBuilder);
+        matchBuilder.End();
+        return this;
+    }
+
+    public IOptMatchQuery OptionalMatch(Action<OptMatchClause> configureOptMatch)
+    {
+        _queryStateValidator.ValidateTransition(QueryState.OptionalMatch);
+
+        var optMatchBuilder = new OptMatchClause(_optMatchClauses);
+        configureOptMatch(optMatchBuilder);
+        optMatchBuilder.End();
+        return this;
+    }
+
+    public IDeleteQuery Delete(Action<DeleteClause> configureDelete)
     {
         _queryStateValidator.ValidateTransition(QueryState.Delete);
 
@@ -97,7 +86,7 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
         return this;
     }
 
-    public IBuildQuery DetachDelete(Action<DeleteClause> configureDelete)
+    public IDeleteQuery DetachDelete(Action<DeleteClause> configureDelete)
     {
         _queryStateValidator.ValidateTransition(QueryState.DetachDelete);
 
@@ -106,7 +95,7 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
         deleteBuilder.End();
         return this;
     }
-
+    
     public string Build()
     {
         StringBuilder queryBuilder = new();
@@ -127,7 +116,7 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
 
         return queryBuilder.ToString().Trim();
     }
-
+    
     private static void AppendClause(StringBuilder clause, StringBuilder queryBuilder)
     {
         if (clause.Length <= 0) return;

@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Abstraction.Subclauses;
 
-public interface IWhereSubQuery
+public interface IWhereSubQuery: ICreateQuery
 {
-    IMatchQuery Where(Action<WhereSubClause> conditions);
+    IWhereSubQuery Where(Action<WhereSubClause> conditions);
 }

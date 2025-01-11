@@ -1,7 +1,7 @@
 ﻿namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
-public interface IDeleteQuery
+public interface IDeleteQuery: IBuildQuery
 {
-    IBuildQuery Delete(Action<DeleteClause> configureDelete);
-    IBuildQuery DetachDelete(Action<DeleteClause> configureDelete);
+    IDeleteQuery Delete(Action<DeleteClause> configureDelete);
+    IDeleteQuery DetachDelete(Action<DeleteClause> configureDelete);
 }

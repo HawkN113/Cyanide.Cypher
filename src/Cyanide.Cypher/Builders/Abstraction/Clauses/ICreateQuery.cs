@@ -1,6 +1,6 @@
 ﻿namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
-public interface ICreateQuery
+public interface ICreateQuery: IReturnQuery
 {
-    IBuildQuery Create(Action<CreateClause> configureCreate);
+    ICreateQuery Create(Action<CreateClause> configureCreate);
 }

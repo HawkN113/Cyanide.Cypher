@@ -8,6 +8,7 @@ internal class QueryStateValidator(bool enableValidation)
     [
         QueryState.Match,
         QueryState.Create,
+        QueryState.OptionalMatch
     ];
     
     private readonly Dictionary<QueryState, HashSet<QueryState>> _validTransitions = new()
