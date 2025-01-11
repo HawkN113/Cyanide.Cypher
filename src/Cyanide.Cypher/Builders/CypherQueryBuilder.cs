@@ -5,7 +5,7 @@ using Cyanide.Cypher.Builders.Validation;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CypherQueryBuilder : IStartQuery, IOrderBySubQuery, ICreateQuery, IDeleteQuery, IWhereSubQuery, IReturnQuery,
+public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDeleteQuery, IWhereSubQuery, IReturnQuery,
     IBuildQuery, IMatchQuery, IOptMatchQuery
 {
     private readonly StringBuilder _createClauses = new();
@@ -24,36 +24,6 @@ public sealed class CypherQueryBuilder : IStartQuery, IOrderBySubQuery, ICreateQ
         var returnBuilder = new ReturnClause(_returnClauses);
         configureReturn(returnBuilder);
         returnBuilder.End();
-        return this;
-    }
-
-    /// <summary>
-    /// First (Match)
-    /// </summary>
-    /// <param name="configureMatch"></param>
-    /// <returns></returns>
-    IMatchQuery IStartQuery.Match(Action<MatchClause> configureMatch)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.Match);
-
-        var matchBuilder = new MatchClause(_matchClauses);
-        configureMatch(matchBuilder);
-        matchBuilder.End();
-        return this;
-    }
-
-    /// <summary>
-    /// First (Create)
-    /// </summary>
-    /// <param name="configureCreate"></param>
-    /// <returns></returns>
-    ICreateQuery IStartQuery.Create(Action<CreateClause> configureCreate)
-    {
-        _queryStateValidator.ValidateTransition(QueryState.Create);
-
-        var createBuilder = new CreateClause(_createClauses);
-        configureCreate(createBuilder);
-        createBuilder.End();
         return this;
     }
 
