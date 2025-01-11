@@ -227,6 +227,24 @@ public class CypherQueryBuilderTests
             "MATCH (a:Person {name: 'Martin Sheen'}) OPTIONAL MATCH (a)-[r:DIRECTED]->() RETURN a.name, r";
         Assert.Equal(resultQuery, expectedQuery);
     }
+    
+    
+    [Fact]
+    public void Translate_With_OPTIONAL_MATCH_InvalidOrderClause_ReturnsException()
+    {
+        // Act
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            _queryBuilder
+                .OptionalMatch(q =>
+                    q.WithNode(new Entity("Person", "a", [new Field("name", "'Martin Sheen'")]))
+                )
+                .Return(q =>
+                    q.WithField("name", "a").WithField("r")
+                )
+                .Build();
+        });
+    }
 
     #endregion
 

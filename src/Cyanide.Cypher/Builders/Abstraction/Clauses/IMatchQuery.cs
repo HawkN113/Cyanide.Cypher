@@ -6,7 +6,7 @@ public interface IMatchQuery
 {
     IOptMatchQuery Match(Action<MatchClause> configureMatch);
     IOrderBySubQuery Return(Action<ReturnClause> configureReturn);
-    ISelectQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
+    IReturnQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
     IBuildQuery Create(Action<CreateClause> configureCreate);
     IBuildQuery Delete(Action<DeleteClause> configureDelete);
     IBuildQuery DetachDelete(Action<DeleteClause> configureDelete);

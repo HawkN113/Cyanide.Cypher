@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
-public interface ISelectQuery
+public interface IReturnQuery
 {
     IOrderBySubQuery Return(Action<ReturnClause> configureReturn);
     string Build();

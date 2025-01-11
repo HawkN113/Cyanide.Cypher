@@ -4,7 +4,7 @@ namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
 public interface IOptMatchQuery
 {
-    ISelectQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
+    IReturnQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
     IOrderBySubQuery Return(Action<ReturnClause> configureReturn);
     IMatchQuery Match(Action<MatchClause> configureMatch);
     IMatchQuery Where(Action<WhereSubClause> conditions);
