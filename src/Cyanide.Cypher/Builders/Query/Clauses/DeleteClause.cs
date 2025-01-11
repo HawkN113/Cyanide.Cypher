@@ -1,14 +1,14 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelete): IRelationship<DeleteClause>, INode<DeleteClause>, IEmptyNode<DeleteClause>
 {
     private readonly List<string> _patterns = [];
     
     /// <summary>
-    /// Add a node (entity) to the MATCH clause
+    /// Delete a node (entity) to the DELETE clause
     /// </summary>
     /// <returns></returns>
     public DeleteClause WithEmptyNode()
@@ -18,7 +18,7 @@ public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelet
     }
 
     /// <summary>
-    /// Add a node (entity) to the DELETE clause
+    /// Delete a node (entity) to the DELETE clause
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -29,7 +29,7 @@ public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelet
     }
 
     /// <summary>
-    /// Return a node (entity) to the DELETE clause
+    /// Delete a node (entity) to the DELETE clause <br/>
     /// Sample: p
     /// </summary>
     /// <param name="type"></param>
@@ -40,7 +40,7 @@ public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelet
     }
 
     /// <summary>
-    /// Add a relationship to the MATCH clause
+    /// Add a relationship to the DELETE clause
     /// </summary>
     /// <param name="type"></param>
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
@@ -53,7 +53,7 @@ public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelet
     }
 
     /// <summary>
-    /// Add a relationship to the MATCH clause
+    /// Add a relationship to the DELETE clause
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="relation"></param>
@@ -66,11 +66,7 @@ public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelet
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
-
-    /// <summary>
-    /// End the MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;

@@ -1,4 +1,6 @@
-﻿namespace Cyanide.Cypher.Builders.Abstraction;
+﻿using Cyanide.Cypher.Builders.Query;
+
+namespace Cyanide.Cypher.Builders.Abstraction;
 
 public interface INode<out T> where T : class
 {

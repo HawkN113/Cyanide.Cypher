@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public sealed class MatchClause(StringBuilder matchClauses): IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
 {
@@ -32,7 +32,14 @@ public sealed class MatchClause(StringBuilder matchClauses): IRelationship<Match
     /// Add a relationship to the MATCH clause
     /// </summary>
     /// <param name="type"></param>
-    /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
+    /// <param name="relation">
+    /// <param name="alias"></param>
+    /// NonDirect (non-directed) <br/>
+    /// Direct (directed) <br/>
+    /// InDirect (in-directed) <br/>
+    /// UnDirect (undirected) <br/>
+    /// BiDirect (bidirectional)
+    /// </param>
     /// <param name="alias"></param>
     /// <returns></returns>
     public MatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
@@ -55,11 +62,7 @@ public sealed class MatchClause(StringBuilder matchClauses): IRelationship<Match
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
-
-    /// <summary>
-    /// End the MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;

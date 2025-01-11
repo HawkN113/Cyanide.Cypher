@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public sealed class OrderBySubClause(StringBuilder orderByClauses): INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
 {
@@ -19,7 +19,7 @@ public sealed class OrderBySubClause(StringBuilder orderByClauses): INode<OrderB
     }
     
     /// <summary>
-    /// Return a property to the ORDER BY clause
+    /// Return a property to the ORDER BY clause <br/>
     /// Sample: p.bornIn
     /// </summary>
     /// <param name="propertyName"></param>
@@ -43,15 +43,15 @@ public sealed class OrderBySubClause(StringBuilder orderByClauses): INode<OrderB
         return this;
     }
     
+    /// <summary>
+    /// Add DESC for the ORDER BY clause <br/>
+    /// Sample: ORDER BY p.name DESC
+    /// </summary>
     public void Descending()
     {
         _patterns.Add(" DESC");
     }
-
-    /// <summary>
-    /// End the MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;

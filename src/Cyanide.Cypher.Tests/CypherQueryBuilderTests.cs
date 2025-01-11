@@ -1,5 +1,5 @@
-﻿using Cyanide.Cypher.Builders;
-using Cyanide.Cypher.Builders.Abstraction.Clauses;
+﻿using Cyanide.Cypher.Builders.Abstraction.Clauses;
+using Cyanide.Cypher.Builders.Query;
 
 namespace Cyanide.Cypher.Tests;
 
@@ -26,9 +26,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)-[:LIVES_IN]->(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -48,9 +46,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)<-[:LIVES_IN]-(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)<-[:LIVES_IN]-(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -70,9 +66,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)->[:LIVES_IN]<-(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)->[:LIVES_IN]<-(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -92,9 +86,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)<-[:LIVES_IN]->(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)<-[:LIVES_IN]->(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -114,9 +106,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]-(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)-[:LIVES_IN]-(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -136,9 +126,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[x:LIVES_IN]-(c:City) RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)-[x:LIVES_IN]-(c:City) RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -155,9 +143,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (a:Person {name: 'Martin Sheen'}) RETURN a.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (a:Person {name: 'Martin Sheen'}) RETURN a.name", resultQuery);
     }
 
     [Fact]
@@ -176,9 +162,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (:Movie {title: 'Wall Street'})<-[:ACTED_IN|DIRECTED]-(person:Person) RETURN person.name AS person";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (:Movie {title: 'Wall Street'})<-[:ACTED_IN|DIRECTED]-(person:Person) RETURN person.name AS person",
+            resultQuery);
     }
 
     [Fact]
@@ -187,7 +173,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.WithNode(new Entity("Person", "a",[new Field("name","'Martin Sheen'")]))
+                q.WithNode(new Entity("Person", "a", [new Field("name", "'Martin Sheen'")]))
             )
             .Match(q =>
                 q.WithNode(new Entity("a"))
@@ -200,9 +186,8 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (a:Person {name: 'Martin Sheen'}) MATCH (a)-[r:DIRECTED]->() RETURN a.name, r";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (a:Person {name: 'Martin Sheen'}) MATCH (a)-[r:DIRECTED]->() RETURN a.name, r",
+            resultQuery);
     }
 
     [Fact]
@@ -224,27 +209,8 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (a:Person {name: 'Martin Sheen'}) OPTIONAL MATCH (a)-[r:DIRECTED]->() RETURN a.name, r";
-        Assert.Equal(resultQuery, expectedQuery);
-    }
-    
-    
-    [Fact(Skip = "Not ready")]
-    public void Translate_With_OPTIONAL_MATCH_InvalidOrderClause_ReturnsException()
-    {
-        // Act
-        Assert.Throws<InvalidOperationException>(() =>
-        {
-            _queryBuilder
-                .OptionalMatch(q =>
-                    q.WithNode(new Entity("Person", "a", [new Field("name", "'Martin Sheen'")]))
-                )
-                .Return(q =>
-                    q.WithField("name", "a").WithField("r")
-                )
-                .Build();
-        });
+        Assert.Equal("MATCH (a:Person {name: 'Martin Sheen'}) OPTIONAL MATCH (a)-[r:DIRECTED]->() RETURN a.name, r",
+            resultQuery);
     }
 
     #endregion
@@ -270,9 +236,7 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 RETURN p.name, c.name", resultQuery);
     }
 
     [Fact]
@@ -294,9 +258,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city=\"New York\" RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city=\"New York\" RETURN p.name, c.name",
+            resultQuery);
     }
 
     [Fact]
@@ -318,9 +282,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 OR b.city=\"New York\" RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 OR b.city=\"New York\" RETURN p.name, c.name",
+            resultQuery);
     }
 
     [Fact]
@@ -342,9 +306,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 XOR b.city=\"New York\" RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 XOR b.city=\"New York\" RETURN p.name, c.name",
+            resultQuery);
     }
 
     [Fact]
@@ -366,9 +330,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 NOT b.city=\"New York\" RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 NOT b.city=\"New York\" RETURN p.name, c.name",
+            resultQuery);
     }
 
     [Fact]
@@ -390,11 +354,11 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NOT NULL RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NOT NULL RETURN p.name, c.name",
+            resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_WHERE_IS_NULL_Query_ReturnsCorrectCypherQuery()
     {
@@ -414,9 +378,8 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NULL RETURN p.name, c.name";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city IS NULL RETURN p.name, c.name",
+            resultQuery);
     }
 
     #endregion
@@ -429,15 +392,13 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.WithNode(new Entity("Person", "charlie",[new Field("name","'Charlie Sheen'")]))
+                q.WithNode(new Entity("Person", "charlie", [new Field("name", "'Charlie Sheen'")]))
             )
             .Create(q => q.WithNode(new Entity("Actor", "charlie")))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (charlie:Person {name: 'Charlie Sheen'}) CREATE (charlie:Actor)";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (charlie:Person {name: 'Charlie Sheen'}) CREATE (charlie:Actor)", resultQuery);
     }
 
     [Fact]
@@ -453,9 +414,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (person:Person) WHERE person.name IS NOT NULL CREATE (anotherPerson:Person {name: person.name})";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "MATCH (person:Person) WHERE person.name IS NOT NULL CREATE (anotherPerson:Person {name: person.name})",
+            resultQuery);
     }
 
     [Fact]
@@ -465,14 +426,14 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q =>
                 q.WithNode(new Entity("Person", "n",
-                    [new Field("name", "'Andy'"), 
-                        new Field("title", "'Developer'")])))
+                [
+                    new Field("name", "'Andy'"),
+                    new Field("title", "'Developer'")
+                ])))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "CREATE (n:Person {name: 'Andy', title: 'Developer'})";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("CREATE (n:Person {name: 'Andy', title: 'Developer'})", resultQuery);
     }
 
     [Fact]
@@ -482,14 +443,14 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q =>
                 q.WithNode(new Entity("Person", null,
-                [new Field("name", "'Andy'"), 
-                    new Field("title", "'Developer'")])))
+                [
+                    new Field("name", "'Andy'"),
+                    new Field("title", "'Developer'")
+                ])))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "CREATE (Person {name: 'Andy', title: 'Developer'})";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("CREATE (Person {name: 'Andy', title: 'Developer'})", resultQuery);
     }
 
     [Fact]
@@ -498,21 +459,21 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Create(q =>
-                q.WithRelationship(new Entity("WORKS_AT", ""), RelationshipType.Direct, 
-                        new Entity("Person", "andy", [new Field("name", "'Andy'")]), 
+                q.WithRelationship(new Entity("WORKS_AT", ""), RelationshipType.Direct,
+                        new Entity("Person", "andy", [new Field("name", "'Andy'")]),
                         new Entity("neo"))
                     .WithRelationship("WORKS_AT", RelationshipType.InDirect)
                     .WithNode(new Entity("Person", "michael", [new Field("name", "'Michael'")]))
             )
-            .Return(q => q.WithField("andy").WithField("michael"))                              
+            .Return(q => q.WithField("andy").WithField("michael"))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "CREATE (andy:Person {name: 'Andy'})-[:WORKS_AT]->(neo)<-[:WORKS_AT]-(michael:Person {name: 'Michael'}) RETURN andy, michael";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "CREATE (andy:Person {name: 'Andy'})-[:WORKS_AT]->(neo)<-[:WORKS_AT]-(michael:Person {name: 'Michael'}) RETURN andy, michael",
+            resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_CREATE_MultiNodes_ReturnsCorrectCypherQuery()
     {
@@ -521,42 +482,40 @@ public class CypherQueryBuilderTests
             .Create(q =>
                 q.WithNode(new Entity("Person", "keanu", [new Field("name", "'Keanu Reever'")]))
                     .WithNode(new Entity("Person", "laurence", [new Field("name", "'Laurence Fishburne'")]))
-                    .WithRelationship(new Entity("ACTED_IN",""), RelationshipType.Direct, new Entity("keanu"),
+                    .WithRelationship(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("keanu"),
                         new Entity("theMatrix"))
-                    .WithRelationship(new Entity("ACTED_IN",""), RelationshipType.Direct, new Entity("laurence"),
+                    .WithRelationship(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("laurence"),
                         new Entity("theMatrix"))
             )
             .Build();
 
         // Assert
-        var expectedQuery =
-            "CREATE (keanu:Person {name: 'Keanu Reever'}), (laurence:Person {name: 'Laurence Fishburne'}), (keanu)-[:ACTED_IN]->(theMatrix), (laurence)-[:ACTED_IN]->(theMatrix)";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal(
+            "CREATE (keanu:Person {name: 'Keanu Reever'}), (laurence:Person {name: 'Laurence Fishburne'}), (keanu)-[:ACTED_IN]->(theMatrix), (laurence)-[:ACTED_IN]->(theMatrix)",
+            resultQuery);
     }
 
     #endregion
-    
+
     #region DELETE
-    
+
     [Fact]
     public void Translate_With_DELETE_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.WithRelationship(new Entity("ACTED_IN", "r"), RelationshipType.Direct, 
-                        new Entity("Person", "n", [new Field("name", "'Laurence Fishburne'")]), 
-                        new Entity(string.Empty))
+                q.WithRelationship(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
+                    new Entity("Person", "n", [new Field("name", "'Laurence Fishburne'")]),
+                    new Entity(string.Empty))
             )
             .Delete(q => q.WithNode("r"))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (n:Person {name: 'Laurence Fishburne'})-[r:ACTED_IN]->() DELETE r";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (n:Person {name: 'Laurence Fishburne'})-[r:ACTED_IN]->() DELETE r", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_DETACH_DELETE_ReturnsCorrectCypherQuery()
     {
@@ -569,15 +528,13 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (n:Person {name: 'Carrie-Anne Moss'}) DETACH DELETE n";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (n:Person {name: 'Carrie-Anne Moss'}) DETACH DELETE n", resultQuery);
     }
-    
+
     #endregion
-    
+
     #region ORDER BY
-    
+
     [Fact]
     public void Translate_With_ORDER_BY_ReturnsCorrectCypherQuery()
     {
@@ -591,11 +548,9 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (n) RETURN n.name, n.age ORDER BY n.name, n.age";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (n) RETURN n.name, n.age ORDER BY n.name, n.age", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_ORDER_BY_DESC_ReturnsCorrectCypherQuery()
     {
@@ -609,15 +564,13 @@ public class CypherQueryBuilderTests
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (n) RETURN n.name, n.age ORDER BY n.name DESC";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (n) RETURN n.name, n.age ORDER BY n.name DESC", resultQuery);
     }
-    
+
     #endregion
-    
+
     #region SELECT
-    
+
     [Fact]
     public void Translate_With_SELECT_RETURN_Query_ReturnsCorrectCypherQuery()
     {
@@ -625,19 +578,17 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithRelationship(
-                    new Entity("r"), 
+                    new Entity("r"),
                     RelationshipType.Direct,
-                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]), 
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
                     new Entity("movie"))
             )
             .Return(q => q.WithRelation("r"))
             .Build();
 
         // Assert
-        var expectedQuery =
-            "MATCH (:Person {name: 'Oliver Stone'})-[r]->(movie) RETURN type(r)";
-        Assert.Equal(resultQuery, expectedQuery);
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})-[r]->(movie) RETURN type(r)", resultQuery);
     }
-    
+
     #endregion
 }

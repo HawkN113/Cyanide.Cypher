@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public sealed class OptMatchClause(StringBuilder optMatchClauses): IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
 {
@@ -32,7 +32,13 @@ public sealed class OptMatchClause(StringBuilder optMatchClauses): IRelationship
     /// Add a relationship to the OPTIONAL MATCH clause
     /// </summary>
     /// <param name="type"></param>
-    /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
+    /// <param name="relation">
+    /// NonDirect (non-directed) <br/>
+    /// Direct (directed) <br/>
+    /// InDirect (in-directed) <br/>
+    /// UnDirect (undirected) <br/>
+    /// BiDirect (bidirectional)
+    /// </param>
     /// <param name="alias"></param>
     /// <returns></returns>
     public OptMatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
@@ -55,11 +61,7 @@ public sealed class OptMatchClause(StringBuilder optMatchClauses): IRelationship
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
-
-    /// <summary>
-    /// End the OPTIONAL MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;

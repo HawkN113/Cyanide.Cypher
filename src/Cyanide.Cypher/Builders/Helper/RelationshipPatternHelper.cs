@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Query;
 
 namespace Cyanide.Cypher.Builders;
 

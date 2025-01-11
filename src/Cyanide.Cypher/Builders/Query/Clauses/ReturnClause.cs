@@ -1,14 +1,14 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
 {
     private readonly List<string> _patterns = [];
     
     /// <summary>
-    /// Return a relationship to the RETURN clause
+    /// Return a relationship to the RETURN clause <br/>
     /// Sample: type(r)
     /// </summary>
     /// <param name="alias"></param>
@@ -20,7 +20,7 @@ public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
     }
     
     /// <summary>
-    /// Return a named property to the RETURN clause
+    /// Return a named property to the RETURN clause <br/>
     /// Sample: p.bornIn AS Born
     /// </summary>
     /// <param name="fieldName"></param>
@@ -34,7 +34,7 @@ public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
     }
 
     /// <summary>
-    /// Return a property to the RETURN clause
+    /// Return a property to the RETURN clause <br/>
     /// Sample: p.bornIn
     /// </summary>
     /// <param name="fieldName"></param>
@@ -47,7 +47,7 @@ public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
     }
 
     /// <summary>
-    /// Return a node (entity) to the RETURN clause
+    /// Return a node (entity) to the RETURN clause <br/>
     /// Sample: p
     /// </summary>
     /// <param name="fieldAlias"></param>
@@ -57,11 +57,7 @@ public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
         _patterns.Add($"{fieldAlias}");
         return this;
     }
-
-    /// <summary>
-    /// End the MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;

@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query;
 
 public sealed class CreateClause(StringBuilder createClauses): IRelationship<CreateClause>, INode<CreateClause>
 {
@@ -9,7 +9,7 @@ public sealed class CreateClause(StringBuilder createClauses): IRelationship<Cre
     private int _countNodes;
 
     /// <summary>
-    /// Add a node (entity) to the MATCH clause
+    /// Add a node (entity) to the CREATE clause
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -21,7 +21,7 @@ public sealed class CreateClause(StringBuilder createClauses): IRelationship<Cre
     }
 
     /// <summary>
-    /// Add a relationship to the MATCH clause
+    /// Add a relationship to the CREATE clause
     /// </summary>
     /// <param name="type"></param>
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
@@ -34,7 +34,7 @@ public sealed class CreateClause(StringBuilder createClauses): IRelationship<Cre
     }
 
     /// <summary>
-    /// Add a relationship to the MATCH clause
+    /// Add a relationship to the CREATE clause
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="relation"></param>
@@ -47,11 +47,7 @@ public sealed class CreateClause(StringBuilder createClauses): IRelationship<Cre
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
-
-    /// <summary>
-    /// End the MATCH clause
-    /// </summary>
-    /// <returns></returns>
+    
     internal void End()
     {
         if (_patterns.Count <= 0) return;
