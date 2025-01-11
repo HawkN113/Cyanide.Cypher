@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDelete): IRelationship<DeleteBuilder>, INode<DeleteBuilder>, IEmptyNode<DeleteBuilder>
+public sealed class DeleteClause(StringBuilder createClauses, bool isDetachDelete): IRelationship<DeleteClause>, INode<DeleteClause>, IEmptyNode<DeleteClause>
 {
     private readonly List<string> _patterns = [];
     
@@ -11,9 +11,9 @@ public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDele
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <returns></returns>
-    public DeleteBuilder WithEmptyNode()
+    public DeleteClause WithEmptyNode()
     {
-        _patterns.AddRange(NodeHelper.EmptyNode());
+        _patterns.AddRange(NodePatternBuilder.CreateEmptyNode());
         return this;
     }
 
@@ -22,9 +22,9 @@ public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDele
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public DeleteBuilder WithNode(Entity entity)
+    public DeleteClause WithNode(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity));
+        _patterns.AddRange(NodePatternBuilder.CreateNode(entity));
         return this;
     }
 
@@ -46,9 +46,9 @@ public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDele
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public DeleteBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public DeleteClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
-        _patterns.Add(RelationshipHelper.Create(type, relation, alias));
+        _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
     }
 
@@ -60,10 +60,10 @@ public sealed class DeleteBuilder(StringBuilder createClauses, bool isDetachDele
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public DeleteBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public DeleteClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
-        _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));
+        _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
 

@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders;
 
-internal static class RelationshipHelper
+internal static class RelationshipPatternHelper
 {
     public static string Create(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
@@ -25,10 +25,10 @@ internal static class RelationshipHelper
         var label = GetRelationLabel(entity);
 
         var leftLabel = left is not null
-            ? new StringBuilder().Append(string.Join("", NodeHelper.Node(left))).ToString()
+            ? new StringBuilder().Append(string.Join("", NodePatternBuilder.CreateNode(left))).ToString()
             : string.Empty;
         var rightLabel = right is not null
-            ? new StringBuilder().Append(string.Join("", NodeHelper.Node(right))).ToString()
+            ? new StringBuilder().Append(string.Join("", NodePatternBuilder.CreateNode(right))).ToString()
             : string.Empty;
 
         var relationship = relation switch

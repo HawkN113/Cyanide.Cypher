@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class OrderByBuilder(StringBuilder orderByClauses): INode<OrderByBuilder>
+public sealed class OrderBySubClause(StringBuilder orderByClauses): INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
@@ -12,9 +12,9 @@ public sealed class OrderByBuilder(StringBuilder orderByClauses): INode<OrderByB
     /// Add a node (entity) to the ORDER BY clause
     /// </summary>
     /// <returns></returns>
-    public OrderByBuilder WithEmptyNode()
+    public OrderBySubClause WithEmptyNode()
     {
-        _patterns.AddRange(NodeHelper.EmptyNode());
+        _patterns.AddRange(NodePatternBuilder.CreateEmptyNode());
         return this;
     }
     
@@ -25,7 +25,7 @@ public sealed class OrderByBuilder(StringBuilder orderByClauses): INode<OrderByB
     /// <param name="propertyName"></param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public OrderByBuilder WithField(string propertyName, string alias)
+    public OrderBySubClause WithField(string propertyName, string alias)
     {
         _patterns.Add($"{alias}.{propertyName}");
         _countProperties += 1;
@@ -37,9 +37,9 @@ public sealed class OrderByBuilder(StringBuilder orderByClauses): INode<OrderByB
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public OrderByBuilder WithNode(Entity entity)
+    public OrderBySubClause WithNode(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity));
+        _patterns.AddRange(NodePatternBuilder.CreateNode(entity));
         return this;
     }
     

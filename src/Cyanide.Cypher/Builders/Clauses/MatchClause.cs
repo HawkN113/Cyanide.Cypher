@@ -3,20 +3,28 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<CreateBuilder>, INode<CreateBuilder>
+public sealed class MatchClause(StringBuilder matchClauses): IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
-    private int _countNodes;
+
+    /// <summary>
+    /// Add a node (entity) to the MATCH clause
+    /// </summary>
+    /// <returns></returns>
+    public MatchClause WithEmptyNode()
+    {
+        _patterns.AddRange(NodePatternBuilder.CreateEmptyNode());
+        return this;
+    }
 
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public CreateBuilder WithNode(Entity entity)
+    public MatchClause WithNode(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity));
-        _countNodes += 1;
+        _patterns.AddRange(NodePatternBuilder.CreateNode(entity));
         return this;
     }
 
@@ -27,12 +35,12 @@ public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<Cr
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public CreateBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public MatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
-        _patterns.Add(RelationshipHelper.Create(type, relation, alias));
+        _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
     }
-
+    
     /// <summary>
     /// Add a relationship to the MATCH clause
     /// </summary>
@@ -41,10 +49,10 @@ public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<Cr
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public CreateBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public MatchClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
-        _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));
+        _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
 
@@ -55,12 +63,12 @@ public sealed class CreateBuilder(StringBuilder createClauses): IRelationship<Cr
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (createClauses.Length > 0)
+        if (matchClauses.Length > 0)
         {
-            createClauses.Append(' ');
+            matchClauses.Append(' ');
         }
 
-        createClauses.Append("CREATE ");
-        createClauses.Append(_countNodes > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
+        matchClauses.Append("MATCH ");
+        matchClauses.Append(string.Join("", _patterns));
     }
 }

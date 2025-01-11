@@ -2,9 +2,9 @@
 
 namespace Cyanide.Cypher.Builders;
 
-internal static class NodeHelper
+internal static class NodePatternBuilder
 {
-    public static List<string> EmptyNode()
+    public static List<string> CreateEmptyNode()
     {
         List<string> patterns =
         [
@@ -13,7 +13,7 @@ internal static class NodeHelper
         return patterns;
     }
 
-    public static List<string> Node(Entity entity)
+    public static List<string> CreateNode(Entity entity)
     {
         List<string> patterns = [];
         if (entity.Properties is not null && entity.Properties.Any())

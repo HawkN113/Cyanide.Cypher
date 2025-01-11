@@ -4,5 +4,5 @@ namespace Cyanide.Cypher.Builders.Abstraction.Subclauses;
 
 public interface IWhereSubQuery
 {
-    IMatchQuery Where(Action<WhereBuilder> conditions);
+    IMatchQuery Where(Action<WhereSubClause> conditions);
 }

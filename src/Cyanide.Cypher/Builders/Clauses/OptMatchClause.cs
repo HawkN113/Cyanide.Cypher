@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationship<OptMatchBuilder>, INode<OptMatchBuilder>, IEmptyNode<OptMatchBuilder>
+public sealed class OptMatchClause(StringBuilder optMatchClauses): IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
 {
     private readonly List<string> _patterns = [];
     
@@ -11,9 +11,9 @@ public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationshi
     /// Add a node (entity) to the OPTIONAL MATCH clause
     /// </summary>
     /// <returns></returns>
-    public OptMatchBuilder WithEmptyNode()
+    public OptMatchClause WithEmptyNode()
     {
-        _patterns.AddRange(NodeHelper.EmptyNode());
+        _patterns.AddRange(NodePatternBuilder.CreateEmptyNode());
         return this;
     }
 
@@ -22,9 +22,9 @@ public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationshi
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public OptMatchBuilder WithNode(Entity entity)
+    public OptMatchClause WithNode(Entity entity)
     {
-        _patterns.AddRange(NodeHelper.Node(entity));
+        _patterns.AddRange(NodePatternBuilder.CreateNode(entity));
         return this;
     }
 
@@ -35,9 +35,9 @@ public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationshi
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public OptMatchBuilder WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public OptMatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
-        _patterns.Add(RelationshipHelper.Create(type, relation, alias));
+        _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
     }
     
@@ -49,10 +49,10 @@ public sealed class OptMatchBuilder(StringBuilder optMatchClauses): IRelationshi
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public OptMatchBuilder WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public OptMatchClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
-        _patterns.Add(RelationshipHelper.Create(entity, relation, left, right));
+        _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
 

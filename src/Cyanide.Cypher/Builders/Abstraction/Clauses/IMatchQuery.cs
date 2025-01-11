@@ -4,10 +4,10 @@ namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
 public interface IMatchQuery
 {
-    IOptMatchQuery Match(Action<MatchBuilder> configureMatch);
-    IOrderBySubQuery Select(Action<SelectBuilder> configureReturn);
-    ISelectQuery OptionalMatch(Action<OptMatchBuilder> configureOptMatch);
-    IBuildQuery Create(Action<CreateBuilder> configureCreate);
-    IBuildQuery Delete(Action<DeleteBuilder> configureDelete);
-    IBuildQuery DetachDelete(Action<DeleteBuilder> configureDelete);
+    IOptMatchQuery Match(Action<MatchClause> configureMatch);
+    IOrderBySubQuery Return(Action<ReturnClause> configureReturn);
+    ISelectQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
+    IBuildQuery Create(Action<CreateClause> configureCreate);
+    IBuildQuery Delete(Action<DeleteClause> configureDelete);
+    IBuildQuery DetachDelete(Action<DeleteClause> configureDelete);
 }

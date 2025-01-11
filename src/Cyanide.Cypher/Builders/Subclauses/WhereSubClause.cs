@@ -2,29 +2,29 @@
 
 namespace Cyanide.Cypher.Builders;
 
-public sealed class WhereBuilder(StringBuilder whereClauses)
+public sealed class WhereSubClause(StringBuilder whereClauses)
 {
     private readonly List<string> _patterns = [];
 
-    public WhereBuilder Query(string query)
+    public WhereSubClause Query(string query)
     {
         _patterns.Add($"{query}");
         return this;
     }
 
-    public void Or(Action<WhereBuilder> nestedConditions)
+    public void Or(Action<WhereSubClause> nestedConditions)
     {
         _patterns.Add(" OR ");
         nestedConditions(this);
     }
 
-    public void Not(Action<WhereBuilder> nestedConditions)
+    public void Not(Action<WhereSubClause> nestedConditions)
     {
         _patterns.Add(" NOT ");
         nestedConditions(this);
     }
 
-    public void Xor(Action<WhereBuilder> nestedConditions)
+    public void Xor(Action<WhereSubClause> nestedConditions)
     {
         _patterns.Add(" XOR ");
         nestedConditions(this);
@@ -40,7 +40,7 @@ public sealed class WhereBuilder(StringBuilder whereClauses)
         _patterns.Add($"{query} IS NULL");
     }
 
-    public void And(Action<WhereBuilder> nestedConditions)
+    public void And(Action<WhereSubClause> nestedConditions)
     {
         _patterns.Add(" AND ");
         nestedConditions(this);

@@ -4,6 +4,6 @@ namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
 public interface ISelectQuery
 {
-    IOrderBySubQuery Select(Action<SelectBuilder> configureReturn);
+    IOrderBySubQuery Return(Action<ReturnClause> configureReturn);
     string Build();
 }

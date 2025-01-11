@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders;
 
-public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
+public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
 {
     private readonly List<string> _patterns = [];
     
@@ -13,7 +13,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
     /// </summary>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public SelectBuilder WithRelation(string alias)
+    public ReturnClause WithRelation(string alias)
     {
         _patterns.Add($"type({alias})");
         return this;
@@ -27,7 +27,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
     /// <param name="fieldAlias"></param>
     /// <param name="aliasName"></param>
     /// <returns></returns>
-    public SelectBuilder WithField(string fieldName, string fieldAlias, string aliasName)
+    public ReturnClause WithField(string fieldName, string fieldAlias, string aliasName)
     {
         _patterns.Add($"{fieldAlias}.{fieldName} AS {aliasName}");
         return this;
@@ -40,7 +40,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
     /// <param name="fieldName"></param>
     /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public SelectBuilder WithField(string fieldName, string fieldAlias)
+    public ReturnClause WithField(string fieldName, string fieldAlias)
     {
         _patterns.Add($"{fieldAlias}.{fieldName}");
         return this;
@@ -52,7 +52,7 @@ public class SelectBuilder(StringBuilder returnClauses): IField<SelectBuilder>
     /// </summary>
     /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public SelectBuilder WithField(string fieldAlias)
+    public ReturnClause WithField(string fieldAlias)
     {
         _patterns.Add($"{fieldAlias}");
         return this;

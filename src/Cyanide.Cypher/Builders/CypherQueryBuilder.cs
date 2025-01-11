@@ -14,73 +14,73 @@ public sealed class CypherQueryBuilder : IOrderBySubQuery, ICreateQuery, IDelete
     private readonly StringBuilder _returnClauses = new();
     private readonly StringBuilder _orderByClauses = new();
 
-    public IOrderBySubQuery Select(Action<SelectBuilder> configureReturn)
+    public IOrderBySubQuery Return(Action<ReturnClause> configureReturn)
     {
-        var returnBuilder = new SelectBuilder(_returnClauses);
+        var returnBuilder = new ReturnClause(_returnClauses);
         configureReturn(returnBuilder);
         returnBuilder.End();
         return this;
     }
 
-    public IBuildQuery Create(Action<CreateBuilder> configureCreate)
+    public IBuildQuery Create(Action<CreateClause> configureCreate)
     {
-        var createBuilder = new CreateBuilder(_createClauses);
+        var createBuilder = new CreateClause(_createClauses);
         configureCreate(createBuilder);
         createBuilder.End();
         return this;
     }
 
-    public IBuildQuery OrderBy(Action<OrderByBuilder> configureOrderBy)
+    public IBuildQuery OrderBy(Action<OrderBySubClause> configureOrderBy)
     {
-        var orderByBuilder = new OrderByBuilder(_orderByClauses);
+        var orderByBuilder = new OrderBySubClause(_orderByClauses);
         configureOrderBy(orderByBuilder);
         orderByBuilder.End();
         return this;
     }
 
-    public IOptMatchQuery Match(Action<MatchBuilder> configureMatch)
+    public IOptMatchQuery Match(Action<MatchClause> configureMatch)
     {
-        var matchBuilder = new MatchBuilder(_matchClauses);
+        var matchBuilder = new MatchClause(_matchClauses);
         configureMatch(matchBuilder);
         matchBuilder.End();
         return this;
     }
 
-    public ISelectQuery OptionalMatch(Action<OptMatchBuilder> configureOptMatch)
+    public ISelectQuery OptionalMatch(Action<OptMatchClause> configureOptMatch)
     {
-        var optMatchBuilder = new OptMatchBuilder(_optMatchClauses);
+        var optMatchBuilder = new OptMatchClause(_optMatchClauses);
         configureOptMatch(optMatchBuilder);
         optMatchBuilder.End();
         return this;
     }
 
-    IMatchQuery IOptMatchQuery.Match(Action<MatchBuilder> configureMatch)
+    IMatchQuery IOptMatchQuery.Match(Action<MatchClause> configureMatch)
     {
-        var matchBuilder = new MatchBuilder(_matchClauses);
+        var matchBuilder = new MatchClause(_matchClauses);
         configureMatch(matchBuilder);
         matchBuilder.End();
         return this;
     }
 
-    public IMatchQuery Where(Action<WhereBuilder> conditions)
+    public IMatchQuery Where(Action<WhereSubClause> conditions)
     {
-        var whereBuilder = new WhereBuilder(_whereClauses);
+        var whereBuilder = new WhereSubClause(_whereClauses);
         conditions(whereBuilder);
         whereBuilder.End();
         return this;
     }
 
-    public IBuildQuery Delete(Action<DeleteBuilder> configureDelete)
+    public IBuildQuery Delete(Action<DeleteClause> configureDelete)
     {
-        var deleteBuilder = new DeleteBuilder(_deleteClauses, false);
+        var deleteBuilder = new DeleteClause(_deleteClauses, false);
         configureDelete(deleteBuilder);
         deleteBuilder.End();
         return this;
     }
 
-    public IBuildQuery DetachDelete(Action<DeleteBuilder> configureDelete)
+    public IBuildQuery DetachDelete(Action<DeleteClause> configureDelete)
     {
-        var deleteBuilder = new DeleteBuilder(_deleteClauses, true);
+        var deleteBuilder = new DeleteClause(_deleteClauses, true);
         configureDelete(deleteBuilder);
         deleteBuilder.End();
         return this;
