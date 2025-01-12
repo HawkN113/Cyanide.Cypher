@@ -10,6 +10,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     private readonly StringBuilder _createClauses = new();
     private readonly StringBuilder _deleteClauses = new();
     private readonly StringBuilder _removeClauses = new();
+    private readonly StringBuilder _setClauses = new();
     private readonly StringBuilder _matchClauses = new();
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
@@ -41,6 +42,21 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
         var returnBuilder = new ReturnClause(_returnClauses);
         configureReturn(returnBuilder);
         returnBuilder.End();
+        return this;
+    }
+
+    /// <summary>
+    /// The SET clause is used to update labels on nodes and properties on nodes and relationships <br/>
+    /// Sample: SET n.Name <br/>
+    /// Sample: SET n.Name = 'Neo'
+    /// </summary>
+    /// <param name="configureSet"></param>
+    /// <returns></returns>
+    public ISetClause Set(Action<SetQueryClause> configureSet)
+    {
+        var setBuilder = new SetQueryClause(_setClauses);
+        configureSet(setBuilder);
+        setBuilder.End();
         return this;
     }
 
@@ -157,6 +173,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             _createClauses,
             _deleteClauses,
             _removeClauses,
+            _setClauses,
             _returnClauses,
             _orderByClauses
         };

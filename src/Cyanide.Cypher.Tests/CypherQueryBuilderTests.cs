@@ -609,4 +609,49 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
+    
+    #region SET
+
+    [Fact]
+    public void Translate_With_SET_WithProperties_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n", null, [new Field("name", "'Andy'")])))
+            .Set(q=>q.WithField("surname","n", "'Taylor'"))
+            .Return(q => q.WithField("name", "n").WithField("surname", "n"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n {name: 'Andy'}) SET n.surname = 'Taylor' RETURN n.name, n.surname", resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SET_WithMultiProperties_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n", null, [new Field("name", "'Andy'")])))
+            .Set(q=>q.WithField("position","n", "'Developer'").WithField("surname","n","'Taylor'"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n {name: 'Andy'}) SET n.position = 'Developer', n.surname = 'Taylor'", resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SET_WithCondition_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("p", null, [new Field("name", "'Peter'")])))
+            .Set(q=>q.WithQuery("p += {}"))
+            .Return(q => q.WithField("name", "p").WithField("age", "p"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (p {name: 'Peter'}) SET p += {} RETURN p.name, p.age", resultQuery);
+    }
+
+    #endregion
 }
