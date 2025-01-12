@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Abstraction.Clauses;
 
-public interface IMatchQuery: IOptMatchQuery, IDeleteQuery
+public interface IMatchQuery: IOptMatchQuery, IDeleteQuery, IRemoveQuery
 {
     /// <summary>
     /// MATCH clause <br/>

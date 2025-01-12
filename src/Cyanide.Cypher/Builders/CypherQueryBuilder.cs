@@ -9,6 +9,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
 {
     private readonly StringBuilder _createClauses = new();
     private readonly StringBuilder _deleteClauses = new();
+    private readonly StringBuilder _removeClauses = new();
     private readonly StringBuilder _matchClauses = new();
     private readonly StringBuilder _optMatchClauses = new();
     private readonly StringBuilder _whereClauses = new();
@@ -40,6 +41,20 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
         var returnBuilder = new ReturnClause(_returnClauses);
         configureReturn(returnBuilder);
         returnBuilder.End();
+        return this;
+    }
+
+    /// <summary>
+    /// The REMOVE clause is used to remove properties from nodes and relationships, and to remove labels from nodes. <br/>
+    /// Sample: REMOVE n.Name
+    /// </summary>
+    /// <param name="configureRemove"></param>
+    /// <returns></returns>
+    public IRemoveQuery Remove(Action<RemoveClause> configureRemove)
+    {
+        var removeBuilder = new RemoveClause(_removeClauses);
+        configureRemove(removeBuilder);
+        removeBuilder.End();
         return this;
     }
 
@@ -141,6 +156,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             _whereClauses,
             _createClauses,
             _deleteClauses,
+            _removeClauses,
             _returnClauses,
             _orderByClauses
         };

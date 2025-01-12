@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public class ReturnClause(StringBuilder returnClauses): IField<ReturnClause>
+public class ReturnClause(StringBuilder returnClauses): IFieldProperty<ReturnClause>, IFieldAlias<ReturnClause>
 {
     private readonly List<string> _patterns = [];
     
