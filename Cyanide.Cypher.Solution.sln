@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyanide.Cypher", "src\Cyani
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyanide.Cypher.Tests", "src\Cyanide.Cypher.Tests\Cyanide.Cypher.Tests.csproj", "{35750314-1DC7-4B4B-BB2D-4D2BEF1C8563}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyanide.Cypher.App", "src\Cyanide.Cypher.App\Cyanide.Cypher.App.csproj", "{10819B2C-BE66-4252-B517-88AE9CEDE689}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{35750314-1DC7-4B4B-BB2D-4D2BEF1C8563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35750314-1DC7-4B4B-BB2D-4D2BEF1C8563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35750314-1DC7-4B4B-BB2D-4D2BEF1C8563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10819B2C-BE66-4252-B517-88AE9CEDE689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10819B2C-BE66-4252-B517-88AE9CEDE689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10819B2C-BE66-4252-B517-88AE9CEDE689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10819B2C-BE66-4252-B517-88AE9CEDE689}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
