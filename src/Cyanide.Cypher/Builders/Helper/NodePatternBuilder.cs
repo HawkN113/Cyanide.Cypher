@@ -7,26 +7,16 @@ internal static class NodePatternBuilder
 {
     public static List<string> CreateEmptyNode()
     {
-        List<string> patterns =
-        [
-            "()"
-        ];
-        return patterns;
+        return ["()"];
     }
 
     public static List<string> CreateNode(Entity entity)
     {
-        List<string> patterns = [];
-        if (entity.Properties is not null && entity.Properties.Any())
+        var patterns = new List<string>();
+        if (entity.Properties is { Length: > 0 })
         {
-            StringBuilder result = new();
-            foreach (var property in entity.Properties)
-            {
-                result.Append($"{property.Label}: {property.Value}");
-                if (property != entity.Properties[^1])
-                    result.Append(", ");
-            }
-            patterns.AddRange(GetEntityLabel(entity, result));
+            var properties = string.Join(", ", entity.Properties.Select(p => $"{p.Label}: {p.Value}"));
+            patterns.AddRange(GetEntityLabel(entity, new StringBuilder(properties)));
         }
         else
         {
@@ -40,18 +30,14 @@ internal static class NodePatternBuilder
 
     private static List<string> GetEntityLabel(Entity entity, StringBuilder properties)
     {
-        List<string> patterns = [];
-        if (entity.Alias is null)
-        {
-            patterns.Add($"({entity.Type} {{{properties}}})");
-        }
-        else
-        {
-            patterns.Add(entity.Alias == ""
-                ? $"(:{entity.Type} {{{properties}}})"
-                : $"({entity.Alias}:{entity.Type} {{{properties}}})");
-        }
-
-        return patterns;
+        return
+        [
+            entity.Alias switch
+            {
+                null => $"({entity.Type} {{{properties}}})",
+                "" => $"(:{entity.Type} {{{properties}}})",
+                _ => $"({entity.Alias}:{entity.Type} {{{properties}}})"
+            }
+        ];
     }
 }
