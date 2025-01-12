@@ -16,6 +16,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
     private readonly StringBuilder _orderByClauses = new();
+    private readonly StringBuilder _limitClauses = new();
 
     /// <summary>
     /// ORDER BY ORDER BY is a sub-clause following RETURN <br/>
@@ -28,6 +29,21 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
         var orderByBuilder = new OrderBySubClause(_orderByClauses);
         configureOrderBy(orderByBuilder);
         orderByBuilder.End();
+        return this;
+    }
+
+    /// <summary>
+    /// LIMIT constrains the number of returned rows <br/>
+    /// Sample: LIMIT 1 + toInteger(3 * rand())
+    /// Sample: LIMIT 3
+    /// </summary>
+    /// <param name="configureLimit"></param>
+    /// <returns></returns>
+    public ILimitClause Limit(Action<LimitClause> configureLimit)
+    {
+        var limitBuilder = new LimitClause(_limitClauses);
+        configureLimit(limitBuilder);
+        limitBuilder.End();
         return this;
     }
 
@@ -175,7 +191,8 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             _removeClauses,
             _setClauses,
             _returnClauses,
-            _orderByClauses
+            _orderByClauses,
+            _limitClauses
         };
         foreach (var clause in clauses)
         {

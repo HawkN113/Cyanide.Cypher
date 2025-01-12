@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Abstraction.Clauses.Subclauses;
 
-public interface IOrderBySubQuery: IBuildQuery
+public interface IOrderBySubQuery: ILimitClause
 {
     /// <summary>
     /// ORDER BY ORDER BY is a sub-clause following RETURN <br/>

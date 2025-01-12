@@ -10,6 +10,7 @@
 - https://github.com/mike-lischke/vscode-antlr4/blob/master/doc/extension-settings.md#grammar-formatting
 - https://github.com/kaby76/Antlr4BuildTasks/blob/master/Antlr4BuildTasks/Antlr4BuildTasks.xml
 
+- https://neo4j.com/docs/cypher-manual/4.4/clauses/limit/
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/set/
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/remove/
 - https://neo4j.com/docs/cypher-manual/4.4/clauses/order-by/

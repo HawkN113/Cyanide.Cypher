@@ -654,4 +654,38 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
+    
+    #region LIMIT
+
+    [Fact]
+    public void Translate_With_LIMIT_WithTextCondition_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n")))
+            .Return(q => q.WithField("name", "n"))
+            .OrderBy(q => q.WithField("name", "n"))
+            .Limit(q => q.WithCount("1 + toInteger(3 * rand())"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name LIMIT 1 + toInteger(3 * rand())", resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_LIMIT_WithPositiveNumber_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n")))
+            .Return(q => q.WithField("name", "n"))
+            .OrderBy(q => q.WithField("name", "n"))
+            .Limit(q => q.WithCount(3))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name LIMIT 3", resultQuery);
+    }
+
+    #endregion
 }
