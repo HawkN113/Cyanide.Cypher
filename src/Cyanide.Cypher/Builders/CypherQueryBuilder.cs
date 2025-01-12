@@ -16,6 +16,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     private readonly StringBuilder _whereClauses = new();
     private readonly StringBuilder _returnClauses = new();
     private readonly StringBuilder _orderByClauses = new();
+    private readonly StringBuilder _skipClauses = new();
     private readonly StringBuilder _limitClauses = new();
 
     /// <summary>
@@ -44,6 +45,21 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
         var limitBuilder = new LimitClause(_limitClauses);
         configureLimit(limitBuilder);
         limitBuilder.End();
+        return this;
+    }
+    
+    /// <summary>
+    /// SKIP defines from which row to start including the rows in the output <br/>
+    /// Sample: SKIP 1 + toInteger(3 * rand())
+    /// Sample: SKIP 3
+    /// </summary>
+    /// <param name="configureSkip"></param>
+    /// <returns></returns>
+    public ISkipClause Skip(Action<SkipClause> configureSkip)
+    {
+        var skipBuilder = new SkipClause(_skipClauses);
+        configureSkip(skipBuilder);
+        skipBuilder.End();
         return this;
     }
 
@@ -192,6 +208,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             _setClauses,
             _returnClauses,
             _orderByClauses,
+            _skipClauses,
             _limitClauses
         };
         foreach (var clause in clauses)
@@ -201,7 +218,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
 
         return queryBuilder.ToString().Trim();
     }
-    
+
     private static void AppendClause(StringBuilder clause, StringBuilder queryBuilder)
     {
         if (clause.Length <= 0) return;

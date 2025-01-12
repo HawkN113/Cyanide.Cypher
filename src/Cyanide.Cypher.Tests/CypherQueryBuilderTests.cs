@@ -688,4 +688,39 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
+    
+    #region SKIP
+
+    [Fact]
+    public void Translate_With_SKIP_WithTextCondition_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n")))
+            .Return(q => q.WithField("name", "n"))
+            .OrderBy(q => q.WithField("name", "n"))
+            .Skip(q => q.WithCount("1 + toInteger(3 * rand())"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name SKIP 1 + toInteger(3 * rand())", resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SKIP_WithPositiveNumber_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("n")))
+            .Return(q => q.WithField("name", "n"))
+            .OrderBy(q => q.WithField("name", "n"))
+            .Skip(q=>q.WithCount(1))
+            .Limit(q => q.WithCount(3))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name SKIP 1 LIMIT 3", resultQuery);
+    }
+
+    #endregion
 }
