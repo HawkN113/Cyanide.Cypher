@@ -52,9 +52,9 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// </summary>
     /// <param name="configureSet"></param>
     /// <returns></returns>
-    public ISetClause Set(Action<SetQueryClause> configureSet)
+    public ISetClause Set(Action<SetClause> configureSet)
     {
-        var setBuilder = new SetQueryClause(_setClauses);
+        var setBuilder = new SetClause(_setClauses);
         configureSet(setBuilder);
         setBuilder.End();
         return this;

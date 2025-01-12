@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public sealed class SetQueryClause(StringBuilder setClauses)
+public sealed class SetClause(StringBuilder setClauses)
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
@@ -11,7 +11,7 @@ public sealed class SetQueryClause(StringBuilder setClauses)
     /// Add a property for the SET clause
     /// </summary>
     /// <returns></returns>
-    public SetQueryClause WithField(string fieldName, string fieldAlias, string? value = null)
+    public SetClause WithField(string fieldName, string fieldAlias, string? value = null)
     {
         var labelProperty = $"{fieldAlias}.{fieldName}";
         _patterns.Add(value != null ? $"{labelProperty} = {value}" : labelProperty);
@@ -24,7 +24,7 @@ public sealed class SetQueryClause(StringBuilder setClauses)
     /// </summary>
     /// <param name="condition"></param>
     /// <returns></returns>
-    public SetQueryClause WithQuery(string condition)
+    public SetClause WithQuery(string condition)
     {
         _patterns.Add($"{condition}");
         return this;

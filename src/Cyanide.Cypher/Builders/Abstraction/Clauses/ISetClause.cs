@@ -11,5 +11,5 @@ public interface ISetClause: IReturnQuery
     /// </summary>
     /// <param name="configureSet"></param>
     /// <returns></returns>
-    ISetClause Set(Action<SetQueryClause> configureSet);
+    ISetClause Set(Action<SetClause> configureSet);
 }
