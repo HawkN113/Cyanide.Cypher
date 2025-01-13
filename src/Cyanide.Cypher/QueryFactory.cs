@@ -1,5 +1,4 @@
-﻿using Cyanide.Cypher.Builders.Admin;
-using Cyanide.Cypher.Builders.Query;
+﻿using Cyanide.Cypher.Builders;
 
 namespace Cyanide.Cypher;
 
