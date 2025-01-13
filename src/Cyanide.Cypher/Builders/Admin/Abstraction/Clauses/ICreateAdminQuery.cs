@@ -6,4 +6,14 @@ public interface ICreateAdmQuery: IBuildQuery
 {
 }
 
+public interface ICreateAdmQueryDatabase
+{
+    INotExistsDatabase WithDatabase(string databaseName);
+}
+
+public interface INotExistsDatabase
+{
+    void IfNotExists();
+}
+
 

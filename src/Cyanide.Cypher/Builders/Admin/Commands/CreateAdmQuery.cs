@@ -2,30 +2,19 @@
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public interface ICreateAdmQueryDatabase
-{
-    IfNotExistsDatabase WithDatabase(string databaseName);
-}
-
-public interface IfNotExistsDatabase
-{
-    IfNotExistsDatabase IfNotExists();
-}
-
-public sealed class CreateAdmQuery(StringBuilder createAdmClauses) : ICreateAdmQueryDatabase, IfNotExistsDatabase
+public sealed class CreateAdmQuery(StringBuilder createAdmClauses) : ICreateAdmQueryDatabase, INotExistsDatabase
 {
     private readonly List<string> _patterns = [];
 
-    public IfNotExistsDatabase WithDatabase(string databaseName)
+    public INotExistsDatabase WithDatabase(string databaseName)
     {
         _patterns.Add($"DATABASE {databaseName}");
         return this;
     }
 
-    public IfNotExistsDatabase IfNotExists()
+    public void IfNotExists()
     {
         _patterns.Add("IF NOT EXISTS");
-        return this;
     }
 
     internal void End()
