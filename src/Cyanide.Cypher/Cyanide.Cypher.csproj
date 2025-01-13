@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Builders\Query\" />
+      <Folder Include="Builders\Admin\Abstraction\" />
     </ItemGroup>
     
 </Project>

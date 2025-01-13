@@ -1,5 +1,5 @@
-﻿using Cyanide.Cypher.Builders;
-using Cyanide.Cypher.Builders.Abstraction.Clauses;
+﻿using Cyanide.Cypher.Builders.Admin;
+using Cyanide.Cypher.Builders.Query;
 
 namespace Cyanide.Cypher;
 
@@ -16,5 +16,15 @@ public static class Factory
     public static IQuery QueryBuilder()
     {
         return new CypherQueryBuilder();
+    }
+    
+    /// <summary>
+    /// Creates and returns a new instance of a Cypher query builder (Admin management).
+    /// Use this to construct admin Cypher queries programmatically.
+    /// </summary>
+    /// <returns>An instance of <see cref="IQuery"/> for building Cypher queries.</returns>
+    public static IAdminQuery AdminQueryBuilder()
+    {
+        return new CypherAdminBuilder();
     }
 }
