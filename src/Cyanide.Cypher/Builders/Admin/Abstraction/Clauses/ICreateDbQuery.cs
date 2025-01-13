@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Admin;
 
-public interface ICreateAdmQuery: IBuildQuery
+public interface ICreateDbQuery: IBuildQuery
 {
 }
 
@@ -13,7 +13,12 @@ public interface ICreateAdmQueryDatabase
 
 public interface INotExistsDatabase
 {
-    void IfNotExists();
+    IReplaceDatabase IfNotExists();
+}
+
+public interface IReplaceDatabase
+{
+    void Replace();
 }
 
 

@@ -5,19 +5,19 @@ namespace Cyanide.Cypher.Builders.Admin;
 
 internal sealed class CypherAdminBuilder: IAdminQuery
 {
-    private readonly StringBuilder _createAdmClauses = new();
+    private readonly StringBuilder _createDbClauses = new();
 
     /// <summary>
-    /// CREATE clause for admin management <br/>
-    ///     - DATABASE  <br/>
+    /// CREATE DATABASE clause for admin management <br/>
+    /// CREATE OR REPLACE DATABASE clause for admin management <br/>
     /// Sample: CREATE DATABASE db
     /// </summary>
-    /// <param name="configureAdmCreate"></param>
+    /// <param name="configureDbCreate"></param>
     /// <returns></returns>
-    public ICreateAdmQuery Create(Action<CreateAdmQuery> configureAdmCreate)
+    public ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate)
     {
-        var createBuilder = new CreateAdmQuery(_createAdmClauses);
-        configureAdmCreate(createBuilder);
+        var createBuilder = new CreateDbQuery(_createDbClauses);
+        configureDbCreate(createBuilder);
         createBuilder.End();
         return this;
     }
@@ -31,7 +31,7 @@ internal sealed class CypherAdminBuilder: IAdminQuery
         StringBuilder queryBuilder = new();
         var clauses = new List<StringBuilder>
         {
-            _createAdmClauses
+            _createDbClauses
         };
         foreach (var clause in clauses)
         {

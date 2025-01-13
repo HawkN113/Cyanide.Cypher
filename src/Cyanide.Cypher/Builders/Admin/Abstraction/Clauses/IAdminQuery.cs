@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Admin;
 
-public interface IAdminQuery: ICreateAdmQuery
+public interface IAdminQuery: ICreateDbQuery
 {
-    ICreateAdmQuery Create(Action<CreateAdmQuery> configureAdmCreate);
+    ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate);
 }
