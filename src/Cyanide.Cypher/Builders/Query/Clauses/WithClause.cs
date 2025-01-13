@@ -9,16 +9,16 @@ public sealed class WithClause(StringBuilder withClauses): IFieldProperty<WithCl
     
     public WithClause Count(string fieldName, string fieldAlias, string aliasName)
     {
-        _patterns.Add($"count({fieldAlias}.{fieldName}) AS {aliasName}");
+        _patterns.Add(FunctionsPatternBuilder.Count(fieldName, fieldAlias, aliasName));
         return this;
     }
 
     public WithClause ToUpper(string fieldName, string fieldAlias, string aliasName)
     {
-        _patterns.Add($"toUpper({fieldAlias}.{fieldName}) AS {aliasName}");
+        _patterns.Add(FunctionsPatternBuilder.ToUpper(fieldName, fieldAlias, aliasName));
         return this;
     }
-    
+
     /// <summary>
     /// Return a type for the WITH clause <br/>
     /// Sample: type(r)

@@ -1,12 +1,12 @@
 ﻿using Cyanide.Cypher;
 using Cyanide.Cypher.Builders;
-using Cyanide.Cypher.Builders.Query;
 
 const string personAlies = "person";
 const string personType = "Person";
 const string template = "Query: {0}";
 
 var queryBuilder = Factory.QueryBuilder();
+
 Console.WriteLine(template, queryBuilder.Match(q =>
         q.WithNode(new Entity(personType, "p"))
             .WithRelationship("LIVES_IN", RelationshipType.Direct)
