@@ -18,9 +18,24 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     private readonly StringBuilder _orderByClauses = new();
     private readonly StringBuilder _skipClauses = new();
     private readonly StringBuilder _limitClauses = new();
+    private readonly StringBuilder _withClauses = new();
 
     /// <summary>
-    /// ORDER BY ORDER BY is a sub-clause following RETURN <br/>
+    /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
+    /// Sample: WITH otherPerson, count(*) AS foaf
+    /// </summary>
+    /// <param name="configureWith"></param>
+    /// <returns></returns>
+    public IWithQuery With(Action<WithClause> configureWith)
+    {
+        var withBuilder = new WithClause(_withClauses);
+        configureWith(withBuilder);
+        withBuilder.End();
+        return this;
+    }
+    
+    /// <summary>
+    /// ORDER BY is a sub-clause following RETURN <br/>
     /// Sample: ORDER BY n.name
     /// </summary>
     /// <param name="configureOrderBy"></param>
@@ -206,6 +221,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             _deleteClauses,
             _removeClauses,
             _setClauses,
+            _withClauses,
             _returnClauses,
             _orderByClauses,
             _skipClauses,

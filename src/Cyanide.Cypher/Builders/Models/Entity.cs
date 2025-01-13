@@ -1,4 +1,4 @@
-﻿namespace Cyanide.Cypher.Builders.Query;
+﻿namespace Cyanide.Cypher.Builders;
 
 /// <summary>
 /// Node (Entity)

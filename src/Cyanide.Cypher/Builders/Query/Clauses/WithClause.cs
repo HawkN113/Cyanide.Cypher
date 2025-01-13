@@ -3,69 +3,81 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public sealed class ReturnClause(StringBuilder returnClauses): IFieldProperty<ReturnClause>, IFieldAlias<ReturnClause>, IFieldType<ReturnClause>
+public sealed class WithClause(StringBuilder withClauses): IFieldProperty<WithClause>, IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
 {
     private readonly List<string> _patterns = [];
     
+    public WithClause Count(string fieldName, string fieldAlias, string aliasName)
+    {
+        _patterns.Add($"count({fieldAlias}.{fieldName}) AS {aliasName}");
+        return this;
+    }
+
+    public WithClause ToUpper(string fieldName, string fieldAlias, string aliasName)
+    {
+        _patterns.Add($"toUpper({fieldAlias}.{fieldName}) AS {aliasName}");
+        return this;
+    }
+    
     /// <summary>
-    /// Return a type to the RETURN clause <br/>
+    /// Return a type for the WITH clause <br/>
     /// Sample: type(r)
     /// </summary>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public ReturnClause WithType(string alias)
+    public WithClause WithType(string alias)
     {
         _patterns.Add($"type({alias})");
         return this;
     }
 
     /// <summary>
-    /// Return a type with alias name  to the RETURN clause <br/>
+    /// Return a type with alias name for the WITH clause <br/>
     /// Sample: type(r) AS t
     /// </summary>
     /// <param name="alias"></param>
     /// <param name="aliasName"></param>
     /// <returns></returns>
-    public ReturnClause WithType(string alias, string aliasName)
+    public WithClause WithType(string alias, string aliasName)
     {
         _patterns.Add($"type({alias}) AS {aliasName}");
         return this;
     }
-
+    
     /// <summary>
-    /// Return a named property to the RETURN clause <br/>
+    /// Return a named property for the WITH clause <br/>
     /// Sample: p.bornIn AS Born
     /// </summary>
     /// <param name="fieldName"></param>
     /// <param name="fieldAlias"></param>
     /// <param name="aliasName"></param>
     /// <returns></returns>
-    public ReturnClause WithField(string fieldName, string fieldAlias, string aliasName)
+    public WithClause WithField(string fieldName, string fieldAlias, string aliasName)
     {
         _patterns.Add($"{fieldAlias}.{fieldName} AS {aliasName}");
         return this;
     }
 
     /// <summary>
-    /// Return a property to the RETURN clause <br/>
+    /// Return a property for the WITH clause <br/>
     /// Sample: p.bornIn
     /// </summary>
     /// <param name="fieldName"></param>
     /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public ReturnClause WithField(string fieldName, string fieldAlias)
+    public WithClause WithField(string fieldName, string fieldAlias)
     {
         _patterns.Add($"{fieldAlias}.{fieldName}");
         return this;
     }
 
     /// <summary>
-    /// Return a node (entity) to the RETURN clause <br/>
+    /// Return a node (entity) for the WITH clause <br/>
     /// Sample: p
     /// </summary>
     /// <param name="fieldAlias"></param>
     /// <returns></returns>
-    public ReturnClause WithField(string fieldAlias)
+    public WithClause WithField(string fieldAlias)
     {
         _patterns.Add($"{fieldAlias}");
         return this;
@@ -74,13 +86,12 @@ public sealed class ReturnClause(StringBuilder returnClauses): IFieldProperty<Re
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (returnClauses.Length > 0)
+        if (withClauses.Length > 0)
         {
-            returnClauses.Append(' ');
+            withClauses.Append(' ');
         }
 
-        returnClauses.Append("RETURN ");
-        returnClauses.Append(string.Join(", ", _patterns));
+        withClauses.Append("WITH ");
+        withClauses.Append(string.Join(", ", _patterns));
     }
-
 }

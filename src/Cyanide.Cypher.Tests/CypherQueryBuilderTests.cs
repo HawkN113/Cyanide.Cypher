@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Abstraction.Clauses;
+﻿using Cyanide.Cypher.Builders;
+using Cyanide.Cypher.Builders.Abstraction.Clauses;
 using Cyanide.Cypher.Builders.Query;
 
 namespace Cyanide.Cypher.Tests;
@@ -583,7 +584,7 @@ public class CypherQueryBuilderTests
                     new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
                     new Entity("movie"))
             )
-            .Return(q => q.WithRelation("r"))
+            .Return(q => q.WithType("r"))
             .Build();
 
         // Assert
@@ -720,6 +721,61 @@ public class CypherQueryBuilderTests
 
         // Assert
         Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name SKIP 1 LIMIT 3", resultQuery);
+    }
+
+    #endregion
+    
+    #region WITH
+
+    [Fact]
+    public void Translate_With_WITH_WithWildcard_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+                new Entity("otherPerson")))
+            .With(q => q.WithField("*").WithType("r", "connectionType"))
+            .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "MATCH (person)-[r]->(otherPerson) WITH *, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_WITH_WithToUpper_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+                new Entity("otherPerson")))
+            .With(q => q.ToUpper("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
+            .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "MATCH (person)-[r]->(otherPerson) WITH toUpper(otherPerson.name) AS upperCaseName, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_WITH_WithCount_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+                new Entity("otherPerson")))
+            .With(q => q.Count("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
+            .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "MATCH (person)-[r]->(otherPerson) WITH count(otherPerson.name) AS upperCaseName, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
+            resultQuery);
     }
 
     #endregion

@@ -1,4 +1,5 @@
 ﻿using Cyanide.Cypher;
+using Cyanide.Cypher.Builders;
 using Cyanide.Cypher.Builders.Query;
 
 const string personAlies = "person";
@@ -76,7 +77,7 @@ Console.WriteLine(template, queryBuilder
             new Entity(personType, "", [new Field("name", "'Oliver Stone'")]),
             new Entity("movie"))
     )
-    .Return(q => q.WithRelation("r"))
+    .Return(q => q.WithType("r"))
     .Build());
     
 Console.WriteLine(template, queryBuilder
