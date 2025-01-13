@@ -40,7 +40,23 @@ public class CypherAdminQueryBuilderTests
             "CREATE DATABASE db IF NOT EXISTS",
             resultQuery);
     }
-    
+
+    [Fact]
+    public void Translate_With_CREATE_OR_REPLACE_DATABASE_WithNotExists_ReturnsInvalidOperationException()
+    {
+        // Act
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            _queryBuilder
+                .Create(q =>
+                    q.WithDatabase("db")
+                        .IfNotExists()
+                        .Replace()
+                )
+                .Build();
+        });
+    }
+
     [Fact]
     public void Translate_With_CREATE_OR_REPLACE_DATABASE_WithNotExists_ReturnsCorrectCypherQuery()
     {
@@ -48,14 +64,13 @@ public class CypherAdminQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q =>
                 q.WithDatabase("db")
-                    .IfNotExists()
                     .Replace()
             )
             .Build();
 
         // Assert
         Assert.Equal(
-            "CREATE OR REPLACE DATABASE db IF NOT EXISTS",
+            "CREATE OR REPLACE DATABASE db",
             resultQuery);
     }
     

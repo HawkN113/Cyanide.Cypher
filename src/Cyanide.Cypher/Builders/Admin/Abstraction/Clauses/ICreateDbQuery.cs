@@ -11,7 +11,7 @@ public interface ICreateAdmQueryDatabase
     INotExistsDatabase WithDatabase(string databaseName);
 }
 
-public interface INotExistsDatabase
+public interface INotExistsDatabase: IReplaceDatabase
 {
     IReplaceDatabase IfNotExists();
 }

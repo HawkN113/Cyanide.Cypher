@@ -27,7 +27,7 @@ internal sealed class CypherAdminBuilder: IAdminQuery
 
     /// <summary>
     /// CREATE USER clause for admin management <br/>
-    /// CREATE OR USER USER clause for admin management <br/>
+    /// CREATE OR USER clause for admin management <br/>
     /// Sample: CREATE OR REPLACE USER name <br/>
     ///         <tab/> SET PLAINTEXT PASSWORD 'password' <br/>
     /// </summary>
