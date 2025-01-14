@@ -2,21 +2,9 @@
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryDatabase, IAllFieldsDatabase, IFieldsCountDatabase
+public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryDatabase, IAllFieldsDatabase, IFieldsCountDatabase, IShowAllDatabases
 {
     private readonly List<string> _patterns = [];
-
-    internal void End()
-    {
-        if (_patterns.Count <= 0) return;
-        if (showDbClauses.Length > 0)
-        {
-            showDbClauses.Append(' ');
-        }
-
-        showDbClauses.Append("SHOW ");
-        showDbClauses.Append(string.Join(" ", _patterns));
-    }
 
     public IAllFieldsDatabase WithDatabase(string databaseName)
     {
@@ -24,12 +12,12 @@ public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryData
         return this;
     }
 
-    public void AsDefault()
+    public void AsDefaultDatabase()
     {
         _patterns.Add("DEFAULT DATABASE");
     }
 
-    public void AsHome()
+    public void AsHomeDatabase()
     {
         _patterns.Add("HOME DATABASE");
     }
@@ -43,5 +31,22 @@ public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryData
     public void WithCount()
     {
         _patterns.Add("RETURN count(*) AS count");
+    }
+
+    public void WithDatabases()
+    {
+        _patterns.Add("DATABASES");
+    }
+    
+    internal void End()
+    {
+        if (_patterns.Count <= 0) return;
+        if (showDbClauses.Length > 0)
+        {
+            showDbClauses.Append(' ');
+        }
+
+        showDbClauses.Append("SHOW ");
+        showDbClauses.Append(string.Join(" ", _patterns));
     }
 }

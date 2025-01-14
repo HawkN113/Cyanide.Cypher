@@ -14,14 +14,18 @@ public interface IAllFieldsDatabase
 {
     IFieldsCountDatabase WithAllFields();
 }
+public interface IShowAllDatabases
+{
+    void WithDatabases();
+}
 public interface IDefaultDatabase
 {
-    void AsDefault();
+    void AsDefaultDatabase();
 }
 
 public interface IHomeDatabase
 {
-    void AsHome();
+    void AsHomeDatabase();
 }
 public interface IFieldsCountDatabase
 {

@@ -8,6 +8,7 @@ internal sealed class CypherAdminBuilder: IAdminQuery
 {
     private readonly StringBuilder _createDbClauses = new();
     private readonly StringBuilder _showDbClauses = new();
+    private readonly StringBuilder _showUserClauses = new();
     private readonly StringBuilder _createUserClauses = new();
 
     /// <summary>
@@ -50,6 +51,14 @@ internal sealed class CypherAdminBuilder: IAdminQuery
         return this;
     }
 
+    public IShowUserQuery Show(Action<ShowUserQuery> configureUserShow)
+    {
+        var showBuilder = new ShowUserQuery(_showUserClauses);
+        configureUserShow(showBuilder);
+        showBuilder.End();
+        return this;
+    }
+
     /// <summary>
     /// Generate Cypher query
     /// </summary>
@@ -61,7 +70,8 @@ internal sealed class CypherAdminBuilder: IAdminQuery
         {
             _createDbClauses,
             _createUserClauses,
-            _showDbClauses
+            _showDbClauses,
+            _showUserClauses
         };
         foreach (var clause in clauses)
         {

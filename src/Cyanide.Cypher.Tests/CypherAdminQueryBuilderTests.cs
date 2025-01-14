@@ -196,7 +196,7 @@ public class CypherAdminQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Show(q =>
-                q.AsDefault()
+                q.AsDefaultDatabase()
             )
             .Build();
 
@@ -212,13 +212,65 @@ public class CypherAdminQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Show(q =>
-                q.AsHome()
+                q.AsHomeDatabase()
             )
             .Build();
 
         // Assert
         Assert.Equal(
             "SHOW HOME DATABASE",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_DATABASES_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.WithDatabases()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW DATABASES",
+            resultQuery);
+    }
+    
+    
+    [Fact]
+    public void Translate_With_SHOW_CURRENT_USER_WithFields_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.AsCurrentUser()
+                    .WithAllFields()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW CURRENT USER YIELD *",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_CURRENT_USER_WithFieldsAndCount_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.AsCurrentUser()
+                    .WithAllFields()
+                    .WithCount()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW CURRENT USER YIELD * RETURN count(*) AS count",
             resultQuery);
     }
     
