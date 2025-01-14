@@ -7,6 +7,7 @@ namespace Cyanide.Cypher.Builders;
 internal sealed class CypherAdminBuilder: IAdminQuery
 {
     private readonly StringBuilder _createDbClauses = new();
+    private readonly StringBuilder _showDbClauses = new();
     private readonly StringBuilder _createUserClauses = new();
 
     /// <summary>
@@ -41,6 +42,14 @@ internal sealed class CypherAdminBuilder: IAdminQuery
         return this;
     }
 
+    public IShowDbQuery Show(Action<ShowDbQuery> configureDbShow)
+    {
+        var showBuilder = new ShowDbQuery(_showDbClauses);
+        configureDbShow(showBuilder);
+        showBuilder.End();
+        return this;
+    }
+
     /// <summary>
     /// Generate Cypher query
     /// </summary>
@@ -51,7 +60,8 @@ internal sealed class CypherAdminBuilder: IAdminQuery
         var clauses = new List<StringBuilder>
         {
             _createDbClauses,
-            _createUserClauses
+            _createUserClauses,
+            _showDbClauses
         };
         foreach (var clause in clauses)
         {

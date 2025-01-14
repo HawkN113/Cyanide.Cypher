@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Admin.Commands;
 
 namespace Cyanide.Cypher.Builders;
 
-public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery
+public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery
 {
     /// <summary>
     /// CREATE DATABASE clause for admin management <br/>
@@ -18,9 +18,16 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery
     /// CREATE USER clause for admin management <br/>
     /// CREATE OR USER DATABASE clause for admin management <br/>
     /// Sample: CREATE OR REPLACE USER name <br/>
-    ///         <tab/> SET PLAINTEXT PASSWORD 'password' <br/>
     /// </summary>
     /// <param name="configureUserCreate"></param>
     /// <returns></returns>
     ICreateUserQuery Create(Action<CreateUserQuery> configureUserCreate);
+    
+    /// <summary>
+    /// SHOW DATABASE clause for admin management <br/>
+    /// Sample: SHOW DATABASE db YIELD *
+    /// </summary>
+    /// <param name="configureDbShow"></param>
+    /// <returns></returns>
+    IShowDbQuery Show(Action<ShowDbQuery> configureDbShow);
 }

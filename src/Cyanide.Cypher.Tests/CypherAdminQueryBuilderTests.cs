@@ -152,4 +152,75 @@ public class CypherAdminQueryBuilderTests
     }
 
     #endregion
+    
+    #region SHOW
+    
+    [Fact]
+    public void Translate_With_SHOW_DATABASE_WithFields_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.WithDatabase("db")
+                    .WithAllFields()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW DATABASE db YIELD *",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_DATABASE_WithFieldsAndCount_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.WithDatabase("db")
+                    .WithAllFields()
+                    .WithCount()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW DATABASE db YIELD * RETURN count(*) AS count",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_DATABASE_AsDefault_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.AsDefault()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW DEFAULT DATABASE",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_DATABASE_AsHome_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.AsHome()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW HOME DATABASE",
+            resultQuery);
+    }
+    
+    #endregion
 }
