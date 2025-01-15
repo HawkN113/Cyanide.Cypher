@@ -152,7 +152,10 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
         where TClause : class where TInterface : class
     {
         ConfigureClause(key, configure);
-        return (this as TInterface)!;
+        var result = this as TInterface;
+        if (result == null)
+            throw new InvalidOperationException($"Failed to cast {nameof(CypherQueryBuilder)} to {typeof(TInterface)}");
+        return result;
     }
 
     private void ConfigureClause<T>(string key, Action<T> configure) where T : class
