@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class MatchClause: IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
+public sealed class MatchClause: IClause, IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
     private readonly StringBuilder _matchClauses;

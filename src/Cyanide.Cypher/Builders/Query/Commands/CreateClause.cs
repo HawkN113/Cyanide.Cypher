@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class CreateClause: IRelationship<CreateClause>, INode<CreateClause>
+public sealed class CreateClause: IClause, IRelationship<CreateClause>, INode<CreateClause>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;

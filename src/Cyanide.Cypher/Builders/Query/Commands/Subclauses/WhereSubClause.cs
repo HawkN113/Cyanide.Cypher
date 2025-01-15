@@ -1,8 +1,9 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WhereSubClause
+public sealed class WhereSubClause: IClause
 {
     private readonly List<string> _patterns = [];
     private readonly StringBuilder _whereClauses;

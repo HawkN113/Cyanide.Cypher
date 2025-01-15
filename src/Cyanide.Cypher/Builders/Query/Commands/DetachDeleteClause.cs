@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class DetachDeleteClause: IRelationship<DetachDeleteClause>, INode<DetachDeleteClause>, IEmptyNode<DetachDeleteClause>
+public sealed class DetachDeleteClause: IClause, IRelationship<DetachDeleteClause>, INode<DetachDeleteClause>, IEmptyNode<DetachDeleteClause>
 {
     private readonly List<string> _patterns = [];
     private readonly StringBuilder _createClauses;

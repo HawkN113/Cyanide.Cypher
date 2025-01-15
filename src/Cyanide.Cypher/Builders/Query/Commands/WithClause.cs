@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WithClause: IFieldProperty<WithClause>, IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
+public sealed class WithClause: IClause, IFieldProperty<WithClause>, IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
 {
     private readonly List<string> _patterns = [];
     private readonly StringBuilder _withClauses;

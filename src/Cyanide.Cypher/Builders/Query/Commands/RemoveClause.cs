@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class RemoveClause : IFieldProperty<RemoveClause>
+public sealed class RemoveClause : IClause, IFieldProperty<RemoveClause>
 {
     private readonly List<string> _patterns = [];
     private readonly StringBuilder _removeClauses;

@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OrderBySubClause: INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
+public sealed class OrderBySubClause: IClause, INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;

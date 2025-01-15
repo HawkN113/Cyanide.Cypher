@@ -1,8 +1,9 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SetClause
+public sealed class SetClause: IClause
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
