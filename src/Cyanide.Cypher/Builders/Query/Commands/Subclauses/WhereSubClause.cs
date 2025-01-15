@@ -2,9 +2,20 @@
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WhereSubClause(StringBuilder whereClauses)
+public sealed class WhereSubClause
 {
     private readonly List<string> _patterns = [];
+    private readonly StringBuilder _whereClauses;
+
+    public WhereSubClause(StringBuilder whereClauses)
+    {
+        _whereClauses = whereClauses;
+    }
+    
+    public WhereSubClause()
+    {
+        _whereClauses = new StringBuilder();
+    }
 
     /// <summary>
     /// Add a query for the property <br/>
@@ -80,12 +91,12 @@ public sealed class WhereSubClause(StringBuilder whereClauses)
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (whereClauses.Length > 0)
+        if (_whereClauses.Length > 0)
         {
-            whereClauses.Append(' ');
+            _whereClauses.Append(' ');
         }
 
-        whereClauses.Append("WHERE ");
-        whereClauses.Append(string.Join("", _patterns));
+        _whereClauses.Append("WHERE ");
+        _whereClauses.Append(string.Join("", _patterns));
     }
 }

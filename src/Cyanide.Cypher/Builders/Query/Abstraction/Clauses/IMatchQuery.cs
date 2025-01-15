@@ -2,7 +2,7 @@
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public interface IMatchQuery: IOptMatchQuery, IDeleteQuery, IRemoveQuery, ISetClause, IWithQuery
+public interface IMatchQuery: IOptMatchQuery, IDeleteQuery, IDetachDeleteQuery, IRemoveQuery, ISetClause, IWithQuery
 {
     /// <summary>
     /// MATCH clause <br/>

@@ -6,18 +6,22 @@ namespace Cyanide.Cypher.Builders;
 
 internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
 {
-    private readonly StringBuilder _createClauses = new();
-    private readonly StringBuilder _deleteClauses = new();
-    private readonly StringBuilder _removeClauses = new();
-    private readonly StringBuilder _setClauses = new();
-    private readonly StringBuilder _matchClauses = new();
-    private readonly StringBuilder _optMatchClauses = new();
-    private readonly StringBuilder _whereClauses = new();
-    private readonly StringBuilder _returnClauses = new();
-    private readonly StringBuilder _orderByClauses = new();
-    private readonly StringBuilder _skipClauses = new();
-    private readonly StringBuilder _limitClauses = new();
-    private readonly StringBuilder _withClauses = new();
+    private readonly Dictionary<string, StringBuilder> _clauses = new()
+    {
+        { "MATCH", new StringBuilder() },
+        { "OPTIONAL_MATCH", new StringBuilder() },
+        { "WHERE", new StringBuilder() },
+        { "CREATE", new StringBuilder() },
+        { "DELETE", new StringBuilder() },
+        { "DETACH_DELETE", new StringBuilder() },
+        { "REMOVE", new StringBuilder() },
+        { "SET", new StringBuilder() },
+        { "WITH", new StringBuilder() },
+        { "RETURN", new StringBuilder() },
+        { "ORDER_BY", new StringBuilder() },
+        { "SKIP", new StringBuilder() },
+        { "LIMIT", new StringBuilder() }
+    };
 
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
@@ -27,9 +31,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IWithQuery With(Action<WithClause> configureWith)
     {
-        var withBuilder = new WithClause(_withClauses);
-        configureWith(withBuilder);
-        withBuilder.End();
+        ConfigureClause("WITH", configureWith);
         return this;
     }
     
@@ -41,9 +43,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IOrderBySubQuery OrderBy(Action<OrderBySubClause> configureOrderBy)
     {
-        var orderByBuilder = new OrderBySubClause(_orderByClauses);
-        configureOrderBy(orderByBuilder);
-        orderByBuilder.End();
+        ConfigureClause("ORDER_BY", configureOrderBy);
         return this;
     }
 
@@ -56,9 +56,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public ILimitClause Limit(Action<LimitClause> configureLimit)
     {
-        var limitBuilder = new LimitClause(_limitClauses);
-        configureLimit(limitBuilder);
-        limitBuilder.End();
+        ConfigureClause("LIMIT", configureLimit);
         return this;
     }
     
@@ -71,9 +69,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public ISkipClause Skip(Action<SkipClause> configureSkip)
     {
-        var skipBuilder = new SkipClause(_skipClauses);
-        configureSkip(skipBuilder);
-        skipBuilder.End();
+        ConfigureClause("SKIP", configureSkip);
         return this;
     }
 
@@ -85,9 +81,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IReturnQuery Return(Action<ReturnClause> configureReturn)
     {
-        var returnBuilder = new ReturnClause(_returnClauses);
-        configureReturn(returnBuilder);
-        returnBuilder.End();
+        ConfigureClause("RETURN", configureReturn);
         return this;
     }
 
@@ -100,9 +94,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public ISetClause Set(Action<SetClause> configureSet)
     {
-        var setBuilder = new SetClause(_setClauses);
-        configureSet(setBuilder);
-        setBuilder.End();
+        ConfigureClause("SET", configureSet);
         return this;
     }
 
@@ -114,9 +106,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IRemoveQuery Remove(Action<RemoveClause> configureRemove)
     {
-        var removeBuilder = new RemoveClause(_removeClauses);
-        configureRemove(removeBuilder);
-        removeBuilder.End();
+        ConfigureClause("REMOVE", configureRemove);
         return this;
     }
 
@@ -128,9 +118,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IWhereSubQuery Where(Action<WhereSubClause> conditions)
     {
-        var whereBuilder = new WhereSubClause(_whereClauses);
-        conditions(whereBuilder);
-        whereBuilder.End();
+        ConfigureClause("WHERE", conditions);
         return this;
     }
 
@@ -142,9 +130,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public ICreateQuery Create(Action<CreateClause> configureCreate)
     {
-        var createBuilder = new CreateClause(_createClauses);
-        configureCreate(createBuilder);
-        createBuilder.End();
+        ConfigureClause("CREATE", configureCreate);
         return this;
     }
 
@@ -156,9 +142,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IMatchQuery Match(Action<MatchClause> configureMatch)
     {
-        var matchBuilder = new MatchClause(_matchClauses);
-        configureMatch(matchBuilder);
-        matchBuilder.End();
+        ConfigureClause("MATCH", configureMatch);
         return this;
     }
 
@@ -170,9 +154,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IOptMatchQuery OptionalMatch(Action<OptMatchClause> configureOptMatch)
     {
-        var optMatchBuilder = new OptMatchClause(_optMatchClauses);
-        configureOptMatch(optMatchBuilder);
-        optMatchBuilder.End();
+        ConfigureClause("OPTIONAL_MATCH", configureOptMatch);
         return this;
     }
     
@@ -184,9 +166,7 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns></returns>
     public IDeleteQuery Delete(Action<DeleteClause> configureDelete)
     {
-        var deleteBuilder = new DeleteClause(_deleteClauses, false);
-        configureDelete(deleteBuilder);
-        deleteBuilder.End();
+        ConfigureClause("DELETE", configureDelete);
         return this;
     }
 
@@ -196,52 +176,28 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// </summary>
     /// <param name="configureDelete"></param>
     /// <returns></returns>
-    public IDeleteQuery DetachDelete(Action<DeleteClause> configureDelete)
+    public IDetachDeleteQuery DetachDelete(Action<DetachDeleteClause> configureDelete)
     {
-        var deleteBuilder = new DeleteClause(_deleteClauses, true);
-        configureDelete(deleteBuilder);
-        deleteBuilder.End();
+        ConfigureClause("DETACH_DELETE", configureDelete);
         return this;
     }
     
     /// <summary>
-    /// Generate Cypher query
+    /// Generates the final Cypher query by concatenating all configured clauses.
     /// </summary>
-    /// <returns>string</returns>
+    /// <returns>The fully constructed Cypher query as a string.</returns>
     public string Build()
     {
-        StringBuilder queryBuilder = new();
-        var clauses = new List<StringBuilder>
-        {
-            _matchClauses,
-            _optMatchClauses,
-            _whereClauses,
-            _createClauses,
-            _deleteClauses,
-            _removeClauses,
-            _setClauses,
-            _withClauses,
-            _returnClauses,
-            _orderByClauses,
-            _skipClauses,
-            _limitClauses
-        };
-        foreach (var clause in clauses)
-        {
-            AppendClause(clause, queryBuilder);
-        }
-
-        return queryBuilder.ToString().Trim();
+        return string.Join(" ", _clauses.Values
+            .Where(clause => clause.Length > 0)
+            .Select(clause => clause.ToString().Trim()));
     }
-
-    private static void AppendClause(StringBuilder clause, StringBuilder queryBuilder)
+    
+    private void ConfigureClause<T>(string key, Action<T> configure) where T : class, new()
     {
-        if (clause.Length <= 0) return;
-        if (queryBuilder.Length > 0)
-        {
-            queryBuilder.Append(' ');
-        }
-
-        queryBuilder.Append(clause);
+        if (!_clauses.TryGetValue(key, out var clauseBuilder)) return;
+        var builder = Activator.CreateInstance(typeof(T), clauseBuilder) as T;
+        configure(builder!);
+        (builder as dynamic)?.End();
     }
 }

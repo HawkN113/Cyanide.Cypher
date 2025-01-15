@@ -12,12 +12,4 @@ public interface IDeleteQuery: IBuildQuery
     /// <param name="configureDelete"></param>
     /// <returns></returns>
     IDeleteQuery Delete(Action<DeleteClause> configureDelete);
-    
-    /// <summary>
-    /// DETACH DELETE clause may not be permitted to users with restricted security privileges <br/>
-    /// Sample: DETACH DELETE n
-    /// </summary>
-    /// <param name="configureDelete"></param>
-    /// <returns></returns>
-    IDeleteQuery DetachDelete(Action<DeleteClause> configureDelete);
 }

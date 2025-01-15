@@ -2,9 +2,20 @@
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SkipClause(StringBuilder skipClauses)
+public sealed class SkipClause
 {
     private readonly List<string> _patterns = [];
+    private readonly StringBuilder _skipClauses;
+
+    public SkipClause(StringBuilder skipClauses)
+    {
+        _skipClauses= skipClauses;
+    }
+    
+    public SkipClause()
+    {
+        _skipClauses = new StringBuilder();
+    }
     
     /// <summary>
     /// Add a string number of returned rows for the SKIP clause <br/>
@@ -33,12 +44,12 @@ public sealed class SkipClause(StringBuilder skipClauses)
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (skipClauses.Length > 0)
+        if (_skipClauses.Length > 0)
         {
-            skipClauses.Append(' ');
+            _skipClauses.Append(' ');
         }
 
-        skipClauses.Append("SKIP ");
-        skipClauses.Append(string.Join("", _patterns));
+        _skipClauses.Append("SKIP ");
+        _skipClauses.Append(string.Join("", _patterns));
     }
 }

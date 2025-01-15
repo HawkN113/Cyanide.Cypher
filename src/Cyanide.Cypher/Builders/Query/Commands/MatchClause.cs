@@ -3,9 +3,20 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class MatchClause(StringBuilder matchClauses): IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
+public sealed class MatchClause: IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
+    private readonly StringBuilder _matchClauses;
+
+    public MatchClause(StringBuilder matchClauses)
+    {
+        _matchClauses = matchClauses;
+    }
+    
+    public MatchClause()
+    {
+        _matchClauses = new StringBuilder();
+    }
 
     /// <summary>
     /// Add a node (entity) to the MATCH clause
@@ -66,12 +77,12 @@ public sealed class MatchClause(StringBuilder matchClauses): IRelationship<Match
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (matchClauses.Length > 0)
+        if (_matchClauses.Length > 0)
         {
-            matchClauses.Append(' ');
+            _matchClauses.Append(' ');
         }
 
-        matchClauses.Append("MATCH ");
-        matchClauses.Append(string.Join("", _patterns));
+        _matchClauses.Append("MATCH ");
+        _matchClauses.Append(string.Join("", _patterns));
     }
 }

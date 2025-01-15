@@ -3,10 +3,21 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class CreateClause(StringBuilder createClauses): IRelationship<CreateClause>, INode<CreateClause>
+public sealed class CreateClause: IRelationship<CreateClause>, INode<CreateClause>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;
+    private readonly StringBuilder _createClauses;
+
+    public CreateClause(StringBuilder createClauses)
+    {
+        _createClauses = createClauses;
+    }
+    
+    public CreateClause()
+    {
+        _createClauses = new StringBuilder();
+    }
 
     /// <summary>
     /// Add a node (entity) to the CREATE clause
@@ -51,12 +62,12 @@ public sealed class CreateClause(StringBuilder createClauses): IRelationship<Cre
     internal void End()
     {
         if (_patterns.Count <= 0) return;
-        if (createClauses.Length > 0)
+        if (_createClauses.Length > 0)
         {
-            createClauses.Append(' ');
+            _createClauses.Append(' ');
         }
 
-        createClauses.Append("CREATE ");
-        createClauses.Append(_countNodes > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
+        _createClauses.Append("CREATE ");
+        _createClauses.Append(_countNodes > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
     }
 }
