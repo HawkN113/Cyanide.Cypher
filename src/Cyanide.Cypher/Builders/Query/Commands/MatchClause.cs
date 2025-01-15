@@ -4,21 +4,11 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class MatchClause: IClause, IRelationship<MatchClause>, INode<MatchClause>, IEmptyNode<MatchClause>
+public sealed class MatchClause(StringBuilder matchClauses) : IClause, IRelationship<MatchClause>,
+    INode<MatchClause>, IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _matchClauses;
-
-    public MatchClause(StringBuilder matchClauses)
-    {
-        _matchClauses = matchClauses;
-    }
     
-    public MatchClause()
-    {
-        _matchClauses = new StringBuilder();
-    }
-
     /// <summary>
     /// Add a node (entity) to the MATCH clause
     /// </summary>
@@ -75,15 +65,15 @@ public sealed class MatchClause: IClause, IRelationship<MatchClause>, INode<Matc
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_matchClauses.Length > 0)
+        if (matchClauses.Length > 0)
         {
-            _matchClauses.Append(' ');
+            matchClauses.Append(' ');
         }
 
-        _matchClauses.Append("MATCH ");
-        _matchClauses.Append(string.Join("", _patterns));
+        matchClauses.Append("MATCH ");
+        matchClauses.Append(string.Join("", _patterns));
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IClause
 {
-    
+    void End();
 }

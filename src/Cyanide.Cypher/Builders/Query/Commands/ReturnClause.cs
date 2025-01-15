@@ -4,21 +4,11 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class ReturnClause: IClause, IFieldProperty<ReturnClause>, IFieldAlias<ReturnClause>, IFieldType<ReturnClause>
+public sealed class ReturnClause(StringBuilder returnClauses) : IClause, IFieldProperty<ReturnClause>,
+    IFieldAlias<ReturnClause>, IFieldType<ReturnClause>
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _returnClauses;
 
-    public ReturnClause(StringBuilder returnClauses)
-    {
-        _returnClauses = returnClauses;
-    }
-    
-    public ReturnClause()
-    {
-        _returnClauses = new StringBuilder();
-    }
-    
     /// <summary>
     /// Return a type to the RETURN clause <br/>
     /// Sample: type(r)
@@ -83,16 +73,16 @@ public sealed class ReturnClause: IClause, IFieldProperty<ReturnClause>, IFieldA
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_returnClauses.Length > 0)
+        if (returnClauses.Length > 0)
         {
-            _returnClauses.Append(' ');
+            returnClauses.Append(' ');
         }
 
-        _returnClauses.Append("RETURN ");
-        _returnClauses.Append(string.Join(", ", _patterns));
+        returnClauses.Append("RETURN ");
+        returnClauses.Append(string.Join(", ", _patterns));
     }
 
 }

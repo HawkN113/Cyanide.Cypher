@@ -4,21 +4,10 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OptMatchClause: IClause, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
+public sealed class OptMatchClause(StringBuilder optMatchClauses) : IClause, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _optMatchClauses;
 
-    public OptMatchClause(StringBuilder optMatchClauses)
-    {
-        _optMatchClauses = optMatchClauses;
-    }
-    
-    public OptMatchClause()
-    {
-        _optMatchClauses = new StringBuilder();
-    }
-    
     /// <summary>
     /// Add a node (entity) to the OPTIONAL MATCH clause
     /// </summary>
@@ -74,15 +63,15 @@ public sealed class OptMatchClause: IClause, IRelationship<OptMatchClause>, INod
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_optMatchClauses.Length > 0)
+        if (optMatchClauses.Length > 0)
         {
-            _optMatchClauses.Append(' ');
+            optMatchClauses.Append(' ');
         }
 
-        _optMatchClauses.Append("OPTIONAL MATCH ");
-        _optMatchClauses.Append(string.Join("", _patterns));
+        optMatchClauses.Append("OPTIONAL MATCH ");
+        optMatchClauses.Append(string.Join("", _patterns));
     }
 }

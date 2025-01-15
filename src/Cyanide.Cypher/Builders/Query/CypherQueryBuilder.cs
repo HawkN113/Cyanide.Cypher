@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Query;
 using Cyanide.Cypher.Builders.Query.Commands;
 
@@ -6,22 +7,15 @@ namespace Cyanide.Cypher.Builders;
 
 internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
 {
-    private readonly Dictionary<string, StringBuilder> _clauses = new()
+    private static readonly string[] ClauseKeys = 
     {
-        { "MATCH", new StringBuilder() },
-        { "OPTIONAL_MATCH", new StringBuilder() },
-        { "WHERE", new StringBuilder() },
-        { "CREATE", new StringBuilder() },
-        { "DELETE", new StringBuilder() },
-        { "DETACH_DELETE", new StringBuilder() },
-        { "REMOVE", new StringBuilder() },
-        { "SET", new StringBuilder() },
-        { "WITH", new StringBuilder() },
-        { "RETURN", new StringBuilder() },
-        { "ORDER_BY", new StringBuilder() },
-        { "SKIP", new StringBuilder() },
-        { "LIMIT", new StringBuilder() }
+        "MATCH", "OPTIONAL_MATCH", "WHERE", "CREATE", "DELETE", 
+        "DETACH_DELETE", "REMOVE", "SET", "WITH", "RETURN", 
+        "ORDER_BY", "SKIP", "LIMIT"
     };
+
+    private readonly Dictionary<string, StringBuilder> _clauses = ClauseKeys
+        .ToDictionary(key => key, _ => new StringBuilder());
 
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
@@ -154,27 +148,21 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
             .Select(clause => clause.ToString().Trim()));
     }
 
-    internal TInterface ConfigureAndReturn<TInterface, TClause>(string key, Action<TClause> configure)
+    private TInterface ConfigureAndReturn<TInterface, TClause>(string key, Action<TClause> configure)
         where TClause : class where TInterface : class
     {
         ConfigureClause(key, configure);
         return (this as TInterface)!;
     }
 
-    internal void ConfigureClause<T>(string key, Action<T> configure) where T : class
+    private void ConfigureClause<T>(string key, Action<T> configure) where T : class
     {
-        if (!_clauses.TryGetValue(key, out var clauseBuilder)) return;
-        var builder = Activator.CreateInstance(typeof(T), clauseBuilder) as T;
-        try
-        {
-            configure(builder!);
-        }
-        catch (Exception ex)
-        {
-            // Log the exception or rethrow with additional context
-            throw new InvalidOperationException($"Error while configuring {typeof(T).Name}", ex);
-        }
-
-        (builder as dynamic)?.End();
+        if (!_clauses.TryGetValue(key, out var clauseBuilder))
+            throw new ArgumentException($"Invalid clause key: {key}", nameof(key));
+        var builder = Activator.CreateInstance(typeof(T), clauseBuilder) as T
+                      ?? throw new InvalidOperationException($"Failed to create instance of {typeof(T).Name}");
+        configure(builder);
+        if (builder is IClause withEnd)
+            withEnd.End();
     }
 }

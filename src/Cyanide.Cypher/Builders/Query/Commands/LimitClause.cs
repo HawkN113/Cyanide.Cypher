@@ -3,21 +3,10 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class LimitClause: IClause
+public sealed class LimitClause(StringBuilder limitClauses) : IClause
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _limitClauses;
 
-    public LimitClause(StringBuilder limitClauses)
-    {
-        _limitClauses = limitClauses;
-    }
-    
-    public LimitClause()
-    {
-        _limitClauses = new StringBuilder();
-    }
-    
     /// <summary>
     /// Add a string number of returned rows for the LIMIT clause <br/>
     /// Sample: LIMIT 1 + toInteger(3 * rand())
@@ -42,15 +31,15 @@ public sealed class LimitClause: IClause
         return this;
     }
 
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_limitClauses.Length > 0)
+        if (limitClauses.Length > 0)
         {
-            _limitClauses.Append(' ');
+            limitClauses.Append(' ');
         }
 
-        _limitClauses.Append("LIMIT ");
-        _limitClauses.Append(string.Join("", _patterns));
+        limitClauses.Append("LIMIT ");
+        limitClauses.Append(string.Join("", _patterns));
     }
 }

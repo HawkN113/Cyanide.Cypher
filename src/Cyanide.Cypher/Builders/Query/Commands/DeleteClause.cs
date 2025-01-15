@@ -4,21 +4,12 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class DeleteClause: IClause, IRelationship<DeleteClause>, INode<DeleteClause>, IEmptyNode<DeleteClause>
+public sealed class DeleteClause(StringBuilder createClauses) : IClause, IRelationship<DeleteClause>,
+    INode<DeleteClause>, IEmptyNode<DeleteClause>
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _createClauses;
 
-    public DeleteClause(StringBuilder createClauses)
-    {
-        _createClauses = createClauses;
-    }
-    
-    public DeleteClause()
-    {
-        _createClauses = new StringBuilder();
-    }
-    
+
     /// <summary>
     /// Delete a node (entity) to the DELETE clause
     /// </summary>
@@ -79,15 +70,15 @@ public sealed class DeleteClause: IClause, IRelationship<DeleteClause>, INode<De
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_createClauses.Length > 0)
+        if (createClauses.Length > 0)
         {
-            _createClauses.Append(' ');
+            createClauses.Append(' ');
         }
 
-        _createClauses.Append("DELETE ");
-        _createClauses.Append(string.Join("", _patterns));
+        createClauses.Append("DELETE ");
+        createClauses.Append(string.Join("", _patterns));
     }
 }

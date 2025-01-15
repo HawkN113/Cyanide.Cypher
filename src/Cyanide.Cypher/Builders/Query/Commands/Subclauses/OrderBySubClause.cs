@@ -4,21 +4,11 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OrderBySubClause: IClause, INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
+public sealed class OrderBySubClause(StringBuilder orderByClauses)
+    : IClause, INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
-    private readonly StringBuilder _orderByClauses;
-
-    public OrderBySubClause(StringBuilder orderByClauses)
-    {
-        _orderByClauses = orderByClauses;
-    }
-    
-    public OrderBySubClause()
-    {
-        _orderByClauses = new StringBuilder();
-    }
 
     /// <summary>
     /// Add a node (entity) to the ORDER BY clause
@@ -64,14 +54,14 @@ public sealed class OrderBySubClause: IClause, INode<OrderBySubClause>, IEmptyNo
         _patterns.Add(" DESC");
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_orderByClauses.Length > 0)
+        if (orderByClauses.Length > 0)
         {
-            _orderByClauses.Append(' ');
+            orderByClauses.Append(' ');
         }
-        _orderByClauses.Append("ORDER BY ");
-        _orderByClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
+        orderByClauses.Append("ORDER BY ");
+        orderByClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
     }
 }

@@ -4,21 +4,11 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WithClause: IClause, IFieldProperty<WithClause>, IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
+public sealed class WithClause(StringBuilder withClauses) : IClause, IFieldProperty<WithClause>,
+    IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
 {
     private readonly List<string> _patterns = [];
-    private readonly StringBuilder _withClauses;
 
-    public WithClause(StringBuilder withClauses)
-    {
-        _withClauses = withClauses;
-    }
-    
-    public WithClause()
-    {
-        _withClauses = new StringBuilder();
-    }
-    
     public WithClause Count(string fieldName, string fieldAlias, string aliasName)
     {
         _patterns.Add(FunctionsPatternBuilder.Count(fieldName, fieldAlias, aliasName));
@@ -95,15 +85,15 @@ public sealed class WithClause: IClause, IFieldProperty<WithClause>, IFieldAlias
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (_withClauses.Length > 0)
+        if (withClauses.Length > 0)
         {
-            _withClauses.Append(' ');
+            withClauses.Append(' ');
         }
 
-        _withClauses.Append("WITH ");
-        _withClauses.Append(string.Join(", ", _patterns));
+        withClauses.Append("WITH ");
+        withClauses.Append(string.Join(", ", _patterns));
     }
 }
