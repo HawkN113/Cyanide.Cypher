@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders;
 
-public interface IQuery
+public interface IQuery: IBaseQuery
 {
     /// <summary>
     /// CREATE clause <br/>

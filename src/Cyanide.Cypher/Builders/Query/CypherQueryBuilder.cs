@@ -149,11 +149,10 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     }
 
     private TInterface ConfigureAndReturn<TInterface, TClause>(string key, Action<TClause> configure)
-        where TClause : class where TInterface : class
+        where TClause : class where TInterface : IBaseQuery
     {
         ConfigureClause(key, configure);
-        var result = this as TInterface;
-        if (result == null)
+        if (this is not TInterface result)
             throw new InvalidOperationException($"Failed to cast {nameof(CypherQueryBuilder)} to {typeof(TInterface)}");
         return result;
     }

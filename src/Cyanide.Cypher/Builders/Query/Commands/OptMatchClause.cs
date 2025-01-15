@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OptMatchClause(StringBuilder optMatchClauses) : IClause, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
+public sealed class OptMatchClause(StringBuilder optMatchClauses) : IBaseQuery, IClause, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
 {
     private readonly List<string> _patterns = [];
 

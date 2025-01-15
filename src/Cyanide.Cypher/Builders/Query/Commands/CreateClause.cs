@@ -5,7 +5,7 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
 public sealed class CreateClause(StringBuilder createClauses)
-    : IClause, IRelationship<CreateClause>, INode<CreateClause>
+    : IBaseQuery, IClause, IRelationship<CreateClause>, INode<CreateClause>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;

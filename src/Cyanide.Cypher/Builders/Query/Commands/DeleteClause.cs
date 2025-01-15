@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class DeleteClause(StringBuilder createClauses) : IClause, IRelationship<DeleteClause>,
+public sealed class DeleteClause(StringBuilder createClauses) : IBaseQuery, IClause, IRelationship<DeleteClause>,
     INode<DeleteClause>, IEmptyNode<DeleteClause>
 {
     private readonly List<string> _patterns = [];

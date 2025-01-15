@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WithClause(StringBuilder withClauses) : IClause, IFieldProperty<WithClause>,
+public sealed class WithClause(StringBuilder withClauses) : IBaseQuery, IClause, IFieldProperty<WithClause>,
     IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
 {
     private readonly List<string> _patterns = [];

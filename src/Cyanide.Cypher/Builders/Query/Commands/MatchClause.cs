@@ -4,7 +4,7 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class MatchClause(StringBuilder matchClauses) : IClause, IRelationship<MatchClause>,
+public sealed class MatchClause(StringBuilder matchClauses) : IBaseQuery, IClause, IRelationship<MatchClause>,
     INode<MatchClause>, IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
