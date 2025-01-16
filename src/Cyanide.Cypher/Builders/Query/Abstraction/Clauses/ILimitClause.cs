@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public interface ILimitClause: IBaseQuery, IBuildQuery
+public interface ILimitClause: IBuildQuery
 {
     /// <summary>
     /// LIMIT constrains the number of returned rows <br/>

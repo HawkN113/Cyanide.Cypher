@@ -4,11 +4,17 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OrderBySubClause(StringBuilder orderByClauses)
-    : IClause, INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
+public sealed class OrderBySubClause
+    : IBuilderInitializer, INode<OrderBySubClause>, IEmptyNode<OrderBySubClause>
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
+    private StringBuilder _orderByClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _orderByClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Add a node (entity) to the ORDER BY clause
@@ -57,11 +63,11 @@ public sealed class OrderBySubClause(StringBuilder orderByClauses)
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (orderByClauses.Length > 0)
+        if (_orderByClauses.Length > 0)
         {
-            orderByClauses.Append(' ');
+            _orderByClauses.Append(' ');
         }
-        orderByClauses.Append("ORDER BY ");
-        orderByClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
+        _orderByClauses.Append("ORDER BY ");
+        _orderByClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
     }
 }

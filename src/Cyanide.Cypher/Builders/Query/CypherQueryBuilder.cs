@@ -149,22 +149,26 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     }
 
     private TInterface ConfigureAndReturn<TInterface, TClause>(string key, Action<TClause> configure)
-        where TClause : class where TInterface : IBaseQuery
+        where TClause : class, IBuilderInitializer, new() where TInterface : class
     {
         ConfigureClause(key, configure);
         if (this is not TInterface result)
-            throw new InvalidOperationException($"Failed to cast {nameof(CypherQueryBuilder)} to {typeof(TInterface)}");
+            throw new InvalidOperationException(
+                $"Failed to cast {nameof(CypherQueryBuilder)} to {typeof(TInterface)}");
         return result;
     }
 
-    private void ConfigureClause<T>(string key, Action<T> configure) where T : class
+    private void ConfigureClause<TClause>(string key, Action<TClause> configure) where TClause : class, IBuilderInitializer, new()
     {
         if (!_clauses.TryGetValue(key, out var clauseBuilder))
             throw new ArgumentException($"Invalid clause key: {key}", nameof(key));
-        var builder = Activator.CreateInstance(typeof(T), clauseBuilder) as T
-                      ?? throw new InvalidOperationException($"Failed to create instance of {typeof(T).Name}");
-        configure(builder);
-        if (builder is IClause withEnd)
-            withEnd.End();
+        
+        var instance = new TClause();
+        
+        if (instance is not IBuilderInitializer initializer) return;
+        
+        initializer.Initialize(clauseBuilder);
+        configure(instance);
+        instance.End();
     }
 }

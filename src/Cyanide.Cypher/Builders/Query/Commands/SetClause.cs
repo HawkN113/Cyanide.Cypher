@@ -3,11 +3,16 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SetClause(StringBuilder setClauses) : IBaseQuery, IClause
+public sealed class SetClause : IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;
+    private StringBuilder _setClauses = new();
 
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _setClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Add a property for the SET clause
@@ -35,12 +40,12 @@ public sealed class SetClause(StringBuilder setClauses) : IBaseQuery, IClause
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (setClauses.Length > 0)
+        if (_setClauses.Length > 0)
         {
-            setClauses.Append(' ');
+            _setClauses.Append(' ');
         }
 
-        setClauses.Append("SET ");
-        setClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
+        _setClauses.Append("SET ");
+        _setClauses.Append(_countProperties > 1 ? string.Join(", ", _patterns) : string.Join("", _patterns));
     }
 }

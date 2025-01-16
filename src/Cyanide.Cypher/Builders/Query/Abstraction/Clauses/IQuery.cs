@@ -1,10 +1,9 @@
-﻿using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Query;
+﻿using Cyanide.Cypher.Builders.Query;
 using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders;
 
-public interface IQuery: IBaseQuery
+public interface IQuery
 {
     /// <summary>
     /// CREATE clause <br/>

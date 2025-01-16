@@ -3,10 +3,15 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SkipClause(StringBuilder skipClauses) :IBaseQuery,  IClause
+public sealed class SkipClause : IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _skipClauses = new();
 
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _skipClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Add a string number of returned rows for the SKIP clause <br/>
@@ -35,12 +40,12 @@ public sealed class SkipClause(StringBuilder skipClauses) :IBaseQuery,  IClause
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (skipClauses.Length > 0)
+        if (_skipClauses.Length > 0)
         {
-            skipClauses.Append(' ');
+            _skipClauses.Append(' ');
         }
 
-        skipClauses.Append("SKIP ");
-        skipClauses.Append(string.Join("", _patterns));
+        _skipClauses.Append("SKIP ");
+        _skipClauses.Append(string.Join("", _patterns));
     }
 }

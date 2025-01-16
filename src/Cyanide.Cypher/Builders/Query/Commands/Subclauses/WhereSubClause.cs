@@ -3,10 +3,15 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WhereSubClause(StringBuilder whereClauses) : IClause
+public sealed class WhereSubClause : IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
-
+    private StringBuilder _whereClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _whereClauses= clauseBuilder;
+    }
 
     /// <summary>
     /// Add a query for the property <br/>
@@ -82,12 +87,12 @@ public sealed class WhereSubClause(StringBuilder whereClauses) : IClause
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (whereClauses.Length > 0)
+        if (_whereClauses.Length > 0)
         {
-            whereClauses.Append(' ');
+            _whereClauses.Append(' ');
         }
 
-        whereClauses.Append("WHERE ");
-        whereClauses.Append(string.Join("", _patterns));
+        _whereClauses.Append("WHERE ");
+        _whereClauses.Append(string.Join("", _patterns));
     }
 }

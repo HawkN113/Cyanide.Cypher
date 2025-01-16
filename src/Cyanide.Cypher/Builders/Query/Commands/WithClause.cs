@@ -4,10 +4,16 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class WithClause(StringBuilder withClauses) : IBaseQuery, IClause, IFieldProperty<WithClause>,
+public sealed class WithClause : IBuilderInitializer, IFieldProperty<WithClause>,
     IFieldAlias<WithClause>, IFieldType<WithClause>, IFunctionCount<WithClause>, IFunctionToUpper<WithClause>
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _withClauses = new();
+
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _withClauses = clauseBuilder;
+    }
 
     public WithClause Count(string fieldName, string fieldAlias, string aliasName)
     {
@@ -88,12 +94,12 @@ public sealed class WithClause(StringBuilder withClauses) : IBaseQuery, IClause,
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (withClauses.Length > 0)
+        if (_withClauses.Length > 0)
         {
-            withClauses.Append(' ');
+            _withClauses.Append(' ');
         }
 
-        withClauses.Append("WITH ");
-        withClauses.Append(string.Join(", ", _patterns));
+        _withClauses.Append("WITH ");
+        _withClauses.Append(string.Join(", ", _patterns));
     }
 }

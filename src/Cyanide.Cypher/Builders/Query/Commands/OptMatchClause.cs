@@ -4,9 +4,15 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OptMatchClause(StringBuilder optMatchClauses) : IBaseQuery, IClause, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
+public sealed class OptMatchClause : IBuilderInitializer, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _optMatchClauses = new();
+
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _optMatchClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Add a node (entity) to the OPTIONAL MATCH clause
@@ -66,12 +72,12 @@ public sealed class OptMatchClause(StringBuilder optMatchClauses) : IBaseQuery, 
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (optMatchClauses.Length > 0)
+        if (_optMatchClauses.Length > 0)
         {
-            optMatchClauses.Append(' ');
+            _optMatchClauses.Append(' ');
         }
 
-        optMatchClauses.Append("OPTIONAL MATCH ");
-        optMatchClauses.Append(string.Join("", _patterns));
+        _optMatchClauses.Append("OPTIONAL MATCH ");
+        _optMatchClauses.Append(string.Join("", _patterns));
     }
 }

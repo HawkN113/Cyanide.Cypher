@@ -3,9 +3,15 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class LimitClause(StringBuilder limitClauses) : IBaseQuery, IClause
+public sealed class LimitClause : IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _limitClauses = new();
+
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _limitClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Add a string number of returned rows for the LIMIT clause <br/>
@@ -34,12 +40,12 @@ public sealed class LimitClause(StringBuilder limitClauses) : IBaseQuery, IClaus
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (limitClauses.Length > 0)
+        if (_limitClauses.Length > 0)
         {
-            limitClauses.Append(' ');
+            _limitClauses.Append(' ');
         }
 
-        limitClauses.Append("LIMIT ");
-        limitClauses.Append(string.Join("", _patterns));
+        _limitClauses.Append("LIMIT ");
+        _limitClauses.Append(string.Join("", _patterns));
     }
 }

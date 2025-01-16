@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders.Query;
 
-public interface IDeleteQuery: IBaseQuery, IBuildQuery
+public interface IDeleteQuery: IBuildQuery
 {
     /// <summary>
     /// DELETE clause is used to delete nodes, relationships or paths <br/>

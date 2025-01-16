@@ -4,9 +4,15 @@ using Cyanide.Cypher.Builders.Abstraction.Common;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class RemoveClause(StringBuilder removeClauses) : IBaseQuery, IClause, IFieldProperty<RemoveClause>
+public sealed class RemoveClause: IBuilderInitializer, IFieldProperty<RemoveClause>
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _removeClauses = new();
+
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _removeClauses = clauseBuilder;
+    }
 
     /// <summary>
     /// Remove a property using the REMOVE clause <br/>
@@ -24,12 +30,12 @@ public sealed class RemoveClause(StringBuilder removeClauses) : IBaseQuery, ICla
     public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (removeClauses.Length > 0)
+        if (_removeClauses.Length > 0)
         {
-            removeClauses.Append(' ');
+            _removeClauses.Append(' ');
         }
 
-        removeClauses.Append("REMOVE ");
-        removeClauses.Append(string.Join("", _patterns));
+        _removeClauses.Append("REMOVE ");
+        _removeClauses.Append(string.Join("", _patterns));
     }
 }
