@@ -11,11 +11,7 @@ internal abstract class BaseQueryBuilder(Dictionary<string, StringBuilder> claus
         where TInterface : class
     {
         ConfigureClause(key, configure);
-        
-        if (this is TInterface result)
-            return result;
-        throw new InvalidOperationException(
-            $"The current instance of type '{GetType().Name}' cannot be cast to the specified interface '{typeof(TInterface).Name}'.");
+        return (TInterface)(object)this;
     }
 
     private void ConfigureClause<T>(string key, Action<T> configure)
