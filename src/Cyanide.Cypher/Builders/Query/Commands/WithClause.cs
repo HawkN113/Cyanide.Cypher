@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Helper;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 

@@ -1,12 +1,19 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class CreateDbQuery(StringBuilder createDbClauses) : ICreateAdmQueryDatabase, INotExistsDatabase
+public sealed class CreateDbQuery : IBuilderInitializer, ICreateAdmQueryDatabase, INotExistsDatabase
 {
     private readonly List<string> _patterns = [];
     private bool _shouldReplaced;
     private bool _ifNotExists;
+    private StringBuilder _createDbClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _createDbClauses = clauseBuilder;
+    }
     
     public INotExistsDatabase WithDatabase(string databaseName)
     {
@@ -25,18 +32,18 @@ public sealed class CreateDbQuery(StringBuilder createDbClauses) : ICreateAdmQue
     {
         _shouldReplaced = true;
     }
-    
-    internal void End()
+
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (createDbClauses.Length > 0)
+        if (_createDbClauses.Length > 0)
         {
-            createDbClauses.Append(' ');
+            _createDbClauses.Append(' ');
         }
 
         if (_shouldReplaced && _ifNotExists)
             throw new InvalidOperationException("Either CREATE DATABASE [IF NOT EXISTS] or CREATE OR REPLACE DATABASE");
-        createDbClauses.Append(!_shouldReplaced ? "CREATE " : "CREATE OR REPLACE ");
-        createDbClauses.Append(string.Join(" ", _patterns));
+        _createDbClauses.Append(!_shouldReplaced ? "CREATE " : "CREATE OR REPLACE ");
+        _createDbClauses.Append(string.Join(" ", _patterns));
     }
 }

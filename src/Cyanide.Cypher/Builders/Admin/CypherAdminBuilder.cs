@@ -1,16 +1,14 @@
 ﻿using System.Text;
-using Cyanide.Cypher.Builders.Admin;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Admin.Commands;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Admin;
 
-internal sealed class CypherAdminBuilder: IAdminQuery
+internal sealed class CypherAdminBuilder() : BaseQueryBuilder(DefaultClauses), IAdminQuery
 {
-    private readonly StringBuilder _createDbClauses = new();
-    private readonly StringBuilder _showDbClauses = new();
-    private readonly StringBuilder _showUserClauses = new();
-    private readonly StringBuilder _createUserClauses = new();
-
+    private static readonly Dictionary<string, StringBuilder> DefaultClauses =
+        Enum.GetValues<AdminClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder());
+    
     /// <summary>
     /// CREATE DATABASE clause for admin management <br/>
     /// CREATE OR REPLACE DATABASE clause for admin management <br/>
@@ -19,13 +17,8 @@ internal sealed class CypherAdminBuilder: IAdminQuery
     /// </summary>
     /// <param name="configureDbCreate"></param>
     /// <returns></returns>
-    public ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate)
-    {
-        var createBuilder = new CreateDbQuery(_createDbClauses);
-        configureDbCreate(createBuilder);
-        createBuilder.End();
-        return this;
-    }
+    public ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate) =>
+        ConfigureQueryBuilder<ICreateDbQuery, CreateDbQuery>(AdminClauseKeys.CreateDb.ToString(), configureDbCreate);
 
     /// <summary>
     /// CREATE USER clause for admin management <br/>
@@ -35,60 +28,40 @@ internal sealed class CypherAdminBuilder: IAdminQuery
     /// </summary>
     /// <param name="configureUserCreate"></param>
     /// <returns></returns>
-    public ICreateUserQuery Create(Action<CreateUserQuery> configureUserCreate)
-    {
-        var createBuilder = new CreateUserQuery(_createUserClauses);
-        configureUserCreate(createBuilder);
-        createBuilder.End();
-        return this;
-    }
-
-    public IShowDbQuery Show(Action<ShowDbQuery> configureDbShow)
-    {
-        var showBuilder = new ShowDbQuery(_showDbClauses);
-        configureDbShow(showBuilder);
-        showBuilder.End();
-        return this;
-    }
-
-    public IShowUserQuery Show(Action<ShowUserQuery> configureUserShow)
-    {
-        var showBuilder = new ShowUserQuery(_showUserClauses);
-        configureUserShow(showBuilder);
-        showBuilder.End();
-        return this;
-    }
+    public ICreateUserQuery Create(Action<CreateUserQuery> configureUserCreate) =>
+        ConfigureQueryBuilder<ICreateUserQuery, CreateUserQuery>(AdminClauseKeys.CreateUser.ToString(),
+            configureUserCreate);
 
     /// <summary>
-    /// Generate Cypher query
+    /// SHOW DATABASE(S) clause for admin management <br/>
+    /// Sample: SHOW DATABASE db YIELD *
     /// </summary>
-    /// <returns>string</returns>
+    /// <param name="configureDbShow"></param>
+    public IShowDbQuery Show(Action<ShowDbQuery> configureDbShow) => ConfigureQueryBuilder<IShowDbQuery, ShowDbQuery>(
+        AdminClauseKeys.ShowDb.ToString(),
+        configureDbShow);
+
+    /// <summary>
+    /// SHOW USER(S) clause for admin management <br/>
+    /// Sample: SHOW CURRENT USER db YIELD *
+    /// </summary>
+    /// <param name="configureUserShow"></param>
+    public IShowUserQuery Show(Action<ShowUserQuery> configureUserShow) =>
+        ConfigureQueryBuilder<IShowUserQuery, ShowUserQuery>(AdminClauseKeys.ShowUser.ToString(), configureUserShow);
+
+    /// <summary>
+    /// Generates the final Cypher query by concatenating all configured clauses.
+    /// </summary>
+    /// <returns>The fully constructed Cypher query as a string.</returns>
     public string Build()
     {
-        StringBuilder queryBuilder = new();
-        var clauses = new List<StringBuilder>
+        var finalQuery = new StringBuilder();
+        foreach (var clause in allClauses.Values.Where(clause => clause.Length > 0))
         {
-            _createDbClauses,
-            _createUserClauses,
-            _showDbClauses,
-            _showUserClauses
-        };
-        foreach (var clause in clauses)
-        {
-            AppendClause(clause, queryBuilder);
+            finalQuery.Append(clause);
+            finalQuery.Append(' ');
         }
 
-        return queryBuilder.ToString().Trim();
-    }
-
-    private static void AppendClause(StringBuilder clause, StringBuilder queryBuilder)
-    {
-        if (clause.Length <= 0) return;
-        if (queryBuilder.Length > 0)
-        {
-            queryBuilder.Append(' ');
-        }
-
-        queryBuilder.Append(clause);
+        return finalQuery.ToString().Trim();
     }
 }

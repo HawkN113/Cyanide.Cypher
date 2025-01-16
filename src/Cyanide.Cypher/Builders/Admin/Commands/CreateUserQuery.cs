@@ -1,11 +1,18 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class CreateUserQuery(StringBuilder createUserClauses) : ICreateAdmQueryUser, ISetUserPassword, ISetUserStatus, ISetUserHomeDb
+public sealed class CreateUserQuery : IBuilderInitializer, ICreateAdmQueryUser, ISetUserPassword, ISetUserStatus, ISetUserHomeDb
 {
     private readonly List<string> _patterns = [];
     private bool _shouldReplaced;
+    private StringBuilder _createUserClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _createUserClauses = clauseBuilder;
+    }
     
     public ISetUserPassword WithUser(string userName)
     {
@@ -38,14 +45,14 @@ public sealed class CreateUserQuery(StringBuilder createUserClauses) : ICreateAd
         return this;
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (createUserClauses.Length > 0)
+        if (_createUserClauses.Length > 0)
         {
-            createUserClauses.Append(' ');
+            _createUserClauses.Append(' ');
         }
-        createUserClauses.Append(!_shouldReplaced ? "CREATE " : "CREATE OR REPLACE ");
-        createUserClauses.Append(string.Join(" ", _patterns));
+        _createUserClauses.Append(!_shouldReplaced ? "CREATE " : "CREATE OR REPLACE ");
+        _createUserClauses.Append(string.Join(" ", _patterns));
     }
 }

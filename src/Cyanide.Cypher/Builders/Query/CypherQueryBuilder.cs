@@ -4,11 +4,11 @@ using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders.Query;
 
-internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
-    Enum.GetValues<QueryClauseKeys>()
-        .Distinct()
-        .ToDictionary(key => key.ToString(), _ => new StringBuilder())), IQuery, IMatchQuery
+internal sealed class CypherQueryBuilder() : BaseQueryBuilder(DefaultClauses), IQuery, IMatchQuery
 {
+    private static readonly Dictionary<string, StringBuilder> DefaultClauses =
+        Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder());
+    
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
     /// Sample: WITH otherPerson, count(*) AS foaf
@@ -137,8 +137,13 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <returns>The fully constructed Cypher query as a string.</returns>
     public string Build()
     {
-        return string.Join(" ", allClauses.Values
-            .Where(clause => clause.Length > 0)
-            .Select(clause => clause.ToString().Trim()));
+        var finalQuery = new StringBuilder();
+        foreach (var clause in allClauses.Values.Where(clause => clause.Length > 0))
+        {
+            finalQuery.Append(clause);
+            finalQuery.Append(' ');
+        }
+
+        return finalQuery.ToString().Trim();
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Text;
-using Cyanide.Cypher.Builders.Query;
-
-namespace Cyanide.Cypher.Builders;
+﻿namespace Cyanide.Cypher.Builders.Helper;
 
 internal static class RelationshipPatternHelper
 {

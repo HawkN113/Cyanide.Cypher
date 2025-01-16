@@ -1,4 +1,4 @@
-﻿namespace Cyanide.Cypher.Builders;
+﻿namespace Cyanide.Cypher.Builders.Helper;
 
 internal static class FunctionsPatternBuilder
 {

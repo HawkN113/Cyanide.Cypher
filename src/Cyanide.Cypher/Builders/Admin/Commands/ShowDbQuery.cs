@@ -1,10 +1,17 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryDatabase, IAllFieldsDatabase, IFieldsCountDatabase, IShowAllDatabases
+public sealed class ShowDbQuery : IBuilderInitializer, IShowAdmQueryDatabase, IAllFieldsDatabase, IFieldsCountDatabase, IShowAllDatabases
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _showDbClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _showDbClauses = clauseBuilder;
+    }
 
     public IAllFieldsDatabase WithDatabase(string databaseName)
     {
@@ -38,15 +45,15 @@ public sealed class ShowDbQuery(StringBuilder showDbClauses) : IShowAdmQueryData
         _patterns.Add("DATABASES");
     }
     
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (showDbClauses.Length > 0)
+        if (_showDbClauses.Length > 0)
         {
-            showDbClauses.Append(' ');
+            _showDbClauses.Append(' ');
         }
 
-        showDbClauses.Append("SHOW ");
-        showDbClauses.Append(string.Join(" ", _patterns));
+        _showDbClauses.Append("SHOW ");
+        _showDbClauses.Append(string.Join(" ", _patterns));
     }
 }

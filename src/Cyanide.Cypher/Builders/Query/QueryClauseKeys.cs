@@ -1,18 +1,22 @@
-﻿namespace Cyanide.Cypher.Builders.Query;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 
+namespace Cyanide.Cypher.Builders.Query;
+
+[DataContract]
 internal enum QueryClauseKeys
 {
-    Match = 0,
-    OptionalMatch = 1,
-    Where = 2,
-    Create = 3,
-    Delete = 4,
-    DetachDelete = 5,
-    Remove = 6,
-    Set = 7,
-    With = 8,
-    Return = 9,
-    OrderBy = 10,
-    Skip = 11,
-    Limit = 12
+    [Description("Match")] Match = 0,
+    [Description("OptionalMatch")] OptionalMatch = 1,
+    [Description("Where")] Where = 2,
+    [Description("Create")] Create = 3,
+    [Description("Delete")] Delete = 4,
+    [Description("DetachDelete")] DetachDelete = 5,
+    [Description("Remove")] Remove = 6,
+    [Description("Set")] Set = 7,
+    [Description("With")] With = 8,
+    [Description("Return")] Return = 9,
+    [Description("OrderBy")] OrderBy = 10,
+    [Description("Skip")] Skip = 11,
+    [Description("Limit")] Limit = 12
 }

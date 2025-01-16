@@ -1,11 +1,18 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowUserQuery(StringBuilder showUserlauses)
-    : IAllFieldsUser, IShowAllUsers, IFieldsCountUser, ICurrentUser
+public sealed class ShowUserQuery
+    : IBuilderInitializer, IAllFieldsUser, IShowAllUsers, IFieldsCountUser, ICurrentUser
 {
     private readonly List<string> _patterns = [];
+    private StringBuilder _showUserClauses = new();
+    
+    public void Initialize(StringBuilder clauseBuilder)
+    {
+        _showUserClauses = clauseBuilder;
+    }
 
     public IFieldsCountUser WithAllFields()
     {
@@ -30,15 +37,15 @@ public sealed class ShowUserQuery(StringBuilder showUserlauses)
         return this;
     }
 
-    internal void End()
+    public void End()
     {
         if (_patterns.Count <= 0) return;
-        if (showUserlauses.Length > 0)
+        if (_showUserClauses.Length > 0)
         {
-            showUserlauses.Append(' ');
+            _showUserClauses.Append(' ');
         }
 
-        showUserlauses.Append("SHOW ");
-        showUserlauses.Append(string.Join(" ", _patterns));
+        _showUserClauses.Append("SHOW ");
+        _showUserClauses.Append(string.Join(" ", _patterns));
     }
 }
