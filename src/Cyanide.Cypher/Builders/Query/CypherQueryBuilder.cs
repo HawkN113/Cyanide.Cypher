@@ -5,15 +5,11 @@ using Cyanide.Cypher.Builders.Query.Commands;
 
 namespace Cyanide.Cypher.Builders;
 
-internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
+internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
+    Enum.GetValues<QueryClauseKeys>()
+        .Distinct()
+        .ToDictionary(key => key.ToString(), _ => new StringBuilder())), IQuery, IMatchQuery
 {
-    private readonly Dictionary<string, StringBuilder> _clauses;
-
-    public CypherQueryBuilder()
-    {
-        _clauses = Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder());
-    }
-
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
     /// Sample: WITH otherPerson, count(*) AS foaf
@@ -140,29 +136,8 @@ internal sealed class CypherQueryBuilder : IQuery, IMatchQuery
     /// <returns>The fully constructed Cypher query as a string.</returns>
     public string Build()
     {
-        return string.Join(" ", _clauses.Values
+        return string.Join(" ", allClauses.Values
             .Where(clause => clause.Length > 0)
             .Select(clause => clause.ToString().Trim()));
-    }
-
-    private IBaseQuery ConfigureAndReturn<TClause>(string key, Action<TClause> configure)
-        where TClause : class, IBuilderInitializer, new()
-    {
-        ConfigureClause(key, configure);
-        return this;
-    }
-
-    private void ConfigureClause<TClause>(string key, Action<TClause> configure) where TClause : class, IBuilderInitializer, new()
-    {
-        if (!_clauses.TryGetValue(key, out var clauseBuilder))
-            throw new ArgumentException($"Invalid clause key: {key}", nameof(key));
-        
-        var instance = new TClause();
-        
-        if (instance is not IBuilderInitializer initializer) return;
-        
-        initializer.Initialize(clauseBuilder);
-        configure(instance);
-        instance.End();
     }
 }
