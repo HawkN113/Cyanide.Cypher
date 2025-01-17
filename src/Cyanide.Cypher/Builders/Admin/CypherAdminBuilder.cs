@@ -4,11 +4,9 @@ using Cyanide.Cypher.Builders.Admin.Commands;
 
 namespace Cyanide.Cypher.Builders.Admin;
 
-internal sealed class CypherAdminBuilder() : BaseQueryBuilder(DefaultClauses), IAdminQuery
+internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
+    Enum.GetValues<AdminClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder())), IAdminQuery
 {
-    private static readonly Dictionary<string, StringBuilder> DefaultClauses =
-        Enum.GetValues<AdminClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder());
-    
     /// <summary>
     /// CREATE DATABASE clause for admin management <br/>
     /// CREATE OR REPLACE DATABASE clause for admin management <br/>
