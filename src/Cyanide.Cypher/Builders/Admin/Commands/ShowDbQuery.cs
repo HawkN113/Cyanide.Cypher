@@ -1,9 +1,15 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
+using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowDbQuery : IBuilderInitializer, IShowAdmQueryDatabase, IAllFieldsDatabase, IFieldsCountDatabase, IShowAllDatabases
+public sealed class ShowDbQuery : 
+    IBuilderInitializer, 
+    IShowAdmQueryDatabase, 
+    IAllFieldsDatabase, 
+    IFieldsCountDatabase, 
+    IShowAllDatabases
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _showDbClauses = new();

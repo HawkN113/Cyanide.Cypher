@@ -1,12 +1,17 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Abstraction.Nodes;
+using Cyanide.Cypher.Builders.Abstraction.Relations;
 using Cyanide.Cypher.Builders.Helper;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class DeleteClause : IBuilderInitializer, IRelationship<DeleteClause>,
-    INode<DeleteClause>, IEmptyNode<DeleteClause>
+public sealed class DeleteClause : 
+    IBuilderInitializer, 
+    IRelation<DeleteClause>,
+    INode<DeleteClause>, 
+    IEmptyNode<DeleteClause>
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _deleteClauses = new();
@@ -55,7 +60,7 @@ public sealed class DeleteClause : IBuilderInitializer, IRelationship<DeleteClau
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public DeleteClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public DeleteClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
@@ -69,7 +74,7 @@ public sealed class DeleteClause : IBuilderInitializer, IRelationship<DeleteClau
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public DeleteClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public DeleteClause WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));

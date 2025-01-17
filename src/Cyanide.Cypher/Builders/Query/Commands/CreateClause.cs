@@ -1,12 +1,16 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Abstraction.Nodes;
+using Cyanide.Cypher.Builders.Abstraction.Relations;
 using Cyanide.Cypher.Builders.Helper;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class CreateClause
-    : IBuilderInitializer, IRelationship<CreateClause>, INode<CreateClause>
+public sealed class CreateClause : 
+    IBuilderInitializer, 
+    IRelation<CreateClause>, 
+    INode<CreateClause>
 {
     private readonly List<string> _patterns = [];
     private int _countNodes;
@@ -36,7 +40,7 @@ public sealed class CreateClause
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public CreateClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public CreateClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
@@ -50,7 +54,7 @@ public sealed class CreateClause
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public CreateClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public CreateClause WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));

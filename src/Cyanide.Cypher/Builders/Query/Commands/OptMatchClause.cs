@@ -1,11 +1,17 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Abstraction.Nodes;
+using Cyanide.Cypher.Builders.Abstraction.Relations;
 using Cyanide.Cypher.Builders.Helper;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class OptMatchClause : IBuilderInitializer, IRelationship<OptMatchClause>, INode<OptMatchClause>, IEmptyNode<OptMatchClause>
+public sealed class OptMatchClause : 
+    IBuilderInitializer, 
+    IRelation<OptMatchClause>, 
+    INode<OptMatchClause>, 
+    IEmptyNode<OptMatchClause>
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _optMatchClauses = new();
@@ -49,7 +55,7 @@ public sealed class OptMatchClause : IBuilderInitializer, IRelationship<OptMatch
     /// </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public OptMatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public OptMatchClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
@@ -63,7 +69,7 @@ public sealed class OptMatchClause : IBuilderInitializer, IRelationship<OptMatch
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public OptMatchClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public OptMatchClause WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));

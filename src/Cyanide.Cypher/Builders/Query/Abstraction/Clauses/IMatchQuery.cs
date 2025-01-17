@@ -1,6 +1,6 @@
 ﻿using Cyanide.Cypher.Builders.Query.Commands;
 
-namespace Cyanide.Cypher.Builders.Query;
+namespace Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 
 public interface IMatchQuery: IOptMatchQuery, IDeleteQuery, IDetachDeleteQuery, IRemoveQuery, ISetClause, IWithQuery
 {

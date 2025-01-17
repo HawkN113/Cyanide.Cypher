@@ -3,7 +3,8 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class LimitClause : IBuilderInitializer
+public sealed class LimitClause : 
+    IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _limitClauses = new();

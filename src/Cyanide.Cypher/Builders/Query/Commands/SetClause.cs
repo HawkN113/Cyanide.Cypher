@@ -3,7 +3,8 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SetClause : IBuilderInitializer
+public sealed class SetClause : 
+    IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
     private int _countProperties;

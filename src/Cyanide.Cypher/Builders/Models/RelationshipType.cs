@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Models;
 
 /// <summary>
 /// Relationship types

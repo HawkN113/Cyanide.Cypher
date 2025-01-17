@@ -1,4 +1,6 @@
-﻿namespace Cyanide.Cypher.Builders.Helper;
+﻿using Cyanide.Cypher.Builders.Models;
+
+namespace Cyanide.Cypher.Builders.Helper;
 
 internal static class RelationshipPatternHelper
 {

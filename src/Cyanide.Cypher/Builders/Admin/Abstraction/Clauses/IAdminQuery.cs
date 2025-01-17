@@ -1,7 +1,6 @@
-﻿using Cyanide.Cypher.Builders.Admin;
-using Cyanide.Cypher.Builders.Admin.Commands;
+﻿using Cyanide.Cypher.Builders.Admin.Commands;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 
 public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery
 {

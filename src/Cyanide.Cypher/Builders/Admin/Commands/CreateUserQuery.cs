@@ -1,9 +1,16 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
+using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class CreateUserQuery : IBuilderInitializer, ICreateAdmQueryUser, ISetUserPassword, ISetUserStatus, ISetUserHomeDb
+public sealed class CreateUserQuery : 
+    IBuilderInitializer, 
+    ICreateAdmQueryUser, 
+    ISetUserPassword, 
+    ISetUserStatus, 
+    ISetUserHomeDb
 {
     private readonly List<string> _patterns = [];
     private bool _shouldReplaced;

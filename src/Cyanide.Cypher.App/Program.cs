@@ -1,5 +1,5 @@
 ﻿using Cyanide.Cypher;
-using Cyanide.Cypher.Builders;
+using Cyanide.Cypher.Builders.Models;
 
 const string personAlies = "person";
 const string personType = "Person";
@@ -9,7 +9,7 @@ var queryBuilder = Factory.QueryBuilder();
 
 Console.WriteLine(template, queryBuilder.Match(q =>
         q.WithNode(new Entity(personType, "p"))
-            .WithRelationship("LIVES_IN", RelationshipType.Direct)
+            .WithRelation("LIVES_IN", RelationshipType.Direct)
             .WithNode(new Entity("City", "c"))
     )
     .Return(q =>
@@ -37,7 +37,7 @@ Console.WriteLine(template, queryBuilder
 
 Console.WriteLine(template, queryBuilder
     .Match(q =>
-        q.WithRelationship(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
+        q.WithRelation(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
             new Entity(personType, "n", [new Field("name", "'Laurence Fishburne'")]),
             new Entity(string.Empty))
     )
@@ -47,7 +47,7 @@ Console.WriteLine(template, queryBuilder
 Console.WriteLine(template, queryBuilder
     .Match(q =>
         q.WithNode(new Entity("Movie", "", [new Field("title", "'Wall Street'")]))
-            .WithRelationship("ACTED_IN|DIRECTED", RelationshipType.InDirect)
+            .WithRelation("ACTED_IN|DIRECTED", RelationshipType.InDirect)
             .WithNode(new Entity(personType, personAlies))
     )
     .Return(q =>
@@ -61,7 +61,7 @@ Console.WriteLine(template, queryBuilder
     )
     .Match(q =>
         q.WithNode(new Entity("a"))
-            .WithRelationship("DIRECTED", RelationshipType.Direct, "r")
+            .WithRelation("DIRECTED", RelationshipType.Direct, "r")
             .WithEmptyNode()
     )
     .Return(q =>
@@ -71,7 +71,7 @@ Console.WriteLine(template, queryBuilder
 
 Console.WriteLine(template, queryBuilder
     .Match(q =>
-        q.WithRelationship(
+        q.WithRelation(
             new Entity("r"),
             RelationshipType.Direct,
             new Entity(personType, "", [new Field("name", "'Oliver Stone'")]),
@@ -83,7 +83,7 @@ Console.WriteLine(template, queryBuilder
 Console.WriteLine(template, queryBuilder
     .Match(q =>
         q.WithNode(new Entity(personType, "p"))
-            .WithRelationship("LIVES_IN", RelationshipType.Direct)
+            .WithRelation("LIVES_IN", RelationshipType.Direct)
             .WithNode(new Entity("City", "c"))
     )
     .Where(q => q.Query("p.age > 30"))

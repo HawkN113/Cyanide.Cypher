@@ -1,6 +1,7 @@
 ﻿using System.Text;
+using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders.Abstraction;
+namespace Cyanide.Cypher.Builders.Base;
 
 internal abstract class BaseQueryBuilder(Dictionary<string, StringBuilder> clauses)
 {

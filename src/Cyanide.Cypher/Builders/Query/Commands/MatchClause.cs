@@ -1,12 +1,17 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Abstraction.Nodes;
+using Cyanide.Cypher.Builders.Abstraction.Relations;
 using Cyanide.Cypher.Builders.Helper;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class MatchClause : IBuilderInitializer, IRelationship<MatchClause>,
-    INode<MatchClause>, IEmptyNode<MatchClause>
+public sealed class MatchClause : 
+    IBuilderInitializer, 
+    IRelation<MatchClause>,
+    INode<MatchClause>, 
+    IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _matchClauses = new();
@@ -51,7 +56,7 @@ public sealed class MatchClause : IBuilderInitializer, IRelationship<MatchClause
     /// </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public MatchClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public MatchClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
@@ -65,7 +70,7 @@ public sealed class MatchClause : IBuilderInitializer, IRelationship<MatchClause
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public MatchClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public MatchClause WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));

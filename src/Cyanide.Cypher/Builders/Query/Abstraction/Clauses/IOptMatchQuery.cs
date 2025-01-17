@@ -1,6 +1,7 @@
-﻿using Cyanide.Cypher.Builders.Query.Commands;
+﻿using Cyanide.Cypher.Builders.Query.Abstraction.Clauses.Subclauses;
+using Cyanide.Cypher.Builders.Query.Commands;
 
-namespace Cyanide.Cypher.Builders.Query;
+namespace Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 
 public interface IOptMatchQuery: IWhereSubQuery
 {

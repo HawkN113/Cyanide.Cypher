@@ -1,9 +1,10 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders.Query.Commands;
+namespace Cyanide.Cypher.Builders.Query.Commands.Subclauses;
 
-public sealed class WhereSubClause : IBuilderInitializer
+public sealed class WhereSubClause : 
+    IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _whereClauses = new();

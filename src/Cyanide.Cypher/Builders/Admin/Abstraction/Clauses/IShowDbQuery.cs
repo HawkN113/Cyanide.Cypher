@@ -1,6 +1,6 @@
 ﻿using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders.Admin;
+namespace Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 
 public interface IShowDbQuery: IBuildQuery
 {

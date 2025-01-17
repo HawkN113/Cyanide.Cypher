@@ -1,11 +1,17 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Abstraction;
-using Cyanide.Cypher.Builders.Abstraction.Common;
+using Cyanide.Cypher.Builders.Abstraction.Nodes;
+using Cyanide.Cypher.Builders.Abstraction.Relations;
 using Cyanide.Cypher.Builders.Helper;
+using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class DetachDeleteClause : IBuilderInitializer, IRelationship<DetachDeleteClause>, INode<DetachDeleteClause>, IEmptyNode<DetachDeleteClause>
+public sealed class DetachDeleteClause : 
+    IBuilderInitializer, 
+    IRelation<DetachDeleteClause>, 
+    INode<DetachDeleteClause>, 
+    IEmptyNode<DetachDeleteClause>
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _detachDeleteClauses = new();
@@ -54,7 +60,7 @@ public sealed class DetachDeleteClause : IBuilderInitializer, IRelationship<Deta
     /// <param name="relation">NonDirect (non-directed), Direct (directed), InDirect (in-directed), UnDirect (undirected), BiDirect (bidirectional) </param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public DetachDeleteClause WithRelationship(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
+    public DetachDeleteClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
         return this;
@@ -68,7 +74,7 @@ public sealed class DetachDeleteClause : IBuilderInitializer, IRelationship<Deta
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public DetachDeleteClause WithRelationship(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
+    public DetachDeleteClause WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));

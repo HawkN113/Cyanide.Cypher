@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders;
+﻿using Cyanide.Cypher.Builders.Models;
+using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 
 namespace Cyanide.Cypher.Tests;
 
@@ -15,7 +16,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -35,7 +36,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.InDirect)
+                    .WithRelation("LIVES_IN", RelationshipType.InDirect)
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -55,7 +56,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.BiDirect)
+                    .WithRelation("LIVES_IN", RelationshipType.BiDirect)
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -75,7 +76,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.UnDirect)
+                    .WithRelation("LIVES_IN", RelationshipType.UnDirect)
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -95,7 +96,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN")
+                    .WithRelation("LIVES_IN")
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -115,7 +116,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", alias: "x")
+                    .WithRelation("LIVES_IN", alias: "x")
                     .WithNode(new Entity("City", "c"))
             )
             .Return(q =>
@@ -152,7 +153,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Movie", "", [new Field("title", "'Wall Street'")]))
-                    .WithRelationship("ACTED_IN|DIRECTED", RelationshipType.InDirect)
+                    .WithRelation("ACTED_IN|DIRECTED", RelationshipType.InDirect)
                     .WithNode(new Entity("Person", "person"))
             )
             .Return(q =>
@@ -176,7 +177,7 @@ public class CypherQueryBuilderTests
             )
             .Match(q =>
                 q.WithNode(new Entity("a"))
-                    .WithRelationship("DIRECTED", RelationshipType.Direct, "r")
+                    .WithRelation("DIRECTED", RelationshipType.Direct, "r")
                     .WithEmptyNode()
             )
             .Return(q =>
@@ -199,7 +200,7 @@ public class CypherQueryBuilderTests
             )
             .OptionalMatch(q =>
                 q.WithNode(new Entity("a"))
-                    .WithRelationship("DIRECTED", RelationshipType.Direct, "r")
+                    .WithRelation("DIRECTED", RelationshipType.Direct, "r")
                     .WithEmptyNode()
             )
             .Return(q =>
@@ -223,7 +224,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30"))
@@ -245,7 +246,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").And(q1 => q1.Query("b.city=\"New York\"")))
@@ -269,7 +270,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").Or(q1 => q1.Query("b.city=\"New York\"")))
@@ -293,7 +294,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").Xor(q1 => q1.Query("b.city=\"New York\"")))
@@ -317,7 +318,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").Not(q1 => q1.Query("b.city=\"New York\"")))
@@ -341,7 +342,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").And(q1 => q1.IsNotNull("b.city")))
@@ -365,7 +366,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q =>
                 q.WithNode(new Entity("Person", "p"))
-                    .WithRelationship("LIVES_IN", RelationshipType.Direct)
+                    .WithRelation("LIVES_IN", RelationshipType.Direct)
                     .WithNode(new Entity("City", "c"))
             )
             .Where(q => q.Query("p.age > 30").And(q1 => q1.IsNull("b.city")))
@@ -458,10 +459,10 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Create(q =>
-                q.WithRelationship(new Entity("WORKS_AT", ""), RelationshipType.Direct,
+                q.WithRelation(new Entity("WORKS_AT", ""), RelationshipType.Direct,
                         new Entity("Person", "andy", [new Field("name", "'Andy'")]),
                         new Entity("neo"))
-                    .WithRelationship("WORKS_AT", RelationshipType.InDirect)
+                    .WithRelation("WORKS_AT", RelationshipType.InDirect)
                     .WithNode(new Entity("Person", "michael", [new Field("name", "'Michael'")]))
             )
             .Return(q => q.WithField("andy").WithField("michael"))
@@ -481,9 +482,9 @@ public class CypherQueryBuilderTests
             .Create(q =>
                 q.WithNode(new Entity("Person", "keanu", [new Field("name", "'Keanu Reever'")]))
                     .WithNode(new Entity("Person", "laurence", [new Field("name", "'Laurence Fishburne'")]))
-                    .WithRelationship(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("keanu"),
+                    .WithRelation(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("keanu"),
                         new Entity("theMatrix"))
-                    .WithRelationship(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("laurence"),
+                    .WithRelation(new Entity("ACTED_IN", ""), RelationshipType.Direct, new Entity("laurence"),
                         new Entity("theMatrix"))
             )
             .Build();
@@ -504,7 +505,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.WithRelationship(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
+                q.WithRelation(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
                     new Entity("Person", "n", [new Field("name", "'Laurence Fishburne'")]),
                     new Entity(string.Empty))
             )
@@ -576,7 +577,7 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q =>
-                q.WithRelationship(
+                q.WithRelation(
                     new Entity("r"),
                     RelationshipType.Direct,
                     new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
@@ -730,7 +731,7 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+            .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
                 new Entity("otherPerson")))
             .With(q => q.WithField("*").WithType("r", "connectionType"))
             .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
@@ -747,7 +748,7 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+            .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
                 new Entity("otherPerson")))
             .With(q => q.ToUpper("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
             .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
@@ -764,7 +765,7 @@ public class CypherQueryBuilderTests
     {
         // Act
         var resultQuery = _queryBuilder
-            .Match(q => q.WithRelationship(new Entity("r"), RelationshipType.Direct, new Entity("person"),
+            .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
                 new Entity("otherPerson")))
             .With(q => q.Count("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
             .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))

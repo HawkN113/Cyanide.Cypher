@@ -1,7 +1,6 @@
-﻿using Cyanide.Cypher.Builders.Query;
-using Cyanide.Cypher.Builders.Query.Commands;
+﻿using Cyanide.Cypher.Builders.Query.Commands;
 
-namespace Cyanide.Cypher.Builders;
+namespace Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 
 public interface IQuery
 {

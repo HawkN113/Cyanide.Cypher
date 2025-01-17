@@ -1,6 +1,9 @@
 ﻿using System.Text;
-using Cyanide.Cypher.Builders.Abstraction;
+using Cyanide.Cypher.Builders.Base;
+using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
+using Cyanide.Cypher.Builders.Query.Abstraction.Clauses.Subclauses;
 using Cyanide.Cypher.Builders.Query.Commands;
+using Cyanide.Cypher.Builders.Query.Commands.Subclauses;
 
 namespace Cyanide.Cypher.Builders.Query;
 

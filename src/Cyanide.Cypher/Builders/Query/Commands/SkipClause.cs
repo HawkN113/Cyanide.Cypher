@@ -3,7 +3,8 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Query.Commands;
 
-public sealed class SkipClause : IBuilderInitializer
+public sealed class SkipClause : 
+    IBuilderInitializer
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _skipClauses = new();
