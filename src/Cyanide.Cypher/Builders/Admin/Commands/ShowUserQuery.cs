@@ -4,16 +4,16 @@ using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowUserQuery : 
-    IBuilderInitializer, 
-    IAllFieldsUser, 
-    IShowAllUsers, 
-    IFieldsCountUser, 
+public sealed class ShowUserQuery :
+    IBuilderInitializer,
+    IAllFieldsUser,
+    IShowAllUsers,
+    IFieldsCountUser,
     ICurrentUser
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _showUserClauses = new();
-    
+
     public void Initialize(StringBuilder clauseBuilder)
     {
         _showUserClauses = clauseBuilder;

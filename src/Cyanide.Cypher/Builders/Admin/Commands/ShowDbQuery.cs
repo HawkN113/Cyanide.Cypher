@@ -4,16 +4,16 @@ using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
-public sealed class ShowDbQuery : 
-    IBuilderInitializer, 
-    IShowAdmQueryDatabase, 
-    IAllFieldsDatabase, 
-    IFieldsCountDatabase, 
+public sealed class ShowDbQuery :
+    IBuilderInitializer,
+    IShowAdmQueryDatabase,
+    IAllFieldsDatabase,
+    IFieldsCountDatabase,
     IShowAllDatabases
 {
     private readonly List<string> _patterns = [];
     private StringBuilder _showDbClauses = new();
-    
+
     public void Initialize(StringBuilder clauseBuilder)
     {
         _showDbClauses = clauseBuilder;
@@ -50,7 +50,7 @@ public sealed class ShowDbQuery :
     {
         _patterns.Add("DATABASES");
     }
-    
+
     public void End()
     {
         if (_patterns.Count <= 0) return;

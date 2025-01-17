@@ -4,11 +4,13 @@ using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 using Cyanide.Cypher.Builders.Query.Abstraction.Clauses.Subclauses;
 using Cyanide.Cypher.Builders.Query.Commands;
 using Cyanide.Cypher.Builders.Query.Commands.Subclauses;
+using Cyanide.Cypher.Extensions;
 
 namespace Cyanide.Cypher.Builders.Query;
 
 internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
-    Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder())), IQuery, IMatchQuery
+        Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder())), IQuery,
+    IMatchQuery
 {
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
@@ -17,7 +19,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureWith"></param>
     /// <returns></returns>
     public IWithQuery With(Action<WithClause> configureWith) =>
-        ConfigureQueryBuilder<IWithQuery, WithClause>(QueryClauseKeys.With.ToString(), configureWith);
+        ConfigureQueryBuilder<IWithQuery, WithClause>(
+            QueryClauseKeys.With.GetDescription(), 
+            configureWith);
 
     /// <summary>
     /// ORDER BY is a sub-clause following RETURN <br/>
@@ -26,7 +30,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureOrderBy"></param>
     /// <returns></returns>
     public IOrderBySubQuery OrderBy(Action<OrderBySubClause> configureOrderBy) =>
-        ConfigureQueryBuilder<IOrderBySubQuery, OrderBySubClause>(QueryClauseKeys.OrderBy.ToString(), configureOrderBy);
+        ConfigureQueryBuilder<IOrderBySubQuery, OrderBySubClause>(
+            QueryClauseKeys.OrderBy.GetDescription(),
+            configureOrderBy);
 
     /// <summary>
     /// LIMIT constrains the number of returned rows <br/>
@@ -36,7 +42,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureLimit"></param>
     /// <returns></returns>
     public ILimitClause Limit(Action<LimitClause> configureLimit) =>
-        ConfigureQueryBuilder<ILimitClause, LimitClause>(QueryClauseKeys.Limit.ToString(), configureLimit);
+        ConfigureQueryBuilder<ILimitClause, LimitClause>(
+            QueryClauseKeys.Limit.GetDescription(), 
+            configureLimit);
 
     /// <summary>
     /// SKIP defines from which row to start including the rows in the output <br/>
@@ -46,7 +54,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureSkip"></param>
     /// <returns></returns>
     public ISkipClause Skip(Action<SkipClause> configureSkip) =>
-        ConfigureQueryBuilder<ISkipClause, SkipClause>(QueryClauseKeys.Skip.ToString(), configureSkip);
+        ConfigureQueryBuilder<ISkipClause, SkipClause>(
+            QueryClauseKeys.Skip.GetDescription(), 
+            configureSkip);
 
     /// <summary>
     /// RETURN clause <br/>
@@ -55,7 +65,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureReturn"></param>
     /// <returns></returns>
     public IReturnQuery Return(Action<ReturnClause> configureReturn) =>
-        ConfigureQueryBuilder<IReturnQuery, ReturnClause>(QueryClauseKeys.Return.ToString(), configureReturn);
+        ConfigureQueryBuilder<IReturnQuery, ReturnClause>(
+            QueryClauseKeys.Return.GetDescription(), 
+            configureReturn);
 
     /// <summary>
     /// The SET clause is used to update labels on nodes and properties on nodes and relationships <br/>
@@ -65,7 +77,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureSet"></param>
     /// <returns></returns>
     public ISetClause Set(Action<SetClause> configureSet) =>
-        ConfigureQueryBuilder<ISetClause, SetClause>(QueryClauseKeys.Set.ToString(), configureSet);
+        ConfigureQueryBuilder<ISetClause, SetClause>(
+            QueryClauseKeys.Set.GetDescription(), 
+            configureSet);
 
     /// <summary>
     /// The REMOVE clause is used to remove properties from nodes and relationships, and to remove labels from nodes. <br/>
@@ -74,7 +88,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureRemove"></param>
     /// <returns></returns>
     public IRemoveQuery Remove(Action<RemoveClause> configureRemove) =>
-        ConfigureQueryBuilder<IRemoveQuery, RemoveClause>(QueryClauseKeys.Remove.ToString(), configureRemove);
+        ConfigureQueryBuilder<IRemoveQuery, RemoveClause>(
+            QueryClauseKeys.Remove.GetDescription(), 
+            configureRemove);
 
     /// <summary>
     /// WHERE sub-clause <br/>
@@ -83,7 +99,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="conditions"></param>
     /// <returns></returns>
     public IWhereSubQuery Where(Action<WhereSubClause> conditions) =>
-        ConfigureQueryBuilder<IWhereSubQuery, WhereSubClause>(QueryClauseKeys.Where.ToString(), conditions);
+        ConfigureQueryBuilder<IWhereSubQuery, WhereSubClause>(
+            QueryClauseKeys.Where.GetDescription(), 
+            conditions);
 
     /// <summary>
     /// CREATE clause <br/>
@@ -92,7 +110,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureCreate"></param>
     /// <returns></returns>
     public ICreateQuery Create(Action<CreateClause> configureCreate) =>
-        ConfigureQueryBuilder<ICreateQuery, CreateClause>(QueryClauseKeys.Create.ToString(), configureCreate);
+        ConfigureQueryBuilder<ICreateQuery, CreateClause>(
+            QueryClauseKeys.Create.GetDescription(), 
+            configureCreate);
 
     /// <summary>
     /// MATCH clause <br/>
@@ -101,7 +121,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureMatch"></param>
     /// <returns></returns>
     public IMatchQuery Match(Action<MatchClause> configureMatch) =>
-        ConfigureQueryBuilder<IMatchQuery, MatchClause>(QueryClauseKeys.Match.ToString(), configureMatch);
+        ConfigureQueryBuilder<IMatchQuery, MatchClause>(
+            QueryClauseKeys.Match.GetDescription(), 
+            configureMatch);
 
     /// <summary>
     /// OPTIONAL MATCH clause does as MATCH <br/>
@@ -110,7 +132,8 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureOptMatch"></param>
     /// <returns></returns>
     public IOptMatchQuery OptionalMatch(Action<OptMatchClause> configureOptMatch) =>
-        ConfigureQueryBuilder<IOptMatchQuery, OptMatchClause>(QueryClauseKeys.OptionalMatch.ToString(),
+        ConfigureQueryBuilder<IOptMatchQuery, OptMatchClause>(
+            QueryClauseKeys.OptionalMatch.GetDescription(),
             configureOptMatch);
 
     /// <summary>
@@ -120,7 +143,9 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureDelete"></param>
     /// <returns></returns>
     public IDeleteQuery Delete(Action<DeleteClause> configureDelete) =>
-        ConfigureQueryBuilder<IDeleteQuery, DeleteClause>(QueryClauseKeys.Delete.ToString(), configureDelete);
+        ConfigureQueryBuilder<IDeleteQuery, DeleteClause>(
+            QueryClauseKeys.Delete.GetDescription(), 
+            configureDelete);
 
     /// <summary>
     /// DETACH DELETE clause may not be permitted to users with restricted security privileges <br/>
@@ -129,7 +154,8 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
     /// <param name="configureDelete"></param>
     /// <returns></returns>
     public IDetachDeleteQuery DetachDelete(Action<DetachDeleteClause> configureDelete) =>
-        ConfigureQueryBuilder<IDetachDeleteQuery, DetachDeleteClause>(QueryClauseKeys.DetachDelete.ToString(),
+        ConfigureQueryBuilder<IDetachDeleteQuery, DetachDeleteClause>(
+            QueryClauseKeys.DetachDelete.GetDescription(),
             configureDelete);
 
     /// <summary>

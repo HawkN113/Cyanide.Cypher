@@ -2,6 +2,7 @@
 using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 using Cyanide.Cypher.Builders.Admin.Commands;
 using Cyanide.Cypher.Builders.Base;
+using Cyanide.Cypher.Extensions;
 
 namespace Cyanide.Cypher.Builders.Admin;
 
@@ -17,7 +18,9 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
     /// <param name="configureDbCreate"></param>
     /// <returns></returns>
     public ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate) =>
-        ConfigureQueryBuilder<ICreateDbQuery, CreateDbQuery>(AdminClauseKeys.CreateDb.ToString(), configureDbCreate);
+        ConfigureQueryBuilder<ICreateDbQuery, CreateDbQuery>(
+            AdminClauseKeys.CreateDb.GetDescription(), 
+            configureDbCreate);
 
     /// <summary>
     /// CREATE USER clause for admin management <br/>
@@ -28,7 +31,8 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
     /// <param name="configureUserCreate"></param>
     /// <returns></returns>
     public ICreateUserQuery Create(Action<CreateUserQuery> configureUserCreate) =>
-        ConfigureQueryBuilder<ICreateUserQuery, CreateUserQuery>(AdminClauseKeys.CreateUser.ToString(),
+        ConfigureQueryBuilder<ICreateUserQuery, CreateUserQuery>(
+            AdminClauseKeys.CreateUser.GetDescription(),
             configureUserCreate);
 
     /// <summary>
@@ -36,8 +40,9 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
     /// Sample: SHOW DATABASE db YIELD *
     /// </summary>
     /// <param name="configureDbShow"></param>
-    public IShowDbQuery Show(Action<ShowDbQuery> configureDbShow) => ConfigureQueryBuilder<IShowDbQuery, ShowDbQuery>(
-        AdminClauseKeys.ShowDb.ToString(),
+    public IShowDbQuery Show(Action<ShowDbQuery> configureDbShow) => 
+        ConfigureQueryBuilder<IShowDbQuery, ShowDbQuery>(
+        AdminClauseKeys.ShowDb.GetDescription(),
         configureDbShow);
 
     /// <summary>
@@ -46,7 +51,9 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
     /// </summary>
     /// <param name="configureUserShow"></param>
     public IShowUserQuery Show(Action<ShowUserQuery> configureUserShow) =>
-        ConfigureQueryBuilder<IShowUserQuery, ShowUserQuery>(AdminClauseKeys.ShowUser.ToString(), configureUserShow);
+        ConfigureQueryBuilder<IShowUserQuery, ShowUserQuery>(
+            AdminClauseKeys.ShowUser.GetDescription(), 
+            configureUserShow);
 
     /// <summary>
     /// Generates the final Cypher query by concatenating all configured clauses.

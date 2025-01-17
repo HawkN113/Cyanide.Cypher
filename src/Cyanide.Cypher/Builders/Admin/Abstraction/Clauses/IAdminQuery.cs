@@ -16,7 +16,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// <summary>
     /// CREATE USER clause for admin management <br/>
     /// CREATE OR USER DATABASE clause for admin management <br/>
-    /// Sample: CREATE OR REPLACE USER name <br/>
+    /// Sample: CREATE OR REPLACE USER usr1 <br/>
     /// </summary>
     /// <param name="configureUserCreate"></param>
     /// <returns></returns>
@@ -32,7 +32,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     
     /// <summary>
     /// SHOW USER(S) clause for admin management <br/>
-    /// Sample: SHOW CURRENT USER db YIELD *
+    /// Sample: SHOW CURRENT USER usr1 YIELD *
     /// </summary>
     /// <param name="configureUserShow"></param>
     /// <returns></returns>
