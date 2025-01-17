@@ -2,6 +2,7 @@
 using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 using Cyanide.Cypher.Builders.Models;
+using Cyanide.Cypher.Extensions;
 
 namespace Cyanide.Cypher.Builders.Admin.Commands;
 
@@ -38,11 +39,11 @@ public sealed class CreateUserQuery :
         return this;
     }
 
-    public ISetUserStatus WithPassword(string password, PasswordType type = PasswordType.PLAINTEXT,
+    public ISetUserStatus WithPassword(string password, PasswordType type = PasswordType.Plaintext,
         bool changeRequired = false)
     {
         var change = !changeRequired ? "CHANGE NOT REQUIRED" : "CHANGE REQUIRED";
-        _patterns.Add($"SET {type.ToString()} PASSWORD {password} {change}");
+        _patterns.Add($"SET {type.GetDescription()} PASSWORD {password} {change}");
         return this;
     }
 

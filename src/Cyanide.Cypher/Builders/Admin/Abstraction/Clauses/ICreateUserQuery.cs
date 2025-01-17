@@ -23,7 +23,7 @@ public interface ISetUserPassword
     /// <param name="type">PLAINTEXT or ENCRYPTED</param>
     /// <param name="changeRequired">Should change the password or not</param>
     /// <returns></returns>
-    ISetUserStatus WithPassword(string password, PasswordType type = PasswordType.PLAINTEXT, bool changeRequired = false);
+    ISetUserStatus WithPassword(string password, PasswordType type = PasswordType.Plaintext, bool changeRequired = false);
 }
 public interface ISetUserStatus
 {

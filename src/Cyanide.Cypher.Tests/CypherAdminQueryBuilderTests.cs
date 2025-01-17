@@ -101,7 +101,7 @@ public class CypherAdminQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q =>
                 q.WithUser("jake")
-                    .WithPassword("'abc'", PasswordType.ENCRYPTED)
+                    .WithPassword("'abc'", PasswordType.Encrypted)
                     .SetStatus(UserStatus.SUSPENDED)
                     .SetHomeDb("anotherDb")
             )
@@ -120,7 +120,7 @@ public class CypherAdminQueryBuilderTests
         var resultQuery = _queryBuilder
             .Create(q =>
                 q.WithUser("jake")
-                    .WithPassword("'abc'", PasswordType.ENCRYPTED, true)
+                    .WithPassword("'abc'", PasswordType.Encrypted, true)
                     .SetStatus(UserStatus.SUSPENDED)
                     .SetHomeDb("anotherDb")
             )

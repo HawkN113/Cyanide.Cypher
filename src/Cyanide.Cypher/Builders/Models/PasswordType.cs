@@ -1,7 +1,9 @@
-﻿namespace Cyanide.Cypher.Builders.Models;
+﻿using System.ComponentModel;
+
+namespace Cyanide.Cypher.Builders.Models;
 
 public enum PasswordType
 {
-    PLAINTEXT,
-    ENCRYPTED
+    [Description("PLAINTEXT")] Plaintext = 0,
+    [Description("ENCRYPTED")] Encrypted = 1
 }

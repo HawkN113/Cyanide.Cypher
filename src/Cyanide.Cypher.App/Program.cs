@@ -6,6 +6,7 @@ const string personType = "Person";
 const string template = "Query: {0}";
 
 var queryBuilder = Factory.QueryBuilder();
+var admQueryBuilder = Factory.AdminQueryBuilder();
 
 Console.WriteLine(template, queryBuilder.Match(q =>
         q.WithNode(new Entity(personType, "p"))
@@ -91,5 +92,40 @@ Console.WriteLine(template, queryBuilder
         q
             .WithField("name", "p")
             .WithField("name", "c")
+    )
+    .Build());
+    
+Console.WriteLine(template, admQueryBuilder
+    .Create(q =>
+        q.WithUser("jake")
+            .WithPassword("'abc'", PasswordType.Encrypted)
+            .SetStatus(UserStatus.SUSPENDED)
+            .SetHomeDb("anotherDb")
+    )
+    .Build());
+
+Console.WriteLine(template, admQueryBuilder
+    .Show(q =>
+        q.AsCurrentUser()
+            .WithAllFields()
+            .WithCount()
+    )
+    .Build());
+
+Console.WriteLine(template, admQueryBuilder
+    .Show(q =>
+        q.WithDatabase("db")
+            .WithAllFields()
+            .WithCount()
+    )
+    .Build());
+
+Console.WriteLine(template, admQueryBuilder
+    .Create(q =>
+        q.WithUser("jake")
+            .WithPassword("'abc'")
+            .SetStatus()
+            .SetHomeDb("anotherDb")
+            .Replace()
     )
     .Build());
