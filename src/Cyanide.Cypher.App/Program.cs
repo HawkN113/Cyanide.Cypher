@@ -2,9 +2,9 @@
 using BenchmarkDotNet.Running;
 using Cyanide.Cypher.App;
 
-var config = new ManualConfig();
-config.WithOptions(ConfigOptions.DisableOptimizationsValidator);
+var config = DefaultConfig.Instance.WithOptions(ConfigOptions.DisableOptimizationsValidator);
 
-BenchmarkRunner.Run<QueriesManipulationBenchmarks>();
-BenchmarkRunner.Run<AdminQueriesManipulationBenchmarks>();
+BenchmarkRunner.Run<QueriesManipulationBenchmarks>(config);
+BenchmarkRunner.Run<AdminQueriesManipulationBenchmarks>(config);
+
 Console.ReadKey();
