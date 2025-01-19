@@ -1,6 +1,6 @@
 ﻿using Cyanide.Cypher.Builders.Query.Commands.Subclauses;
 
-namespace Cyanide.Cypher.Builders.Query.Abstraction.Clauses.Subclauses;
+namespace Cyanide.Cypher.Builders.Query;
 
 public interface IWhereSubQuery : ICreateQuery
 {

@@ -1,6 +1,4 @@
-﻿using Cyanide.Cypher.Builders.Models;
-
-namespace Cyanide.Cypher.Builders.Abstraction.Relations;
+﻿namespace Cyanide.Cypher.Builders.Abstraction.Relations;
 
 public interface IRelation<out T> where T : class
 {

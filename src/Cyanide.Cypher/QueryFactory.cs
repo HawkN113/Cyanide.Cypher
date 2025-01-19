@@ -1,7 +1,5 @@
 ﻿using Cyanide.Cypher.Builders.Admin;
-using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
 using Cyanide.Cypher.Builders.Query;
-using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
 
 namespace Cyanide.Cypher;
 

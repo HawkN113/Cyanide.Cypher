@@ -1,6 +1,6 @@
 ﻿using Cyanide.Cypher.Builders.Admin.Commands;
 
-namespace Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
+namespace Cyanide.Cypher.Builders.Admin;
 
 public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery
 {

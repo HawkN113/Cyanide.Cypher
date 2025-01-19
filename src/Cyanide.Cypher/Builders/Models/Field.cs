@@ -1,4 +1,4 @@
-﻿namespace Cyanide.Cypher.Builders.Models;
+﻿namespace Cyanide.Cypher.Builders;
 
 public sealed class Field(string label, string value)
 {

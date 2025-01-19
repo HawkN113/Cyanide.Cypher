@@ -1,5 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Models;
-using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
+﻿using Cyanide.Cypher.Builders;
+using Cyanide.Cypher.Builders.Query;
 
 namespace Cyanide.Cypher.Tests;
 

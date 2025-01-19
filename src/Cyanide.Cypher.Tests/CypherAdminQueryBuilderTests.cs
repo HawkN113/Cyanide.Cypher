@@ -1,5 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
-using Cyanide.Cypher.Builders.Models;
+﻿using Cyanide.Cypher.Builders.Admin;
+using Cyanide.Cypher.Builders;
 
 namespace Cyanide.Cypher.Tests;
 
@@ -272,6 +272,24 @@ public class CypherAdminQueryBuilderTests
         // Assert
         Assert.Equal(
             "SHOW CURRENT USER YIELD * RETURN count(*) AS count",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_SHOW_USERS_WithFieldsAndCount_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Show(q =>
+                q.WithUsers()
+                    .WithAllFields()
+                    .WithCount()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "SHOW USERS YIELD * RETURN count(*) AS count",
             resultQuery);
     }
     

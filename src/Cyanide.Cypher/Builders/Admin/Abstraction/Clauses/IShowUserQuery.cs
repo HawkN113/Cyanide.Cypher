@@ -1,6 +1,6 @@
 ﻿using Cyanide.Cypher.Builders.Abstraction;
 
-namespace Cyanide.Cypher.Builders.Admin.Abstraction.Clauses;
+namespace Cyanide.Cypher.Builders.Admin;
 
 public interface IShowUserQuery: IBuildQuery
 { }

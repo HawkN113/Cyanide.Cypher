@@ -2,7 +2,6 @@
 using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Abstraction.Nodes;
 using Cyanide.Cypher.Builders.Helper;
-using Cyanide.Cypher.Builders.Models;
 
 namespace Cyanide.Cypher.Builders.Query.Commands.Subclauses;
 

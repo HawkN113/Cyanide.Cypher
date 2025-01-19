@@ -1,7 +1,7 @@
 ﻿using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Query.Commands;
 
-namespace Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
+namespace Cyanide.Cypher.Builders.Query;
 
 public interface ILimitClause: IBuildQuery
 {

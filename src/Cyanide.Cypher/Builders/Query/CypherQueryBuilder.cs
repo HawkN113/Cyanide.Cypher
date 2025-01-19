@@ -1,7 +1,5 @@
 ﻿using System.Text;
 using Cyanide.Cypher.Builders.Base;
-using Cyanide.Cypher.Builders.Query.Abstraction.Clauses;
-using Cyanide.Cypher.Builders.Query.Abstraction.Clauses.Subclauses;
 using Cyanide.Cypher.Builders.Query.Commands;
 using Cyanide.Cypher.Builders.Query.Commands.Subclauses;
 using Cyanide.Cypher.Extensions;
