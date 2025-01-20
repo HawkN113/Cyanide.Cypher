@@ -5,3 +5,4 @@
 /src/Cyanide.Cypher.Tests/obj/*
 /src/Cyanide.Cypher.Tests/bin/*
 /.idea*
+/*.user
