@@ -2,7 +2,7 @@
 using Cyanide.Cypher.Builders.Queries.Admin;
 using Cyanide.Cypher.Builders.Queries.General;
 
-namespace Cyanide.Cypher;
+namespace Cyanide.Cypher.Builders;
 
 /// <summary>
 /// Provides factory for creating Cypher query objects.
