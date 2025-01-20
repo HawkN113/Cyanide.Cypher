@@ -75,6 +75,24 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
         ConfigureQueryBuilder<IStartDbQuery, StartDbQuery>(
             AdminClauseKeys.StartDb.GetDescription(),
             configureDbStart);
+    
+    /// <summary>
+    /// STOP DATABASE clause for admin management <br/>
+    /// Sample: STOP DATABASE db
+    /// </summary>
+    /// <param name="configureDbStop"></param>
+    public IStopDbQuery Stop(Action<StopDbQuery> configureDbStop) =>
+        ConfigureQueryBuilder<IStopDbQuery, StopDbQuery>(
+            AdminClauseKeys.StopDb.GetDescription(), configureDbStop);
+
+    /// <summary>
+    /// DELETE DATABASE clause for admin management <br/>
+    /// Sample: DELETE DATABASE db
+    /// </summary>
+    /// <param name="configureDbDelete"></param>
+    public IDeleteDbQuery Delete(Action<DeleteDbQuery> configureDbDelete) =>
+        ConfigureQueryBuilder<IDeleteDbQuery, DeleteDbQuery>(
+            AdminClauseKeys.DeleteDb.GetDescription(), configureDbDelete);
 
     /// <summary>
     /// Generates the final Cypher query by concatenating all configured clauses.

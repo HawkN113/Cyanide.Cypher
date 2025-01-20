@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Queries.Admin.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.Admin;
 
-public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery, IUpdateDbQuery, IStartDbQuery
+public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery, IUpdateDbQuery, IStartDbQuery, IStopDbQuery,IDeleteDbQuery
 {
     /// <summary>
     /// CREATE DATABASE clause for admin management <br/>
@@ -63,5 +63,25 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     [VersionInfo("4.4")]
     [EditionInfo(Edition.Enterprise)]
     IStartDbQuery Start(Action<StartDbQuery> configureDbStart);
+    
+    /// <summary>
+    /// STOP DATABASE clause for admin management <br/>
+    /// Sample: STOP DATABASE db
+    /// </summary>
+    /// <param name="configureDbStop"></param>
+    /// <returns></returns>
+    [VersionInfo("4.4")]
+    [EditionInfo(Edition.Enterprise)]
+    IStopDbQuery Stop(Action<StopDbQuery> configureDbStop);
+    
+    /// <summary>
+    /// DELETE DATABASE clause for admin management <br/>
+    /// Sample: DELETE DATABASE db
+    /// </summary>
+    /// <param name="configureDbDelete"></param>
+    /// <returns></returns>
+    [VersionInfo("4.4")]
+    [EditionInfo(Edition.Enterprise)]
+    IDeleteDbQuery Delete(Action<DeleteDbQuery> configureDbDelete);
     
 }

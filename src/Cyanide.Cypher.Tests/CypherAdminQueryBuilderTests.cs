@@ -345,4 +345,40 @@ public class CypherAdminQueryBuilderTests
     }
     
     #endregion
+    
+    #region STOP
+
+    [Fact]
+    public void Translate_With_STOP_DATABASE_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Stop(q => q.WithDatabase("db"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "STOP DATABASE db",
+            resultQuery);
+    }
+    
+    #endregion
+    
+    #region DELETE
+
+    [Fact]
+    public void Translate_With_DELETE_DATABASE_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Delete(q => q.WithDatabase("db"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "DROP DATABASE db",
+            resultQuery);
+    }
+    
+    #endregion
 }
