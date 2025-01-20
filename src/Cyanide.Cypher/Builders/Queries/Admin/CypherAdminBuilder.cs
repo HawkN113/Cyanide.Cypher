@@ -66,6 +66,15 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
             AdminClauseKeys.UpdateDb.GetDescription(), 
             configureDbUpdate);
 
+    /// <summary>
+    /// START DATABASE clause for admin management <br/>
+    /// Sample: START DATABASE db
+    /// </summary>
+    /// <param name="configureDbStart"></param>
+    public IStartDbQuery Start(Action<StartDbQuery> configureDbStart) =>
+        ConfigureQueryBuilder<IStartDbQuery, StartDbQuery>(
+            AdminClauseKeys.StartDb.GetDescription(),
+            configureDbStart);
 
     /// <summary>
     /// Generates the final Cypher query by concatenating all configured clauses.

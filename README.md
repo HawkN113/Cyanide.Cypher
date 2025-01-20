@@ -11,6 +11,7 @@
 - https://github.com/kaby76/Antlr4BuildTasks/blob/master/Antlr4BuildTasks/Antlr4BuildTasks.xml
 
 Admin
+- https://neo4j.com/docs/cypher-manual/4.4/administration/databases/#administration-databases-start-database
 - https://neo4j.com/docs/cypher-manual/4.4/administration/databases/#administration-databases-alter-database
 - https://neo4j.com/docs/cypher-manual/4.4/administration/access-control/manage-users/#access-control-create-users (not completed)
 - https://neo4j.com/docs/cypher-manual/4.4/administration/databases/#administration-databases-create-database (not completed)

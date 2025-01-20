@@ -10,5 +10,6 @@ internal enum AdminClauseKeys
     [Description("CreateUser")] CreateUser = 1,
     [Description("ShowDb")] ShowDb = 2,
     [Description("ShowUser")] ShowUser = 3,
-    [Description("UpdateDb")] UpdateDb = 4
+    [Description("UpdateDb")] UpdateDb = 4,
+    [Description("StartDb")] StartDb = 5
 }

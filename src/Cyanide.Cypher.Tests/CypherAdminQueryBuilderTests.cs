@@ -327,4 +327,22 @@ public class CypherAdminQueryBuilderTests
     }
 
     #endregion
+    
+    #region START
+
+    [Fact]
+    public void Translate_With_START_DATABASE_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Start(q => q.WithDatabase("db"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "START DATABASE db",
+            resultQuery);
+    }
+    
+    #endregion
 }

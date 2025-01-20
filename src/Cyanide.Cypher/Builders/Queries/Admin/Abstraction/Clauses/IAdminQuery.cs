@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Queries.Admin.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.Admin;
 
-public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery, IUpdateDbQuery
+public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IShowUserQuery, IUpdateDbQuery, IStartDbQuery
 {
     /// <summary>
     /// CREATE DATABASE clause for admin management <br/>
@@ -53,5 +53,15 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     [VersionInfo("4.4")]
     [EditionInfo(Edition.Enterprise)]
     IUpdateDbQuery Update(Action<UpdateDbQuery> configureDbUpdate);
+    
+    /// <summary>
+    /// START DATABASE clause for admin management <br/>
+    /// Sample: START DATABASE db
+    /// </summary>
+    /// <param name="configureDbStart"></param>
+    /// <returns></returns>
+    [VersionInfo("4.4")]
+    [EditionInfo(Edition.Enterprise)]
+    IStartDbQuery Start(Action<StartDbQuery> configureDbStart);
     
 }
