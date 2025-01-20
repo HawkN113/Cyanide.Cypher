@@ -12,6 +12,7 @@
         <FileVersion>4.4.0.0</FileVersion>
         <ProductVersion>4.4.0.0</ProductVersion>
         <InformationalVersion>4.4.0.0</InformationalVersion>
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
