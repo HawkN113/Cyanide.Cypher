@@ -10,6 +10,11 @@
 - https://github.com/mike-lischke/vscode-antlr4/blob/master/doc/extension-settings.md#grammar-formatting
 - https://github.com/kaby76/Antlr4BuildTasks/blob/master/Antlr4BuildTasks/Antlr4BuildTasks.xml
 
+Nuget package
+- cd C:\Experiments\Cyanide.cypher\src\Cyanide.Cypher
+- dotnet pack --configuration Release
+- dotnet pack -p:NuspecFile=Cyanide.Cypher.nuspec (primary)
+
 Admin
 - https://neo4j.com/docs/cypher-manual/4.4/administration/databases/#administration-databases-stop-database
 - https://neo4j.com/docs/cypher-manual/4.4/administration/databases/#administration-databases-drop-database
