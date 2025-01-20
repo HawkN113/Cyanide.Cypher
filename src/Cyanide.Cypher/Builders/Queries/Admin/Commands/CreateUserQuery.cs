@@ -31,9 +31,9 @@ public sealed class CreateUserQuery :
         _shouldReplaced = true;
     }
 
-    public ISetUserHomeDb SetStatus(UserStatus status = UserStatus.ACTIVE)
+    public ISetUserHomeDb SetStatus(UserStatus status = UserStatus.Active)
     {
-        _patterns.Add($"SET STATUS {status.ToString()}");
+        _patterns.Add($"SET STATUS {status.GetDescription()}");
         return this;
     }
 

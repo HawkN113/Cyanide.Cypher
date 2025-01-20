@@ -15,7 +15,7 @@ public class AdminQueriesManipulationBenchmarks
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'", PasswordType.Encrypted)
-                    .SetStatus(UserStatus.SUSPENDED)
+                    .SetStatus(UserStatus.Suspended)
                     .SetHomeDb("anotherDb")
             )
             .Build();

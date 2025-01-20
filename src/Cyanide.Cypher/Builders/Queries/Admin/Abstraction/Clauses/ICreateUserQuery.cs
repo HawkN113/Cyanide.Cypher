@@ -31,7 +31,7 @@ public interface ISetUserStatus
     /// </summary>
     /// <param name="status"></param>
     /// <returns></returns>
-    ISetUserHomeDb SetStatus(UserStatus status = UserStatus.ACTIVE);
+    ISetUserHomeDb SetStatus(UserStatus status = UserStatus.Active);
 }
 public interface ISetUserHomeDb: IReplaceUser
 {

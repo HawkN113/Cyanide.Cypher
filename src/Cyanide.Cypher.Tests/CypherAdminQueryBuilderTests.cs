@@ -83,7 +83,7 @@ public class CypherAdminQueryBuilderTests
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'")
-                    .SetStatus(UserStatus.SUSPENDED)
+                    .SetStatus(UserStatus.Suspended)
                     .SetHomeDb("anotherDb")
             )
             .Build();
@@ -102,7 +102,7 @@ public class CypherAdminQueryBuilderTests
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'", PasswordType.Encrypted)
-                    .SetStatus(UserStatus.SUSPENDED)
+                    .SetStatus(UserStatus.Suspended)
                     .SetHomeDb("anotherDb")
             )
             .Build();
@@ -121,7 +121,7 @@ public class CypherAdminQueryBuilderTests
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'", PasswordType.Encrypted, true)
-                    .SetStatus(UserStatus.SUSPENDED)
+                    .SetStatus(UserStatus.Suspended)
                     .SetHomeDb("anotherDb")
             )
             .Build();
@@ -149,6 +149,26 @@ public class CypherAdminQueryBuilderTests
         // Assert
         Assert.Equal(
             "CREATE OR REPLACE USER jake SET PLAINTEXT PASSWORD 'abc' CHANGE NOT REQUIRED SET STATUS ACTIVE SET HOME DATABASE anotherDb",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_CREATE_OR_REPLACE_USER_WithSuspenedStatus_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Create(q =>
+                q.WithUser("jake")
+                    .WithPassword("'abc'")
+                    .SetStatus(UserStatus.Suspended)
+                    .SetHomeDb("anotherDb")
+                    .Replace()
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "CREATE OR REPLACE USER jake SET PLAINTEXT PASSWORD 'abc' CHANGE NOT REQUIRED SET STATUS SUSPENDED SET HOME DATABASE anotherDb",
             resultQuery);
     }
 

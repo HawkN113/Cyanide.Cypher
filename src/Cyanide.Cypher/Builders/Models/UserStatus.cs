@@ -1,7 +1,9 @@
-﻿namespace Cyanide.Cypher.Builders;
+﻿using System.ComponentModel;
+
+namespace Cyanide.Cypher.Builders;
 
 public enum UserStatus
 {
-    ACTIVE,
-    SUSPENDED
+    [Description("ACTIVE")] Active = 0,
+    [Description("SUSPENDED")] Suspended = 1
 }
