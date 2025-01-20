@@ -5,7 +5,7 @@ namespace Cyanide.Cypher.Tests;
 
 public class CypherAdminQueryBuilderTests
 {
-    private readonly IAdminQuery _queryBuilder = Factory.AdminQueryBuilder();
+    private readonly IAdminQuery _adminQueryBuilder = Factory.AdminQueryBuilder();
 
     #region CREATE
 
@@ -13,7 +13,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_DATABASE_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithDatabase("db")
             )
@@ -29,7 +29,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_DATABASE_WithNotExists_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithDatabase("db")
                     .IfNotExists()
@@ -48,7 +48,7 @@ public class CypherAdminQueryBuilderTests
         // Act
         Assert.Throws<InvalidOperationException>(() =>
         {
-            _queryBuilder
+            _adminQueryBuilder
                 .Create(q =>
                     q.WithDatabase("db")
                         .IfNotExists()
@@ -62,7 +62,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_OR_REPLACE_DATABASE_WithNotExists_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithDatabase("db")
                     .Replace()
@@ -79,7 +79,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_USER_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'")
@@ -98,7 +98,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_USER_SET_ENCRYPTED_PASSWORD_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'", PasswordType.Encrypted)
@@ -117,7 +117,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_USER_SET_ENCRYPTED_PASSWORD_WithChange_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'", PasswordType.Encrypted, true)
@@ -136,7 +136,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_OR_REPLACE_USER_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'")
@@ -156,7 +156,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_CREATE_OR_REPLACE_USER_WithSuspenedStatus_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Create(q =>
                 q.WithUser("jake")
                     .WithPassword("'abc'")
@@ -180,7 +180,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_DATABASE_WithFields_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.WithDatabase("db")
                     .WithAllFields()
@@ -197,7 +197,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_DATABASE_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.WithDatabase("db")
                     .WithAllFields()
@@ -215,7 +215,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_DATABASE_AsDefault_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.AsDefaultDatabase()
             )
@@ -231,7 +231,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_DATABASE_AsHome_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.AsHomeDatabase()
             )
@@ -247,7 +247,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_DATABASES_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.WithDatabases()
             )
@@ -264,7 +264,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_CURRENT_USER_WithFields_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.AsCurrentUser()
                     .WithAllFields()
@@ -281,7 +281,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_CURRENT_USER_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.AsCurrentUser()
                     .WithAllFields()
@@ -299,7 +299,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_SHOW_USERS_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Show(q =>
                 q.WithUsers()
                     .WithAllFields()
@@ -322,7 +322,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_ALTER_DATABASE_SetAccessReadOnly_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Update(q => q.WithDatabase("db").SetAccessReadOnly())
             .Build();
 
@@ -336,7 +336,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_ALTER_DATABASE_SetAccessReadWrite_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Update(q => q.WithDatabase("db").SetAccessReadWrite())
             .Build();
 
@@ -354,7 +354,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_START_DATABASE_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Start(q => q.WithDatabase("db"))
             .Build();
 
@@ -372,7 +372,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_STOP_DATABASE_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Stop(q => q.WithDatabase("db"))
             .Build();
 
@@ -390,7 +390,7 @@ public class CypherAdminQueryBuilderTests
     public void Translate_With_DELETE_DATABASE_ReturnsCorrectCypherQuery()
     {
         // Act
-        var resultQuery = _queryBuilder
+        var resultQuery = _adminQueryBuilder
             .Delete(q => q.WithDatabase("db"))
             .Build();
 
