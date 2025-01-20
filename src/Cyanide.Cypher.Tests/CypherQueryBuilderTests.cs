@@ -1,5 +1,5 @@
 ﻿using Cyanide.Cypher.Builders;
-using Cyanide.Cypher.Builders.Query;
+using Cyanide.Cypher.Builders.Queries.General;
 
 namespace Cyanide.Cypher.Tests;
 

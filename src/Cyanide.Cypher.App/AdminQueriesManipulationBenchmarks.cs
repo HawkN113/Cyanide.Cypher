@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Cyanide.Cypher.Builders;
-using Cyanide.Cypher.Builders.Admin;
+using Cyanide.Cypher.Builders.Queries.Admin;
 
 namespace Cyanide.Cypher.App;
 
