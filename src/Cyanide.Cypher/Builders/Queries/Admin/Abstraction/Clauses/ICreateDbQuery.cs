@@ -3,6 +3,7 @@ using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Queries.Admin;
 
+[EditionInfo(Edition.Enterprise)]
 public interface ICreateDbQuery: IBuildQuery
 { }
 public interface ICreateAdmQueryDatabase

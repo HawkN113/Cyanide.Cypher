@@ -56,6 +56,18 @@ internal sealed class CypherAdminBuilder() : BaseQueryBuilder(
             configureUserShow);
 
     /// <summary>
+    /// ALTER DATABASE clause for admin management <br/>
+    /// Sample: ALTER DATABASE db SET ACCESS READ ONLY <br/>
+    /// Sample: ALTER DATABASE db SET ACCESS READ WRITE
+    /// </summary>
+    /// <param name="configureDbUpdate"></param>
+    public IUpdateDbQuery Update(Action<UpdateDbQuery> configureDbUpdate)=>
+        ConfigureQueryBuilder<IUpdateDbQuery, UpdateDbQuery>(
+            AdminClauseKeys.UpdateDb.GetDescription(), 
+            configureDbUpdate);
+
+
+    /// <summary>
     /// Generates the final Cypher query by concatenating all configured clauses.
     /// </summary>
     /// <returns>The fully constructed Cypher query as a string.</returns>

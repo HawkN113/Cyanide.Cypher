@@ -6,9 +6,9 @@ namespace Cyanide.Cypher.Tests;
 public class CypherAdminQueryBuilderTests
 {
     private readonly IAdminQuery _queryBuilder = Factory.AdminQueryBuilder();
-    
+
     #region CREATE
-    
+
     [Fact]
     public void Translate_With_CREATE_DATABASE_ReturnsCorrectCypherQuery()
     {
@@ -74,7 +74,7 @@ public class CypherAdminQueryBuilderTests
             "CREATE OR REPLACE DATABASE db",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_CREATE_USER_ReturnsCorrectCypherQuery()
     {
@@ -93,7 +93,7 @@ public class CypherAdminQueryBuilderTests
             "CREATE USER jake SET PLAINTEXT PASSWORD 'abc' CHANGE NOT REQUIRED SET STATUS SUSPENDED SET HOME DATABASE anotherDb",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_CREATE_USER_SET_ENCRYPTED_PASSWORD_ReturnsCorrectCypherQuery()
     {
@@ -112,7 +112,7 @@ public class CypherAdminQueryBuilderTests
             "CREATE USER jake SET ENCRYPTED PASSWORD 'abc' CHANGE NOT REQUIRED SET STATUS SUSPENDED SET HOME DATABASE anotherDb",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_CREATE_USER_SET_ENCRYPTED_PASSWORD_WithChange_ReturnsCorrectCypherQuery()
     {
@@ -131,7 +131,7 @@ public class CypherAdminQueryBuilderTests
             "CREATE USER jake SET ENCRYPTED PASSWORD 'abc' CHANGE REQUIRED SET STATUS SUSPENDED SET HOME DATABASE anotherDb",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_CREATE_OR_REPLACE_USER_ReturnsCorrectCypherQuery()
     {
@@ -153,9 +153,9 @@ public class CypherAdminQueryBuilderTests
     }
 
     #endregion
-    
+
     #region SHOW
-    
+
     [Fact]
     public void Translate_With_SHOW_DATABASE_WithFields_ReturnsCorrectCypherQuery()
     {
@@ -172,7 +172,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW DATABASE db YIELD *",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_DATABASE_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
@@ -190,7 +190,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW DATABASE db YIELD * RETURN count(*) AS count",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_DATABASE_AsDefault_ReturnsCorrectCypherQuery()
     {
@@ -206,7 +206,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW DEFAULT DATABASE",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_DATABASE_AsHome_ReturnsCorrectCypherQuery()
     {
@@ -222,7 +222,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW HOME DATABASE",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_DATABASES_ReturnsCorrectCypherQuery()
     {
@@ -238,8 +238,8 @@ public class CypherAdminQueryBuilderTests
             "SHOW DATABASES",
             resultQuery);
     }
-    
-    
+
+
     [Fact]
     public void Translate_With_SHOW_CURRENT_USER_WithFields_ReturnsCorrectCypherQuery()
     {
@@ -256,7 +256,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW CURRENT USER YIELD *",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_CURRENT_USER_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
@@ -274,7 +274,7 @@ public class CypherAdminQueryBuilderTests
             "SHOW CURRENT USER YIELD * RETURN count(*) AS count",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SHOW_USERS_WithFieldsAndCount_ReturnsCorrectCypherQuery()
     {
@@ -292,6 +292,39 @@ public class CypherAdminQueryBuilderTests
             "SHOW USERS YIELD * RETURN count(*) AS count",
             resultQuery);
     }
-    
+
+    #endregion
+
+
+    #region ALTER
+
+    [Fact]
+    public void Translate_With_ALTER_DATABASE_SetAccessReadOnly_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Update(q => q.WithDatabase("db").SetAccessReadOnly())
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "ALTER DATABASE db SET ACCESS READ ONLY",
+            resultQuery);
+    }
+
+    [Fact]
+    public void Translate_With_ALTER_DATABASE_SetAccessReadWrite_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Update(q => q.WithDatabase("db").SetAccessReadWrite())
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "ALTER DATABASE db SET ACCESS READ WRITE",
+            resultQuery);
+    }
+
     #endregion
 }
