@@ -13,6 +13,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// <param name="configureDbCreate"></param>
     /// <returns></returns>
     [VersionInfo("4.4")]
+    [EditionInfo(Edition.Enterprise)]
     ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate);
     
     /// <summary>

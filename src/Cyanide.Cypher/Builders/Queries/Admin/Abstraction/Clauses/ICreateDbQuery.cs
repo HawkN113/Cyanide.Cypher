@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Abstraction;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Abstraction;
 
 namespace Cyanide.Cypher.Builders.Queries.Admin;
 
@@ -17,6 +18,7 @@ public interface INotExistsDatabase: IReplaceDatabase
     /// Create a database if doesn't exist
     /// Use CREATE DATABASE [IF NOT EXISTS] clause to ensure the database is only created if it does not already exist, or use CREATE OR REPLACE DATABASE to create a new database, replacing the existing one if it already exists.
     /// </summary>
+    [EditionInfo(Edition.Enterprise)]
     IReplaceDatabase IfNotExists();
 }
 public interface IReplaceDatabase
