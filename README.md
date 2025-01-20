@@ -6,7 +6,7 @@ Cypher Query Builder is a lightweight and intuitive C# library designed to const
 
 - **Fluent Query Builder**: Easily construct Cypher queries using a fluent API.
 - **Customizable general clauses**: Support for the following Cypher clauses:
-  - `MATCH`
+  - `MATCH`, `OPTIONAL MATCH`
   - `CREATE`
   - `RETURN`
   - `WHERE` (`IS NOT NULL`, `IS NULL`, `OR`, `XOR`)
@@ -16,6 +16,7 @@ Cypher Query Builder is a lightweight and intuitive C# library designed to const
   - `SET`
   - `REMOVE`
   - `ORDER BY`
+  - `DELETE`, `DETACH DELETE`
 - **Customizable admin clauses**: Support for the following Cypher clauses:
   - `SHOW CURRENT USER`
   - `SHOW DATABASE(S)`
@@ -319,7 +320,55 @@ MATCH (n) RETURN n.name, n.age ORDER BY n.name, n.age
 ```
 ------
 
+#### `DELETE`
+```csharp
+var resultQuery = _queryBuilder
+    .Match(q =>
+        q.WithRelation(new Entity("ACTED_IN", "r"), RelationshipType.Direct,
+            new Entity("Person", "n", [new Field("name", "'Laurence Fishburne'")]),
+            new Entity(string.Empty))
+    )
+    .Delete(q => q.WithNode("r"))
+    .Build();
+```
+**Output:**
+```cypher
+MATCH (n:Person {name: 'Laurence Fishburne'})-[r:ACTED_IN]->() DELETE r
+```
+------
+
+#### `DETACH DELETE`
+```csharp
+var resultQuery = _queryBuilder
+    .Match(q =>
+        q.WithNode(new Entity("Person", "n", [new Field("name", "'Carrie-Anne Moss'")]))
+    )
+    .DetachDelete(q => q.WithNode("n"))
+    .Build();
+```
+**Output:**
+```cypher
+MATCH (n:Person {name: 'Carrie-Anne Moss'}) DETACH DELETE n
+```
+------
+
 ### Administrative clauses
+
+#### `SKIP`
+```csharp
+```
+**Output:**
+```cypher
+```
+------
+
+#### `SKIP`
+```csharp
+```
+**Output:**
+```cypher
+```
+------
 
 #### `SKIP`
 ```csharp
