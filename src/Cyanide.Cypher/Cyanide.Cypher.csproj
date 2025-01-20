@@ -4,14 +4,14 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <IsPackable>true</IsPackable>
-        <PackageId />
-        <AssemblyVersion>4.4.0</AssemblyVersion>
-        <Version>4.4.0</Version>
-        <FileVersion>4.4.0</FileVersion>
-        <ProductVersion>4.4.0</ProductVersion>
-        <InformationalVersion>4.4.0</InformationalVersion>
+        <PackageId>Cyanide.Cypher</PackageId>
+        <AssemblyVersion>4.4.0.0</AssemblyVersion>
+        <Version>4.4.0.0</Version>
+        <FileVersion>4.4.0.0</FileVersion>
+        <ProductVersion>4.4.0.0</ProductVersion>
+        <InformationalVersion>4.4.0.0</InformationalVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

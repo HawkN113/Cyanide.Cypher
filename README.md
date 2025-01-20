@@ -564,5 +564,5 @@ ALTER DATABASE db SET ACCESS READ WRITE
 ```
 ------
 
-### Executing a Query
+### Executing a query
 To execute the query, use your preferred `Neo4j driver` or client.
