@@ -10,6 +10,7 @@
         <tags>cypher neo4j translator query builder</tags>
         <repository type="git" url="https://github.com/HawkN113/Cyanide.cypher" branch="main" />
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+        <icon>content\cyanide.cypher.ico.png</icon>
         <language>en-GB</language>
         <dependencies>
             <group targetFramework="net8.0" />
@@ -17,6 +18,6 @@
     </metadata>
     <files>
         <file src="bin\Release\net8.0\*" target="lib\net8.0" />
-        <file src="Content\cyanide.cypher.png" target="content\cyanide.cypher.png" />
+        <file src="Content\cyanide.cypher.ico.png" target="content\cyanide.cypher.ico.png" />
     </files>
 </package>
