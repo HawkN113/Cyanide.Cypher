@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.General.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
@@ -10,6 +11,7 @@ public interface IQuery
     /// </summary>
     /// <param name="configureCreate"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     ICreateQuery Create(Action<CreateClause> configureCreate);
     
     /// <summary>
@@ -18,6 +20,7 @@ public interface IQuery
     /// </summary>
     /// <param name="configureMatch"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IMatchQuery Match(Action<MatchClause> configureMatch);
     
     /// <summary>
@@ -26,5 +29,6 @@ public interface IQuery
     /// </summary>
     /// <param name="configureOptMatch"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IOptMatchQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
 }

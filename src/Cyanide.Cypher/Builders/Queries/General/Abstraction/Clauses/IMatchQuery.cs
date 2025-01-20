@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.General.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
@@ -10,5 +11,6 @@ public interface IMatchQuery: IOptMatchQuery, IDeleteQuery, IDetachDeleteQuery, 
     /// </summary>
     /// <param name="configureMatch"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IMatchQuery Match(Action<MatchClause> configureMatch);
 }

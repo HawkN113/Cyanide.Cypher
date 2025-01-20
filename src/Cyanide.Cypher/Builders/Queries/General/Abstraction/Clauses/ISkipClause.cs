@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.General.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
@@ -11,5 +12,6 @@ public interface ISkipClause: ILimitClause
     /// </summary>
     /// <param name="configureSkip"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     ISkipClause Skip(Action<SkipClause> configureSkip);
 }

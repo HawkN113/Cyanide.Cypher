@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.General.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
@@ -10,5 +11,6 @@ public interface IOptMatchQuery: IWhereSubQuery
     /// </summary>
     /// <param name="configureOptMatch"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IOptMatchQuery OptionalMatch(Action<OptMatchClause> configureOptMatch);
 }

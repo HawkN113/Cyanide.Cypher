@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Abstraction;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Abstraction;
 using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
@@ -11,5 +12,6 @@ public interface IDetachDeleteQuery: IBuildQuery
     /// </summary>
     /// <param name="configureDelete"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IDetachDeleteQuery DetachDelete(Action<DetachDeleteClause> configureDelete);
 }

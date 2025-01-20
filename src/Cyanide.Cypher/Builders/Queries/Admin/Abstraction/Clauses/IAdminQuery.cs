@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.Admin.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.Admin.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.Admin;
 
@@ -11,6 +12,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// </summary>
     /// <param name="configureDbCreate"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     ICreateDbQuery Create(Action<CreateDbQuery> configureDbCreate);
     
     /// <summary>
@@ -20,6 +22,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// </summary>
     /// <param name="configureUserCreate"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     ICreateUserQuery Create(Action<CreateUserQuery> configureUserCreate);
     
     /// <summary>
@@ -28,6 +31,7 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// </summary>
     /// <param name="configureDbShow"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IShowDbQuery Show(Action<ShowDbQuery> configureDbShow);
     
     /// <summary>
@@ -36,5 +40,6 @@ public interface IAdminQuery: ICreateDbQuery, ICreateUserQuery, IShowDbQuery, IS
     /// </summary>
     /// <param name="configureUserShow"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IShowUserQuery Show(Action<ShowUserQuery> configureUserShow);
 }

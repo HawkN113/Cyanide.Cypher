@@ -1,4 +1,6 @@
-﻿namespace Cyanide.Cypher.Builders.Abstraction;
+﻿using Cyanide.Cypher.Attributes;
+
+namespace Cyanide.Cypher.Builders.Abstraction;
 
 public interface IBuildQuery
 {
@@ -6,5 +8,6 @@ public interface IBuildQuery
     /// Generate Cypher query
     /// </summary>
     /// <returns>string</returns>
+    [VersionInfo("4.4")]
     string Build();
 }

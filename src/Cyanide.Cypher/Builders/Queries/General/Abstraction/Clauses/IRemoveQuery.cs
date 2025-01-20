@@ -1,4 +1,5 @@
-﻿using Cyanide.Cypher.Builders.Queries.General.Commands;
+﻿using Cyanide.Cypher.Attributes;
+using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
@@ -10,5 +11,6 @@ public interface IRemoveQuery: IReturnQuery
     /// </summary>
     /// <param name="configureRemove"></param>
     /// <returns></returns>
+    [VersionInfo("4.4")]
     IRemoveQuery Remove(Action<RemoveClause> configureRemove);
 }

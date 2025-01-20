@@ -53,7 +53,6 @@ public sealed class MatchClause :
     /// UnDirect (undirected) <br/>
     /// BiDirect (bidirectional)
     /// </param>
-    /// <param name="alias"></param>
     /// <returns></returns>
     public MatchClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
