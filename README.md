@@ -1,5 +1,5 @@
 # Cyanide.Cypher
-| ![Cypher](docs/img/cyanide.cypher.png) | <span style="height: 200px !important;text-align: justify !important;font-weight: 200 !important;">Cypher query builder is a lightweight and intuitive C# library designed to construct Cypher queries programmatically for use with Neo4j or other compatible graph databases. It simplifies query creation by providing a fluent and type-safe API, allowing developers to focus on query logic rather than string concatenation.</span> |
+| ![Cypher](docs/img/cyanide.cypher.png) | Cypher query builder is a lightweight and intuitive C# library designed to construct Cypher queries programmatically for use with Neo4j or other compatible graph databases. It simplifies query creation by providing a fluent and type-safe API, allowing developers to focus on query logic rather than string concatenation. |
 |----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 ## Features
