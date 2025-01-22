@@ -18,7 +18,7 @@
             - Added support for .NET 8.0
             - Added support for Neo4j 4.4
         </releaseNotes>
-        <copyright>Copyright © 2025 HawkN113</copyright>
+        <copyright>Copyright © 2025 Nikolay Selyutin (HawkN113)</copyright>
         <dependencies>
             <group targetFramework="net8.0" />
         </dependencies>
