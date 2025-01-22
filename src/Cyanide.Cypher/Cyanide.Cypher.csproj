@@ -4,15 +4,13 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <IsPackable>true</IsPackable>
         <PackageId>Cyanide.Cypher</PackageId>
-        <AssemblyVersion>4.4.0</AssemblyVersion>
-        <Version>4.4.0</Version>
-        <FileVersion>4.4.0</FileVersion>
-        <ProductVersion>4.4.0</ProductVersion>
-        <InformationalVersion>4.4.0</InformationalVersion>
+        <FileVersion>4.4.0.0</FileVersion>
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+        <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+        <GenerateAssemblyFileVersionAttribute>true</GenerateAssemblyFileVersionAttribute>
+        <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,7 +21,7 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Cyanide.Cypher.xml</DocumentationFile>
       <NoWarn>1701;1702;1591;</NoWarn>
-      <DebugType>portable</DebugType>
+      <DebugType>none</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,8 +29,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="README.md">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Update="Package\Content\README.md">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
     </ItemGroup>
     
