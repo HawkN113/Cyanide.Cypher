@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>Cyanide.Cypher</id>
-        <version>4.4.0.0</version>
+        <version>4.4.0</version>
         <title>Cyanide.Cypher</title>
         <authors>Nikolay Selyutin (HawkN113)</authors>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -14,6 +14,11 @@
         <icon>content\cyanide.cypher.ico.png</icon>
         <readme>content\README.md</readme>
         <language>en-GB</language>
+        <releaseNotes>
+            - Added support for .NET 8.0
+            - Added support for Neo4j 4.4
+        </releaseNotes>
+        <copyright>Copyright © 2025 HawkN113</copyright>
         <dependencies>
             <group targetFramework="net8.0" />
         </dependencies>
@@ -22,5 +27,6 @@
         <file src="bin\Release\net8.0\*" target="lib\net8.0" />
         <file src="README.md" target="content\README.md" />
         <file src="Content\cyanide.cypher.ico.png" target="content\cyanide.cypher.ico.png" />
+        <file src="Content\cyanide.cypher.png" target="content\cyanide.cypher.png" />
     </files>
 </package>

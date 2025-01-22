@@ -4,7 +4,7 @@ Cypher query builder is a lightweight and intuitive C# library designed to const
 
 ## Features
 
-- **Fluent Query builder**: Easily construct Cypher queries using a fluent API.
+- **Fluent query builder**: Easily construct Cypher queries using a fluent API.
 - **Customizable general clauses / subclauses**: Support for the following Cypher clauses:
     - `MATCH`,`OPTIONAL MATCH`
     - `CREATE`
@@ -34,7 +34,6 @@ More information about clauses is available an [official site](https://neo4j.com
 - .NET 8 or higher.
 - A running instance of a Neo4j database:
     - version `4.4`
-    - version `5.0`
 
 ## Usage
 
