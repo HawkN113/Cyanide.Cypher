@@ -400,6 +400,25 @@ public class CypherQueryBuilderTests
         // Assert
         Assert.Equal("MATCH (charlie:Person {name: 'Charlie Sheen'}) CREATE (charlie:Actor)", resultQuery);
     }
+    
+    [Fact]
+    public void Translate_With_CREATE_WithRelations_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithNode(new Entity("Person", "a"))
+                    .WithNode(new Entity("Person", "b"))
+            )
+            .Where(q => q.Query("a.name = 'A'").And(q => q.Query("b.name = 'B'")))
+            .Create(q => q.WithRelation(new Entity("RELTYPE", "r", [new Field("name", "a.name + '<->' + b.name")]),
+                RelationshipType.Direct, new Entity("a"), new Entity("b")))
+            .Return(q => q.WithType("r").WithField("name", "r"))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (a:Person), (b:Person) WHERE a.name = 'A' AND b.name = 'B' CREATE (a)-[r:RELTYPE {name: a.name + '<->' + b.name}]->(b) RETURN type(r), r.name", resultQuery);
+    }
 
     [Fact]
     public void Translate_With_CREATE_Where_ReturnsCorrectCypherQuery()

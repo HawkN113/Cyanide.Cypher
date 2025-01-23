@@ -13,6 +13,8 @@ public sealed class MatchClause :
     IEmptyNode<MatchClause>
 {
     private readonly List<string> _patterns = [];
+    private int _countNodes;
+    private int _countRelations;
     private StringBuilder _matchClauses = new();
 
     public void Initialize(StringBuilder clauseBuilder)
@@ -27,6 +29,7 @@ public sealed class MatchClause :
     public MatchClause WithEmptyNode()
     {
         _patterns.AddRange(NodePatternBuilder.CreateEmptyNode());
+        _countNodes += 1;
         return this;
     }
 
@@ -38,6 +41,7 @@ public sealed class MatchClause :
     public MatchClause WithNode(Entity entity)
     {
         _patterns.AddRange(NodePatternBuilder.CreateNode(entity));
+        _countNodes += 1;
         return this;
     }
 
@@ -46,17 +50,18 @@ public sealed class MatchClause :
     /// </summary>
     /// <param name="type"></param>
     /// <param name="relation">
-    /// <param name="alias"></param>
     /// NonDirect (non-directed) <br/>
     /// Direct (directed) <br/>
     /// InDirect (in-directed) <br/>
     /// UnDirect (undirected) <br/>
     /// BiDirect (bidirectional)
     /// </param>
+    /// <param name="alias"></param>
     /// <returns></returns>
     public MatchClause WithRelation(string type, RelationshipType relation = RelationshipType.NonDirect, string alias = "")
     {
         _patterns.Add(RelationshipPatternHelper.Create(type, relation, alias));
+        _countRelations += 1;
         return this;
     }
     
@@ -72,9 +77,10 @@ public sealed class MatchClause :
         Entity? right = null)
     {
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
+        _countRelations += 1;
         return this;
     }
-    
+
     public void End()
     {
         if (_patterns.Count <= 0) return;
@@ -84,6 +90,8 @@ public sealed class MatchClause :
         }
 
         _matchClauses.Append("MATCH ");
-        _matchClauses.Append(string.Join("", _patterns));
+        _matchClauses.Append(_countNodes > 1 && _countRelations == 0
+            ? string.Join(", ", _patterns)
+            : string.Join("", _patterns));
     }
 }
