@@ -6,8 +6,7 @@ using Cyanide.Cypher.Extensions;
 namespace Cyanide.Cypher.Builders.Queries.General;
 
 internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
-        Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.ToString(), _ => new StringBuilder())), IQuery,
-    IMatchQuery
+        Enum.GetValues<QueryClauseKeys>().ToDictionary(key => key.GetDescription(), _ => new StringBuilder())), IQuery, IMatchQuery
 {
     /// <summary>
     /// The WITH clause allows query parts to be chained together, piping the results from one to be used as starting points <br/>
@@ -154,6 +153,38 @@ internal sealed class CypherQueryBuilder() : BaseQueryBuilder(
         ConfigureQueryBuilder<IDetachDeleteQuery, DetachDeleteClause>(
             QueryClauseKeys.DetachDelete.GetDescription(),
             configureDelete);
+
+    /// <summary>
+    /// UNION clause is used to combine the result of multiple queries. <br/>
+    /// Sample: MATCH (n:Actor) RETURN n.name AS name UNION MATCH (n:Movie) RETURN n.title AS name <br/>
+    /// </summary>
+    /// <param name="configureUnion"></param>
+    /// <returns></returns>
+    public IUnionClause Union(Action<IQuery> configureUnion)
+    {
+        var queryBuilder = new CypherQueryBuilder();
+        configureUnion(queryBuilder);
+        var unionClause = new StringBuilder("UNION ");
+        unionClause.Append(queryBuilder.Build());
+        allClauses[QueryClauseKeys.Union.ToString()] = unionClause;
+        return this;
+    }
+
+    /// <summary>
+    /// UNION ALL clause is used to combine the result of multiple queries. <br/>
+    /// Sample: MATCH (n:Actor) RETURN n.name AS name UNION ALL MATCH (n:Movie) RETURN n.title AS name <br/>
+    /// </summary>
+    /// <param name="configureUnionAll"></param>
+    /// <returns></returns>
+    public IUnionClause UnionAll(Action<IQuery> configureUnionAll)
+    {
+        var queryBuilder = new CypherQueryBuilder();
+        configureUnionAll(queryBuilder);
+        var unionAllClause = new StringBuilder("UNION ALL ");
+        unionAllClause.Append(queryBuilder.Build());
+        allClauses[QueryClauseKeys.Union.ToString()] = unionAllClause;
+        return this;
+    }
 
     /// <summary>
     /// Generates the final Cypher query by concatenating all configured clauses.

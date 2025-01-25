@@ -18,5 +18,8 @@ internal enum QueryClauseKeys
     [Description("Return")] Return = 9,
     [Description("OrderBy")] OrderBy = 10,
     [Description("Skip")] Skip = 11,
-    [Description("Limit")] Limit = 12
+    [Description("Limit")] Limit = 12,
+    [Description("Union")] Union = 13,
+    [Description("UnionAll")] UnionAll = 14
+
 }

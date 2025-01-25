@@ -3,7 +3,7 @@ using Cyanide.Cypher.Builders.Queries.General.Commands;
 
 namespace Cyanide.Cypher.Builders.Queries.General;
 
-public interface IReturnQuery: IOrderBySubQuery
+public interface IReturnQuery: IOrderBySubQuery, IUnionClause
 {
     /// <summary>
     /// RETURN clause <br/>

@@ -15,8 +15,10 @@
         <readme>content\README.md</readme>
         <language>en-GB</language>
         <releaseNotes>
-            - Added support for .NET 8.0
-            - Added support for Neo4j 4.4
+            - Added support for .NET 8.0;
+            - Added support for Neo4j 4.4;
+            - Support the general (sub)clauses: MATCH, OPTIONAL MATCH, CREATE, WHERE, WITH, SET, SKIP, LIMIT, REMOVE, DELETE, DETACH DELETE, ORDER BY, UNION, UNION ALL;
+            - Support the administrative clauses: SHOW DATABASE, SHOW DATABASES, SHOW CURRENT USER, SHOW USERS, CREATE USER, CREATE OR REPLACE USER, CREATE DATABASE, STOP DATABASE, START DATABASE, DROP DATABASE, ALTER DATABASE;
         </releaseNotes>
         <copyright>Copyright © 2025 Nikolay Selyutin (HawkN113)</copyright>
         <dependencies>
