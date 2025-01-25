@@ -59,7 +59,20 @@ public sealed class CreateClause :
         _patterns.Add(RelationshipPatternHelper.Create(entity, relation, left, right));
         return this;
     }
-    
+
+    /// <summary>
+    /// Add a basic relationship to the CREATE clause
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <param name="relation"></param>
+    /// <returns></returns>
+    public CreateClause WithRelation(Entity left, Entity right, BasicRelationshipType relation = BasicRelationshipType.RelatedTo)
+    {
+        _patterns.Add(RelationshipPatternHelper.Create(left, right, relation));
+        return this;
+    }
+
     public void End()
     {
         if (_patterns.Count <= 0) return;

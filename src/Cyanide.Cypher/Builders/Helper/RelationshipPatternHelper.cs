@@ -41,6 +41,19 @@ internal static class RelationshipPatternHelper
         };
     }
 
+    public static string Create(Entity left, Entity right, BasicRelationshipType relation = BasicRelationshipType.RelatedTo)
+    {
+        var leftLabel = string.Join("", NodePatternBuilder.CreateNode(left));
+        var rightLabel = string.Join("", NodePatternBuilder.CreateNode(right));
+
+        return relation switch
+        {
+            BasicRelationshipType.Directed => $"{leftLabel}-->{rightLabel}",
+            BasicRelationshipType.InDirected => $"{leftLabel}<--{rightLabel}",
+            _ => $"{leftLabel}--{rightLabel}"
+        };
+    }
+
     private static string GetRelationLabel(Entity entity, StringBuilder? properties)
     {
         return entity.Alias switch

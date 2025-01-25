@@ -39,6 +39,8 @@ More information about clauses is available an [official site](https://neo4j.com
 
 ## Usage
 
+See more details about all clauses with the [project link](https://github.com/HawkN113/Cyanide.cypher).
+
 ### Create a general builder
 ```csharp
 using Cyanide.Cypher.Builders;

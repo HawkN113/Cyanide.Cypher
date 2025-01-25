@@ -168,7 +168,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_With_Multi_MATCH_ReturnsCorrectCypherQuery()
+    public void Translate_With_MATCH_WithThreeNodes_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -187,6 +187,68 @@ public class CypherQueryBuilderTests
 
         // Assert
         Assert.Equal("MATCH (a:Person {name: 'Martin Sheen'}) MATCH (a)-[r:DIRECTED]->() RETURN a.name, r",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_DirectedRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"),
+                    BasicRelationshipType.Directed)
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})-->(movie) RETURN movie.title",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_InDirectRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"),
+                    BasicRelationshipType.InDirected)
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})<--(movie) RETURN movie.title",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_RelatedToRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"))
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})--(movie) RETURN movie.title",
             resultQuery);
     }
 
