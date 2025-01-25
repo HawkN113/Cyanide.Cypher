@@ -17,6 +17,7 @@
   - `REMOVE`
   - `ORDER BY`
   - `DELETE`,`DETACH DELETE`
+  - `UNION`,`UNION ALL`
 - **Customizable administrative clauses**: Support for the following Cypher clauses (limited support):
   - `SHOW CURRENT USER`,`SHOW USERS`
   - `SHOW DATABASE`,`SHOW DATABASES`
@@ -61,6 +62,8 @@ using Cyanide.Cypher.Builders.Queries.Admin;
 
 IAdminQuery adminQueryBuilder = Factory.AdminQueryBuilder();
 ```
+#### Sample
+
 
 | General clauses                                                                                                                                  | Administrative clauses                                                                                                             |
 |--------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
@@ -73,6 +76,7 @@ IAdminQuery adminQueryBuilder = Factory.AdminQueryBuilder();
 | [`LIMIT`](docs/clauses/general/limit.md)                                                                                                         | [`DROP DATABASE`](docs/clauses/administrative/drop_db.md)                                                                          |
 | [`REMOVE`](docs/clauses/general/remove.md), [`DELETE`](docs/clauses/general/delete.md), [`DETACH DELETE`](docs/clauses/general/detach_delete.md) | [`ALTER DATABASE`](docs/clauses/administrative/alter_db.md)                                                                        |
 | [`ORDER BY`](docs/clauses/general/order_by.md)                                                                                                   |                                                                                                                                    |
+| [`UNION`](docs/clauses/general/union.md), [`UNION ALL`](docs/clauses/general/union.md)                                                           |                                                                                                                                    |
 
 ### Executing a query
 To execute the query, use your preferred `Neo4j driver` or client.

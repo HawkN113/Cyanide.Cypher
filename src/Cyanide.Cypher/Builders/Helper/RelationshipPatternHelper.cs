@@ -1,4 +1,6 @@
-﻿namespace Cyanide.Cypher.Builders.Helper;
+﻿using System.Text;
+
+namespace Cyanide.Cypher.Builders.Helper;
 
 internal static class RelationshipPatternHelper
 {
@@ -18,7 +20,14 @@ internal static class RelationshipPatternHelper
 
     public static string Create(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null, Entity? right = null)
     {
-        var label = GetRelationLabel(entity);
+        var label = GetRelationLabel(entity, null);
+        
+        if (entity.Properties is { Length: > 0 })
+        {
+            var properties = string.Join(", ", entity.Properties.Select(p => $"{p.Label}: {p.Value}"));
+            label = GetRelationLabel(entity, new StringBuilder(properties));
+        }
+        
         var leftLabel = left != null ? string.Join("", NodePatternBuilder.CreateNode(left)) : string.Empty;
         var rightLabel = right != null ? string.Join("", NodePatternBuilder.CreateNode(right)) : string.Empty;
 
@@ -32,13 +41,28 @@ internal static class RelationshipPatternHelper
         };
     }
 
-    private static string GetRelationLabel(Entity entity)
+    public static string Create(Entity left, Entity right, BasicRelationshipType relation = BasicRelationshipType.RelatedTo)
+    {
+        var leftLabel = string.Join("", NodePatternBuilder.CreateNode(left));
+        var rightLabel = string.Join("", NodePatternBuilder.CreateNode(right));
+
+        return relation switch
+        {
+            BasicRelationshipType.Directed => $"{leftLabel}-->{rightLabel}",
+            BasicRelationshipType.InDirected => $"{leftLabel}<--{rightLabel}",
+            _ => $"{leftLabel}--{rightLabel}"
+        };
+    }
+
+    private static string GetRelationLabel(Entity entity, StringBuilder? properties)
     {
         return entity.Alias switch
         {
-            null => $"[{entity.Type}]",
-            "" => $"[:{entity.Type}]",
-            _ => $"[{entity.Alias}:{entity.Type}]"
+            null => properties is null ? $"[{entity.Type}]" : $"[{entity.Type} {{{properties}}}]",
+            "" => properties is null ? $"[:{entity.Type}]" : $"[:{entity.Type} {{{properties}}}]",
+            _ => properties is null
+                ? $"[{entity.Alias}:{entity.Type}]"
+                : $"[{entity.Alias}:{entity.Type} {{{properties}}}]"
         };
     }
 }

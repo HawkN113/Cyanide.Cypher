@@ -14,9 +14,11 @@ Cypher query builder is a lightweight and intuitive C# library designed to const
     - `SKIP`
     - `LIMIT`
     - `SET`
+    - `SKIP`
     - `REMOVE`
     - `ORDER BY`
     - `DELETE`,`DETACH DELETE`
+    - `UNION`,`UNION ALL`
 - **Customizable administrative clauses**: Support for the following Cypher clauses (limited support):
     - `SHOW CURRENT USER`,`SHOW USERS`
     - `SHOW DATABASE`,`SHOW DATABASES`
@@ -37,6 +39,8 @@ More information about clauses is available an [official site](https://neo4j.com
 
 ## Usage
 
+See more details about all clauses with the [project link](https://github.com/HawkN113/Cyanide.cypher).
+
 ### Create a general builder
 ```csharp
 using Cyanide.Cypher.Builders;
@@ -45,6 +49,23 @@ using Cyanide.Cypher.Builders.Queries.General;
 IQuery queryBuilder = Factory.QueryBuilder()
 ```
 
+#### Sample
+```csharp
+var resultQuery = _queryBuilder
+    .Match(q =>
+        q.WithNode(new Entity("Person", "a", [new Field("name", "'Martin Sheen'")]))
+    )
+    .Return(q =>
+        q.WithField("name", "a")
+    )
+    .Build();
+```
+**Output:**
+```cypher
+MATCH (a:Person {name: 'Martin Sheen'}) RETURN a.name
+```
+------
+
 ### Create an administrative builder
 ```csharp
 using Cyanide.Cypher.Builders;
@@ -52,3 +73,17 @@ using Cyanide.Cypher.Builders.Queries.Admin;
 
 IAdminQuery adminQueryBuilder = Factory.AdminQueryBuilder();
 ```
+
+#### Sample
+```csharp
+var resultQuery = _adminQueryBuilder
+    .Show(q =>
+        q.WithDatabases()
+    )
+    .Build();
+```
+**Output:**
+```cypher
+SHOW DATABASES
+```
+------

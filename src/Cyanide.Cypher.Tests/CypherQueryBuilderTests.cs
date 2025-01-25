@@ -168,7 +168,7 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
-    public void Translate_With_Multi_MATCH_ReturnsCorrectCypherQuery()
+    public void Translate_With_MATCH_WithThreeNodes_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
@@ -187,6 +187,68 @@ public class CypherQueryBuilderTests
 
         // Assert
         Assert.Equal("MATCH (a:Person {name: 'Martin Sheen'}) MATCH (a)-[r:DIRECTED]->() RETURN a.name, r",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_DirectedRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"),
+                    BasicRelationshipType.Directed)
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})-->(movie) RETURN movie.title",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_InDirectRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"),
+                    BasicRelationshipType.InDirected)
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})<--(movie) RETURN movie.title",
+            resultQuery);
+    }
+    
+    [Fact]
+    public void Translate_With_MATCH_RelatedToRelation_WithTwoNodes_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithRelation(
+                    new Entity("Person", "", [new Field("name", "'Oliver Stone'")]),
+                    new Entity("movie"))
+            )
+            .Return(q =>
+                q.WithField("title", "movie")
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (:Person {name: 'Oliver Stone'})--(movie) RETURN movie.title",
             resultQuery);
     }
 
@@ -402,6 +464,27 @@ public class CypherQueryBuilderTests
     }
 
     [Fact]
+    public void Translate_With_CREATE_WithRelations_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q =>
+                q.WithNode(new Entity("Person", "a"))
+                    .WithNode(new Entity("Person", "b"))
+            )
+            .Where(q => q.Query("a.name = 'A'").And(q => q.Query("b.name = 'B'")))
+            .Create(q => q.WithRelation(new Entity("RELTYPE", "r", [new Field("name", "a.name + '<->' + b.name")]),
+                RelationshipType.Direct, new Entity("a"), new Entity("b")))
+            .Return(q => q.WithType("r").WithField("name", "r"))
+            .Build();
+
+        // Assert
+        Assert.Equal(
+            "MATCH (a:Person), (b:Person) WHERE a.name = 'A' AND b.name = 'B' CREATE (a)-[r:RELTYPE {name: a.name + '<->' + b.name}]->(b) RETURN type(r), r.name",
+            resultQuery);
+    }
+
+    [Fact]
     public void Translate_With_CREATE_Where_ReturnsCorrectCypherQuery()
     {
         // Act
@@ -609,7 +692,7 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
-    
+
     #region SET
 
     [Fact]
@@ -618,34 +701,34 @@ public class CypherQueryBuilderTests
         // Act
         var resultQuery = _queryBuilder
             .Match(q => q.WithNode(new Entity("n", null, [new Field("name", "'Andy'")])))
-            .Set(q=>q.WithField("surname","n", "'Taylor'"))
+            .Set(q => q.WithField("surname", "n", "'Taylor'"))
             .Return(q => q.WithField("name", "n").WithField("surname", "n"))
             .Build();
 
         // Assert
         Assert.Equal("MATCH (n {name: 'Andy'}) SET n.surname = 'Taylor' RETURN n.name, n.surname", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SET_WithMultiProperties_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
             .Match(q => q.WithNode(new Entity("n", null, [new Field("name", "'Andy'")])))
-            .Set(q=>q.WithField("position","n", "'Developer'").WithField("surname","n","'Taylor'"))
+            .Set(q => q.WithField("position", "n", "'Developer'").WithField("surname", "n", "'Taylor'"))
             .Build();
 
         // Assert
         Assert.Equal("MATCH (n {name: 'Andy'}) SET n.position = 'Developer', n.surname = 'Taylor'", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SET_WithCondition_ReturnsCorrectCypherQuery()
     {
         // Act
         var resultQuery = _queryBuilder
             .Match(q => q.WithNode(new Entity("p", null, [new Field("name", "'Peter'")])))
-            .Set(q=>q.WithQuery("p += {}"))
+            .Set(q => q.WithQuery("p += {}"))
             .Return(q => q.WithField("name", "p").WithField("age", "p"))
             .Build();
 
@@ -654,7 +737,7 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
-    
+
     #region LIMIT
 
     [Fact]
@@ -671,7 +754,7 @@ public class CypherQueryBuilderTests
         // Assert
         Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name LIMIT 1 + toInteger(3 * rand())", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_LIMIT_WithPositiveNumber_ReturnsCorrectCypherQuery()
     {
@@ -688,7 +771,7 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
-    
+
     #region SKIP
 
     [Fact]
@@ -705,7 +788,7 @@ public class CypherQueryBuilderTests
         // Assert
         Assert.Equal("MATCH (n) RETURN n.name ORDER BY n.name SKIP 1 + toInteger(3 * rand())", resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_SKIP_WithPositiveNumber_ReturnsCorrectCypherQuery()
     {
@@ -714,7 +797,7 @@ public class CypherQueryBuilderTests
             .Match(q => q.WithNode(new Entity("n")))
             .Return(q => q.WithField("name", "n"))
             .OrderBy(q => q.WithField("name", "n"))
-            .Skip(q=>q.WithCount(1))
+            .Skip(q => q.WithCount(1))
             .Limit(q => q.WithCount(3))
             .Build();
 
@@ -723,7 +806,7 @@ public class CypherQueryBuilderTests
     }
 
     #endregion
-    
+
     #region WITH
 
     [Fact]
@@ -742,7 +825,7 @@ public class CypherQueryBuilderTests
             "MATCH (person)-[r]->(otherPerson) WITH *, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_WITH_WithToUpper_ReturnsCorrectCypherQuery()
     {
@@ -750,7 +833,7 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
                 new Entity("otherPerson")))
-            .With(q => q.ToUpper("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
+            .With(q => q.ToUpper("name", "otherPerson", "upperCaseName").WithType("r", "connectionType"))
             .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
             .Build();
 
@@ -759,7 +842,7 @@ public class CypherQueryBuilderTests
             "MATCH (person)-[r]->(otherPerson) WITH toUpper(otherPerson.name) AS upperCaseName, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
             resultQuery);
     }
-    
+
     [Fact]
     public void Translate_With_WITH_WithCount_ReturnsCorrectCypherQuery()
     {
@@ -767,13 +850,52 @@ public class CypherQueryBuilderTests
         var resultQuery = _queryBuilder
             .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
                 new Entity("otherPerson")))
-            .With(q => q.Count("name","otherPerson","upperCaseName").WithType("r", "connectionType"))
+            .With(q => q.Count("name", "otherPerson", "upperCaseName").WithType("r", "connectionType"))
             .Return(q => q.WithField("person.name").WithField("otherPerson.name").WithField("connectionType"))
             .Build();
 
         // Assert
         Assert.Equal(
             "MATCH (person)-[r]->(otherPerson) WITH count(otherPerson.name) AS upperCaseName, type(r) AS connectionType RETURN person.name, otherPerson.name, connectionType",
+            resultQuery);
+    }
+
+    #endregion
+
+    #region UNION
+
+    [Fact]
+    public void Translate_With_UNION_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("Actor", "n")))
+            .Return(q => q.WithField("name", "n", "name"))
+            .Union(union => union
+                .Match(q => q.WithNode(new Entity("Movie", "n")))
+                .Return(q => q.WithField("title", "n", "name")))
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n:Actor) RETURN n.name AS name UNION MATCH (n:Movie) RETURN n.title AS name",
+            resultQuery);
+    }
+
+    [Fact]
+    public void Translate_With_UNION_ALL_ReturnsCorrectCypherQuery()
+    {
+        // Act
+        var resultQuery = _queryBuilder
+            .Match(q => q.WithNode(new Entity("Actor", "n")))
+            .Return(q => q.WithField("name", "n", "name"))
+            .UnionAll(union => union
+                .Match(q => q.WithNode(new Entity("Movie", "n")))
+                .Return(q => q.WithField("title", "n", "name"))
+            )
+            .Build();
+
+        // Assert
+        Assert.Equal("MATCH (n:Actor) RETURN n.name AS name UNION ALL MATCH (n:Movie) RETURN n.title AS name",
             resultQuery);
     }
 

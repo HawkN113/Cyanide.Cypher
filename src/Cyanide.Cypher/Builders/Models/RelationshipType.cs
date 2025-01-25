@@ -7,18 +7,57 @@ namespace Cyanide.Cypher.Builders;
 /// </summary>
 public enum RelationshipType
 {
-    [Description("Non-directed relation (classic): -[]-")]
+    /// <summary>
+    /// Non-directed relation (classic)
+    /// </summary>
+    [Description("-[]-")]
     NonDirect = 0,
 
-    [Description("Directed relation (classic): -[]->")]
+    /// <summary>
+    /// Directed relation (classic) 
+    /// </summary>
+    [Description("-[]->")]
     Direct = 1,
-
-    [Description("Indirected relation: <-[]-")]
+    
+    /// <summary>
+    /// In directed relation
+    /// </summary>
+    [Description("<-[]-")]
     InDirect = 2,
-
-    [Description("Undirected relation: <-[]->")]
+    
+    /// <summary>
+    /// Undirected relation
+    /// </summary>
+    [Description("<-[]->")]
     UnDirect = 3,
 
-    [Description("Bidirectional relation: ->[]<-")]
+    /// <summary>
+    /// Bidirectional relation: 
+    /// </summary>
+    [Description("->[]<-")]
     BiDirect = 4
+}
+
+/// <summary>
+/// Outgoing (basic) relationship types
+/// </summary>
+public enum BasicRelationshipType
+{
+    /// <summary>
+    /// Non-directed relation (classic)
+    /// </summary>
+    [Description("--")]
+    RelatedTo = 0,
+
+    /// <summary>
+    /// Directed relation (classic)
+    /// </summary>
+    [Description("-->")]
+    Directed = 1,
+    
+    /// <summary>
+    /// In directed relation
+    /// </summary>
+    [Description("<--")]
+    InDirected = 2,
 }

@@ -6,4 +6,6 @@ public interface IRelation<out T> where T : class
 
     T WithRelation(Entity entity, RelationshipType relation = RelationshipType.NonDirect, Entity? left = null,
         Entity? right = null);
+
+    T WithRelation(Entity left, Entity right, BasicRelationshipType relation = BasicRelationshipType.RelatedTo);
 }
