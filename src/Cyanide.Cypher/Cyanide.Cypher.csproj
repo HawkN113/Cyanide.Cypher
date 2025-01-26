@@ -8,10 +8,16 @@
         <PackageId>Cyanide.Cypher</PackageId>
         <FileVersion>4.4.0.0</FileVersion>
         <Copyright>Copyright © 2025 Nikolay Selyutin (HawkN113)</Copyright>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
         <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
         <GenerateAssemblyFileVersionAttribute>true</GenerateAssemblyFileVersionAttribute>
         <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+        <Optimize>true</Optimize>
+        <SignAssembly>true</SignAssembly>
+        <PublicSign>false</PublicSign>
+        <AssemblyOriginatorKeyFile>Cyanide.Cypher.Key.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,7 +28,7 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Cyanide.Cypher.xml</DocumentationFile>
       <NoWarn>1701;1702;1591;</NoWarn>
-      <DebugType>none</DebugType>
+      <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
