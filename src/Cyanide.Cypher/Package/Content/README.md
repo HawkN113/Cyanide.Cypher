@@ -31,6 +31,8 @@ Cypher query builder is a lightweight and intuitive C# library designed to const
 
 More information about clauses is available an [official site](https://neo4j.com/docs/cypher-manual/4.4/clauses/)
 
+## Getting Started
+
 ### Prerequisites
 
 - .NET 8 or higher.
@@ -49,7 +51,7 @@ using Cyanide.Cypher.Builders.Queries.General;
 IQuery queryBuilder = Factory.QueryBuilder()
 ```
 
-#### Sample
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -74,7 +76,7 @@ using Cyanide.Cypher.Builders.Queries.Admin;
 IAdminQuery adminQueryBuilder = Factory.AdminQueryBuilder();
 ```
 
-#### Sample
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Show(q =>

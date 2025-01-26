@@ -1,4 +1,6 @@
 ### `MATCH`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -16,6 +18,8 @@ MATCH (a:Person {name: 'Martin Sheen'}) RETURN a.name
 ------
 
 ### `MATCH` (with bi-directional relation)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -36,6 +40,8 @@ MATCH (p:Person)->[:LIVES_IN]<-(c:City) RETURN p.name, c.name
 ------
 
 ### `MATCH` (with directional relation)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -56,6 +62,8 @@ MATCH (p:Person)-[:LIVES_IN]->(c:City) RETURN p.name, c.name
 ------
 
 ### `MATCH`(with in-directional relation)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -76,6 +84,8 @@ MATCH (p:Person)<-[:LIVES_IN]-(c:City) RETURN p.name, c.name
 ------
 
 ### `MATCH` (with non-directional relation)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>

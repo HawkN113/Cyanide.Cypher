@@ -1,4 +1,6 @@
 ### `OPTIONAL MATCH`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>

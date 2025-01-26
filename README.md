@@ -34,9 +34,13 @@ More information about clauses is available an [official site](https://neo4j.com
 
 ### Installation
 
-Add the library to your project via NuGet:
+To add the latest NuGet package:
 ```bash
 Install-Package Cyanide.Cypher --version 4.4.0
+```
+or 
+```bash
+dotnet add package Cyanide.Cypher --version 4.4.0
 ```
 
 ### Prerequisites
@@ -48,6 +52,8 @@ Install-Package Cyanide.Cypher --version 4.4.0
 ## Usage
 
 ### Create a general builder
+
+**Sample**
 ```csharp
 using Cyanide.Cypher.Builders;
 using Cyanide.Cypher.Builders.Queries.General;
@@ -56,16 +62,18 @@ IQuery queryBuilder = Factory.QueryBuilder()
 ```
 
 ### Create an administrative builder
+
+**Sample**
 ```csharp
 using Cyanide.Cypher.Builders;
 using Cyanide.Cypher.Builders.Queries.Admin;
 
 IAdminQuery adminQueryBuilder = Factory.AdminQueryBuilder();
 ```
-#### Sample
 
+### Guide of supported clauses 
 
-| General clauses                                                                                                                                  | Administrative clauses                                                                                                             |
+| General (sub)clauses                                                                                                                             | Administrative clauses                                                                                                             |
 |--------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | [`MATCH`](docs/clauses/general/match.md), [`OPTIONAL MATCH`](docs/clauses/general/optional_match.md)                                             | [`SHOW DATABASE`](docs/clauses/administrative/show_db.md),[`SHOW DATABASES`](docs/clauses/administrative/show_db.md)               |
 | [`CREATE`](docs/clauses/general/create.md)                                                                                                       | [`SHOW CURRENT USER`](docs/clauses/administrative/show_user.md),[`SHOW USERS`](docs/clauses/administrative/show_user.md)           |

@@ -1,4 +1,6 @@
 ### `LIMIT`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithNode(new Entity("n")))

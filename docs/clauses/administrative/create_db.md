@@ -1,4 +1,6 @@
 ### `CREATE DATABASE`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Create(q =>

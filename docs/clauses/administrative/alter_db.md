@@ -1,4 +1,6 @@
 ### `ALTER DATABASE`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Update(q => q.WithDatabase("db").SetAccessReadWrite())
