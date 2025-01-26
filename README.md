@@ -34,7 +34,7 @@ More information about clauses is available an [official site](https://neo4j.com
 
 ### Installation
 
-To add the latest NuGet package:
+To add the latest [NuGet package](https://www.nuget.org/packages/Cyanide.Cypher):
 ```bash
 Install-Package Cyanide.Cypher --version 4.4.0
 ```
