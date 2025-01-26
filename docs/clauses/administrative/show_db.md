@@ -1,5 +1,7 @@
 
 ### `SHOW DATABASES`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Show(q =>
@@ -14,6 +16,8 @@ SHOW DATABASES
 ------
 
 ### `SHOW DATABASE`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Show(q =>

@@ -1,4 +1,6 @@
 ### `WITH`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),
@@ -14,6 +16,8 @@ MATCH (person)-[r]->(otherPerson) WITH *, type(r) AS connectionType RETURN perso
 ------
 
 ### `WITH` (with `toUpper` function)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithRelation(new Entity("r"), RelationshipType.Direct, new Entity("person"),

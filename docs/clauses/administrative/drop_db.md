@@ -1,4 +1,6 @@
 ### `DROP DATABASE`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Delete(q => q.WithDatabase("db"))

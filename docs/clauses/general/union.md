@@ -1,4 +1,6 @@
 ### `UNION`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithNode(new Entity("Actor", "n")))
@@ -15,6 +17,8 @@ MATCH (n:Actor) RETURN n.name AS name UNION MATCH (n:Movie) RETURN n.title AS na
 ------
 
 ### `UNION ALL`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithNode(new Entity("Actor", "n")))

@@ -1,4 +1,6 @@
 ### `SHOW USERS`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Show(q =>
@@ -15,6 +17,8 @@ SHOW USERS YIELD * RETURN count(*) AS count
 ------
 
 ### `SHOW CURRENT USER`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Show(q =>

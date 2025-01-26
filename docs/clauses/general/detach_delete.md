@@ -1,4 +1,6 @@
 ### `DETACH DELETE`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>

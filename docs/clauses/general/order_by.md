@@ -1,4 +1,6 @@
 ### `ORDER BY`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>

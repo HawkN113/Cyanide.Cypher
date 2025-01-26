@@ -1,4 +1,6 @@
 ### `CREATE`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Create(q =>
@@ -18,6 +20,8 @@ CREATE (andy:Person {name: 'Andy'})-[:WORKS_AT]->(neo)<-[:WORKS_AT]-(michael:Per
 ------
 
 ### `CREATE` (with multi nodes)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Create(q =>

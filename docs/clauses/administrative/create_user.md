@@ -1,4 +1,6 @@
 ### `CREATE USER`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Create(q =>
@@ -16,6 +18,8 @@ CREATE USER jake SET ENCRYPTED PASSWORD 'abc' CHANGE REQUIRED SET STATUS SUSPEND
 ------
 
 ### `CREATE OR REPLACE USER`
+
+**Sample**
 ```csharp
 var resultQuery = _adminQueryBuilder
     .Create(q =>

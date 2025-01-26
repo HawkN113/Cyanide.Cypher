@@ -1,4 +1,6 @@
 ### `WHERE`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>
@@ -21,6 +23,8 @@ MATCH (p:Person)-[:LIVES_IN]->(c:City) WHERE p.age > 30 AND b.city=\"New York\" 
 ------
 
 ### `WHERE` (`IS NOT NULL`)
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q =>

@@ -1,4 +1,6 @@
 ### `SET`
+
+**Sample**
 ```csharp
 var resultQuery = _queryBuilder
     .Match(q => q.WithNode(new Entity("p", null, [new Field("name", "'Peter'")])))
