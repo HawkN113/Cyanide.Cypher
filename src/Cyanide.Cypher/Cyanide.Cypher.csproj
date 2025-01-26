@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         <PackageId>Cyanide.Cypher</PackageId>
-        <FileVersion>4.4.1.0</FileVersion>
+        <FileVersion>4.4.2.0</FileVersion>
         <Copyright>Copyright © 2025 Nikolay Selyutin (HawkN113)</Copyright>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -15,7 +15,6 @@
         <GenerateAssemblyFileVersionAttribute>true</GenerateAssemblyFileVersionAttribute>
         <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
         <Optimize>true</Optimize>
-        <SignAssembly>true</SignAssembly>
         <PublicSign>false</PublicSign>
         <AssemblyOriginatorKeyFile>Cyanide.Cypher.Key.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>

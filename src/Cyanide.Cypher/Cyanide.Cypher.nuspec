@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>Cyanide.Cypher</id>
-        <version>4.4.1</version>
+        <version>4.4.2</version>
         <title>Cyanide.Cypher</title>
         <authors>Nikolay Selyutin (HawkN113)</authors>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
